@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    <script>
+      function downloadImage(url, filename) {
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    </script>
+    <style>
+      .download-button { transition: transform 0.2s; }
+      .download-button:active { transform: scale(0.80); }
+    </style>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>HFBA v2</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-BluishWhite">
+    <div class="container px-5 py-10 mx-auto">
+      <section id="HFlogos" class="mb-28">
+        <div class="flex flex-row items-center justify-between">
+          <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white mb-5 py-3 px-6 rounded-full">HF Logos</div>
+          <div class="text-BluishDark transform hover:text-gray-900">
+            <a href="https://huggingface.co/brand" target="_blank">View official HF branding guideline <svg xmlns="http://www.w3.org/2000/svg" class="inline w-6 h-6" width="32" height="32" viewBox="0 0 20 20"><path fill="currentColor" d="M9.516 6a.5.5 0 0 0 0 1h2.777l-4.147 4.146a.5.5 0 0 0 .708.708L13 7.707v2.777a.5.5 0 0 0 1 0V6.5a.5.5 0 0 0-.5-.5zm3.25 11a2.5 2.5 0 0 0 2.47-2.11A2.501 2.501 0 0 0 17 12.5v-7A2.5 2.5 0 0 0 14.5 3h-7a2.501 2.501 0 0 0-2.4 1.797A2.5 2.5 0 0 0 3 7.266V13.5A3.5 3.5 0 0 0 6.5 17zM4 7.266A1.5 1.5 0 0 1 5 5.85v6.65A2.5 2.5 0 0 0 7.5 15h6.68a1.5 1.5 0 0 1-1.414 1H6.5A2.5 2.5 0 0 1 4 13.5zM7.5 4h7A1.5 1.5 0 0 1 16 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 6 12.5v-7A1.5 1.5 0 0 1 7.5 4"/></svg></a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+          <div class="w-full flex flex-col">
+            <img src="images/Brand Logos/Hugging Face.png" alt="HF Logo" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
+            <div class="pl-3 pt-3">
+              <h5 class="text-lg font-sans text-BluishDark">HF Logo</h5>
+              <div class="flex flex-wrap gap-y-1 items-center mt-2 text-sm">
+                <button x-data="{ filename: 'Hugging Face.png', imageUrl: 'images/Brand Logos/Hugging Face.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.png</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'hf-logo.svg', imageUrl: 'images/Brand Logos/hf-logo.svg' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.svg</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'hf-logo.ai', imageUrl: 'images/Brand Logos/hf-logo.ai' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.ai</p>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-col">
+            <img src="images/Brand Logos/Rainbow Hugging Face.png" alt="Rainbow Hugging Face" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
+            <div class="pl-3 pt-3">
+              <h5 class="text-lg font-sans text-BluishDark">Rainbow Hugging Face</h5>
+              <div class="flex flex-wrap gap-y-1 items-center mt-2 text-sm">
+                <button x-data="{ filename: 'Rainbow Hugging Face.png', imageUrl: 'images/Brand Logos/Rainbow Hugging Face.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.png</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'Rainbow Hugging Face.svg', imageUrl: 'images/Brand Logos/Rainbow Hugging Face.svg' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.svg</p>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-col">
+            <img src="images/Brand Logos/hf-logo-with-title.png" alt="HF logo + title" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
+            <div class="pl-3 pt-3">
+              <h5 class="text-lg font-sans text-BluishDark">HF logo + title</h5>
+              <div class="flex flex-wrap gap-y-1 items-center mt-2 text-sm">
+                <button x-data="{ filename: 'hf-logo-with-title.png', imageUrl: 'images/Brand Logos/hf-logo-with-title.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.png</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'hf-logo-with-title.svg', imageUrl: 'images/Brand Logos/hf-logo-with-title.svg' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.svg</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'hf-logo-with-title.ai', imageUrl: 'images/Brand Logos/hf-logo-with-title.ai' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.ai</p>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-col">
+            <img src="images/Brand Logos/hf-logo-with-white-title.png" alt="HF logo + white title" class="w-full h-full bg-black shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
+            <div class="pl-3 pt-3">
+              <h5 class="text-lg font-sans text-BluishDark">HF logo + white title</h5>
+              <div class="flex flex-wrap gap-y-1 items-center mt-2 text-sm">
+                <button x-data="{ filename: 'hf-logo-with-white-title.png', imageUrl: 'images/Brand Logos/hf-logo-with-white-title.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.png</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'hf-logo-with-white-title.svg', imageUrl: 'images/Brand Logos/hf-logo-with-white-title.svg' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.svg</p>
+                </button>
+                <hr class="mx-3 h-3 rounded-sm border-r border-IconBorder xl:mx-2.5">
+                <button x-data="{ filename: 'hf-logo-with-white-title.ai', imageUrl: 'images/Brand Logos/hf-logo-with-white-title.ai' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                  <img src="images/download icon.svg" class="w-4 h-4" alt="">
+                  <p class="text-gray-500 font-mono">.ai</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ModernHuggies" class="mb-28">
+        <div class="flex items-center mb-5">
+          <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Modern Huggies</div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+          <div class="w-full flex flex-col" data-display-name="Acedemic Huggy" data-tags="academic graduation cap school teacher professor education">
+            <img src="images/Huggy Collection 2026/Acedemic Huggy.png" alt="Acedemic Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Acedemic Huggy</h5>
+              <button x-data="{ filename: 'Acedemic Huggy.png', imageUrl: 'images/Huggy Collection 2026/Acedemic Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Athlete Frowning Huggy" data-tags="athlete rush run frown sport wristband tired effort">
+            <img src="images/Huggy Collection 2026/Athlete Frowning Huggy.png" alt="Athlete Frowning Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Athlete Frowning Huggy</h5>
+              <button x-data="{ filename: 'Athlete Frowning Huggy.png', imageUrl: 'images/Huggy Collection 2026/Athlete Frowning Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Athlete Huggy" data-tags="athlete rush run wristband sport race compete fast">
+            <img src="images/Huggy Collection 2026/Athlete Huggy.png" alt="Athlete Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Athlete Huggy</h5>
+              <button x-data="{ filename: 'Athlete Huggy.png', imageUrl: 'images/Huggy Collection 2026/Athlete Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Athlete Laughing Huggy" data-tags="athlete rush run laugh sport wristband happy joy">
+            <img src="images/Huggy Collection 2026/Athlete Laughing Huggy.png" alt="Athlete Laughing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Athlete Laughing Huggy</h5>
+              <button x-data="{ filename: 'Athlete Laughing Huggy.png', imageUrl: 'images/Huggy Collection 2026/Athlete Laughing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Baguette Violinist Huggy" data-tags="violin baguette music french play instrument bread">
+            <img src="images/Huggy Collection 2026/Baguette Violinist Huggy.png" alt="Baguette Violinist Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Baguette Violinist Huggy</h5>
+              <button x-data="{ filename: 'Baguette Violinist Huggy.png', imageUrl: 'images/Huggy Collection 2026/Baguette Violinist Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Bob Huggy" data-tags="bob haircut wave hello greet happy fashion">
+            <img src="images/Huggy Collection 2026/Bob Huggy.png" alt="Bob Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Bob Huggy</h5>
+              <button x-data="{ filename: 'Bob Huggy.png', imageUrl: 'images/Huggy Collection 2026/Bob Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Bored Huggy" data-tags="bored shrug meh indifferent tired flat uninterested">
+            <img src="images/Huggy Collection 2026/Bored Huggy.png" alt="Bored Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Bored Huggy</h5>
+              <button x-data="{ filename: 'Bored Huggy.png', imageUrl: 'images/Huggy Collection 2026/Bored Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Boxing Huggy" data-tags="boxing rush fast video play media energy helmet">
+            <img src="images/Huggy Collection 2026/Boxing Huggy.png" alt="Boxing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Boxing Huggy</h5>
+              <button x-data="{ filename: 'Boxing Huggy.png', imageUrl: 'images/Huggy Collection 2026/Boxing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Breathing Huggy" data-tags="breathe deeply calm meditation relax yoga zen music">
+            <img src="images/Huggy Collection 2026/Breathing Huggy.png" alt="Breathing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Breathing Huggy</h5>
+              <button x-data="{ filename: 'Breathing Huggy.png', imageUrl: 'images/Huggy Collection 2026/Breathing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="computer vision Huggy" data-tags="vision computer-vision ml ai book study labeling annotation">
+            <img src="images/Huggy Collection 2026/computer vision Huggy.png" alt="computer vision Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">computer vision Huggy</h5>
+              <button x-data="{ filename: 'computer vision Huggy.png', imageUrl: 'images/Huggy Collection 2026/computer vision Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Cool Huggy" data-tags="cool sunglasses shades tie fancy smug stylish boss">
+            <img src="images/Huggy Collection 2026/Cool Huggy.png" alt="Cool Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Cool Huggy</h5>
+              <button x-data="{ filename: 'Cool Huggy.png', imageUrl: 'images/Huggy Collection 2026/Cool Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Cowboy Huggy" data-tags="cowboy hat western sheriff bandana star rancher wild-west">
+            <img src="images/Huggy Collection 2026/Cowboy Huggy.png" alt="Cowboy Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Cowboy Huggy</h5>
+              <button x-data="{ filename: 'Cowboy Huggy.png', imageUrl: 'images/Huggy Collection 2026/Cowboy Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Cowboy Wizard Huggy" data-tags="wizard cowboy hat robe thumbs-up magic mysterious cool">
+            <img src="images/Huggy Collection 2026/Cowboy Wizard Huggy.png" alt="Cowboy Wizard Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Cowboy Wizard Huggy</h5>
+              <button x-data="{ filename: 'Cowboy Wizard Huggy.png', imageUrl: 'images/Huggy Collection 2026/Cowboy Wizard Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="D Huggy" data-tags="detective magnifying investigate spy search clue curious">
+            <img src="images/Huggy Collection 2026/D Huggy.png" alt="D Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">D Huggy</h5>
+              <button x-data="{ filename: 'D Huggy.png', imageUrl: 'images/Huggy Collection 2026/D Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Dancing Huggy 2" data-tags="dancing dance cry tears drama sad emotional">
+            <img src="images/Huggy Collection 2026/Dancing Huggy 2.png" alt="Dancing Huggy 2" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Dancing Huggy 2</h5>
+              <button x-data="{ filename: 'Dancing Huggy 2.png', imageUrl: 'images/Huggy Collection 2026/Dancing Huggy 2.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Dancing Huggy 3" data-tags="dancing dance cry tears thumbs-up drama bittersweet">
+            <img src="images/Huggy Collection 2026/Dancing Huggy 3.png" alt="Dancing Huggy 3" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Dancing Huggy 3</h5>
+              <button x-data="{ filename: 'Dancing Huggy 3.png', imageUrl: 'images/Huggy Collection 2026/Dancing Huggy 3.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Dancing Huggy" data-tags="dancing dance music whistle groove happy rhythm">
+            <img src="images/Huggy Collection 2026/Dancing Huggy.png" alt="Dancing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Dancing Huggy</h5>
+              <button x-data="{ filename: 'Dancing Huggy.png', imageUrl: 'images/Huggy Collection 2026/Dancing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Default Huggy" data-tags="default smile happy plain basic standard open">
+            <img src="images/Huggy Collection 2026/Default Huggy.png" alt="Default Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Default Huggy</h5>
+              <button x-data="{ filename: 'Default Huggy.png', imageUrl: 'images/Huggy Collection 2026/Default Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="DJ Huggy" data-tags="dj headphones music point lean audio sound song">
+            <img src="images/Huggy Collection 2026/DJ Huggy.png" alt="DJ Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">DJ Huggy</h5>
+              <button x-data="{ filename: 'DJ Huggy.png', imageUrl: 'images/Huggy Collection 2026/DJ Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Doodle Huggy" data-tags="doodle sketch drawing messy music fun scribble">
+            <img src="images/Huggy Collection 2026/Doodle Huggy.gif" alt="Doodle Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Doodle Huggy</h5>
+              <button x-data="{ filename: 'Doodle Huggy.gif', imageUrl: 'images/Huggy Collection 2026/Doodle Huggy.gif' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.gif</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Double Thumbs Up Huggy" data-tags="thumbs-up approve good yes happy great double">
+            <img src="images/Huggy Collection 2026/Double Thumbs Up Huggy.png" alt="Double Thumbs Up Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Double Thumbs Up Huggy</h5>
+              <button x-data="{ filename: 'Double Thumbs Up Huggy.png', imageUrl: 'images/Huggy Collection 2026/Double Thumbs Up Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Dragon Huggy" data-tags="dragon costume lunar new-year mythical antlers zodiac">
+            <img src="images/Huggy Collection 2026/Dragon Huggy.png" alt="Dragon Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Dragon Huggy</h5>
+              <button x-data="{ filename: 'Dragon Huggy.png', imageUrl: 'images/Huggy Collection 2026/Dragon Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Frustrated Huggy" data-tags="angry frustrated mad irritated bored annoyed vexed">
+            <img src="images/Huggy Collection 2026/Frustrated Huggy.png" alt="Frustrated Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Frustrated Huggy</h5>
+              <button x-data="{ filename: 'Frustrated Huggy.png', imageUrl: 'images/Huggy Collection 2026/Frustrated Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Game Jam Huggy" data-tags="game gaming controller jam play video-game console">
+            <img src="images/Huggy Collection 2026/Game Jam Huggy.png" alt="Game Jam Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Game Jam Huggy</h5>
+              <button x-data="{ filename: 'Game Jam Huggy.png', imageUrl: 'images/Huggy Collection 2026/Game Jam Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Gaming Huggy" data-tags="gaming game controller play video-game smirk console">
+            <img src="images/Huggy Collection 2026/Gaming Huggy.png" alt="Gaming Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Gaming Huggy</h5>
+              <button x-data="{ filename: 'Gaming Huggy.png', imageUrl: 'images/Huggy Collection 2026/Gaming Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Global Huggy" data-tags="global world globe earth international geography travel">
+            <img src="images/Huggy Collection 2026/Global Huggy.png" alt="Global Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Global Huggy</h5>
+              <button x-data="{ filename: 'Global Huggy.png', imageUrl: 'images/Huggy Collection 2026/Global Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="GPU Huggy" data-tags="gpu chip compute hardware graphics card ml">
+            <img src="images/Huggy Collection 2026/GPU Huggy.png" alt="GPU Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">GPU Huggy</h5>
+              <button x-data="{ filename: 'GPU Huggy.png', imageUrl: 'images/Huggy Collection 2026/GPU Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Growing model Huggy 2" data-tags="growing model guide ruler crystal smug training">
+            <img src="images/Huggy Collection 2026/Growing model Huggy 2.png" alt="Growing model Huggy 2" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Growing model Huggy 2</h5>
+              <button x-data="{ filename: 'Growing model Huggy 2.png', imageUrl: 'images/Huggy Collection 2026/Growing model Huggy 2.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Growing model Huggy 3" data-tags="growing model watering plant grow training nurture">
+            <img src="images/Huggy Collection 2026/Growing model Huggy 3.png" alt="Growing model Huggy 3" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Growing model Huggy 3</h5>
+              <button x-data="{ filename: 'Growing model Huggy 3.png', imageUrl: 'images/Huggy Collection 2026/Growing model Huggy 3.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Growing model Huggy" data-tags="growing model watering plant grow training nurture ml">
+            <img src="images/Huggy Collection 2026/Growing model Huggy.png" alt="Growing model Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Growing model Huggy</h5>
+              <button x-data="{ filename: 'Growing model Huggy.png', imageUrl: 'images/Huggy Collection 2026/Growing model Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Guide Huggy 2" data-tags="guide magnifying search investigate question wonder">
+            <img src="images/Huggy Collection 2026/Guide Huggy 2.png" alt="Guide Huggy 2" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Guide Huggy 2</h5>
+              <button x-data="{ filename: 'Guide Huggy 2.png', imageUrl: 'images/Huggy Collection 2026/Guide Huggy 2.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Guide Huggy" data-tags="guide ruler tutorial howto thermometer crystal smug">
+            <img src="images/Huggy Collection 2026/Guide Huggy.png" alt="Guide Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Guide Huggy</h5>
+              <button x-data="{ filename: 'Guide Huggy.png', imageUrl: 'images/Huggy Collection 2026/Guide Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Headphones Huggy" data-tags="headphones music audio listen sound song happy">
+            <img src="images/Huggy Collection 2026/Headphones Huggy.png" alt="Headphones Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Headphones Huggy</h5>
+              <button x-data="{ filename: 'Headphones Huggy.png', imageUrl: 'images/Huggy Collection 2026/Headphones Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Headphones Wave Huggy" data-tags="headphones music wave hello audio happy listen">
+            <img src="images/Huggy Collection 2026/Headphones Wave Huggy.png" alt="Headphones Wave Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Headphones Wave Huggy</h5>
+              <button x-data="{ filename: 'Headphones Wave Huggy.png', imageUrl: 'images/Huggy Collection 2026/Headphones Wave Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Horse Huggy" data-tags="horse costume mane animal zodiac year stallion">
+            <img src="images/Huggy Collection 2026/Horse Huggy.png" alt="Horse Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Horse Huggy</h5>
+              <button x-data="{ filename: 'Horse Huggy.png', imageUrl: 'images/Huggy Collection 2026/Horse Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Chef" data-tags="chef cook kitchen hat food baking cooking sweet">
+            <img src="images/Huggy Collection 2026/Huggy Chef.png" alt="Huggy Chef" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Chef</h5>
+              <button x-data="{ filename: 'Huggy Chef.png', imageUrl: 'images/Huggy Collection 2026/Huggy Chef.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Hi" data-tags="hi hello hey wave greeting welcome friendly">
+            <img src="images/Huggy Collection 2026/Huggy Hi.png" alt="Huggy Hi" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Hi</h5>
+              <button x-data="{ filename: 'Huggy Hi.png', imageUrl: 'images/Huggy Collection 2026/Huggy Hi.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Lab 2" data-tags="lab hug love babies small family warmth tender">
+            <img src="images/Huggy Collection 2026/Huggy Lab 2.png" alt="Huggy Lab 2" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Lab 2</h5>
+              <button x-data="{ filename: 'Huggy Lab 2.png', imageUrl: 'images/Huggy Collection 2026/Huggy Lab 2.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Lab" data-tags="lab scientist test-tube science chemistry research experiment">
+            <img src="images/Huggy Collection 2026/Huggy Lab.png" alt="Huggy Lab" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Lab</h5>
+              <button x-data="{ filename: 'Huggy Lab.png', imageUrl: 'images/Huggy Collection 2026/Huggy Lab.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Lawyer" data-tags="lawyer law justice scales court attorney suit legal">
+            <img src="images/Huggy Collection 2026/Huggy Lawyer.png" alt="Huggy Lawyer" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Lawyer</h5>
+              <button x-data="{ filename: 'Huggy Lawyer.png', imageUrl: 'images/Huggy Collection 2026/Huggy Lawyer.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Medic" data-tags="medic nurse doctor stethoscope health medical hospital">
+            <img src="images/Huggy Collection 2026/Huggy Medic.png" alt="Huggy Medic" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Medic</h5>
+              <button x-data="{ filename: 'Huggy Medic.png', imageUrl: 'images/Huggy Collection 2026/Huggy Medic.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Okay" data-tags="okay ok fine smile happy approve satisfied">
+            <img src="images/Huggy Collection 2026/Huggy Okay.png" alt="Huggy Okay" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Okay</h5>
+              <button x-data="{ filename: 'Huggy Okay.png', imageUrl: 'images/Huggy Collection 2026/Huggy Okay.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Huggy Pop" data-tags="pop animated gif loop motion">
+            <img src="images/Huggy Collection 2026/Huggy Pop.gif" alt="Huggy Pop" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Pop</h5>
+              <button x-data="{ filename: 'Huggy Pop.gif', imageUrl: 'images/Huggy Collection 2026/Huggy Pop.gif' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.gif</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Sunny hello" data-tags="sunny hello hi wave greeting friendly blue">
+            <img src="images/Huggy Collection 2026/Huggy Sunny hello.png" alt="Huggy Sunny hello" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Sunny hello</h5>
+              <button x-data="{ filename: 'Huggy Sunny hello.png', imageUrl: 'images/Huggy Collection 2026/Huggy Sunny hello.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Sunny" data-tags="sunny wave happy hello blue background">
+            <img src="images/Huggy Collection 2026/Huggy Sunny.png" alt="Huggy Sunny" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Sunny</h5>
+              <button x-data="{ filename: 'Huggy Sunny.png', imageUrl: 'images/Huggy Collection 2026/Huggy Sunny.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy the Pooh meme" data-tags="meme pooh sunglasses tuxedo smug cool fancy comparison">
+            <img src="images/Huggy Collection 2026/Huggy the Pooh meme.png" alt="Huggy the Pooh meme" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy the Pooh meme</h5>
+              <button x-data="{ filename: 'Huggy the Pooh meme.png', imageUrl: 'images/Huggy Collection 2026/Huggy the Pooh meme.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Yolk" data-tags="yolk egg hatch born new shell baby chick">
+            <img src="images/Huggy Collection 2026/Huggy Yolk.png" alt="Huggy Yolk" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Yolk</h5>
+              <button x-data="{ filename: 'Huggy Yolk.png', imageUrl: 'images/Huggy Collection 2026/Huggy Yolk.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Judge Huggy" data-tags="judge law justice scales court robe wig legal">
+            <img src="images/Huggy Collection 2026/Judge Huggy.png" alt="Judge Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Judge Huggy</h5>
+              <button x-data="{ filename: 'Judge Huggy.png', imageUrl: 'images/Huggy Collection 2026/Judge Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Karaoke Huggy 2" data-tags="wink smile happy playful wave cute">
+            <img src="images/Huggy Collection 2026/Karaoke Huggy 2.png" alt="Karaoke Huggy 2" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Karaoke Huggy 2</h5>
+              <button x-data="{ filename: 'Karaoke Huggy 2.png', imageUrl: 'images/Huggy Collection 2026/Karaoke Huggy 2.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Karaoke Huggy 3" data-tags="wave hello smile happy greet friendly">
+            <img src="images/Huggy Collection 2026/Karaoke Huggy 3.png" alt="Karaoke Huggy 3" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Karaoke Huggy 3</h5>
+              <button x-data="{ filename: 'Karaoke Huggy 3.png', imageUrl: 'images/Huggy Collection 2026/Karaoke Huggy 3.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Karaoke Huggy" data-tags="karaoke sing microphone music song mic performance">
+            <img src="images/Huggy Collection 2026/Karaoke Huggy.png" alt="Karaoke Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Karaoke Huggy</h5>
+              <button x-data="{ filename: 'Karaoke Huggy.png', imageUrl: 'images/Huggy Collection 2026/Karaoke Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Monopoly Huggy" data-tags="monopoly rich tuxedo mustache monocle boss ceo fancy">
+            <img src="images/Huggy Collection 2026/Monopoly Huggy.png" alt="Monopoly Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Monopoly Huggy</h5>
+              <button x-data="{ filename: 'Monopoly Huggy.png', imageUrl: 'images/Huggy Collection 2026/Monopoly Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Peeking Huggy" data-tags="peek peeking shy smile hello hide happy">
+            <img src="images/Huggy Collection 2026/Peeking Huggy.png" alt="Peeking Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Peeking Huggy</h5>
+              <button x-data="{ filename: 'Peeking Huggy.png', imageUrl: 'images/Huggy Collection 2026/Peeking Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Pointing Huggy" data-tags="pointing direct look smile happy indicate show">
+            <img src="images/Huggy Collection 2026/Pointing Huggy 2.png" alt="Pointing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Pointing Huggy</h5>
+              <button x-data="{ filename: 'Pointing Huggy 2.png', imageUrl: 'images/Huggy Collection 2026/Pointing Huggy 2.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Pointing Huggy" data-tags="pointing wink right thumbs-up directing happy confident">
+            <img src="images/Huggy Collection 2026/Pointing Huggy.png" alt="Pointing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Pointing Huggy</h5>
+              <button x-data="{ filename: 'Pointing Huggy.png', imageUrl: 'images/Huggy Collection 2026/Pointing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Rushing Huggy" data-tags="rush run fast wink thumbs-up go speedy">
+            <img src="images/Huggy Collection 2026/Rushing Huggy.png" alt="Rushing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Rushing Huggy</h5>
+              <button x-data="{ filename: 'Rushing Huggy.png', imageUrl: 'images/Huggy Collection 2026/Rushing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Sad Huggy" data-tags="sad worried frown upset concerned down blue">
+            <img src="images/Huggy Collection 2026/Sad Huggy.png" alt="Sad Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Sad Huggy</h5>
+              <button x-data="{ filename: 'Sad Huggy.png', imageUrl: 'images/Huggy Collection 2026/Sad Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Smiling Huggy" data-tags="smile happy joy open-mouth cheerful grin laugh">
+            <img src="images/Huggy Collection 2026/Smiling Huggy.png" alt="Smiling Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Smiling Huggy</h5>
+              <button x-data="{ filename: 'Smiling Huggy.png', imageUrl: 'images/Huggy Collection 2026/Smiling Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Smug Huggy" data-tags="smug smirk knowing bored satisfied confident cool">
+            <img src="images/Huggy Collection 2026/Smug Huggy.png" alt="Smug Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Smug Huggy</h5>
+              <button x-data="{ filename: 'Smug Huggy.png', imageUrl: 'images/Huggy Collection 2026/Smug Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Snake Huggy" data-tags="snake lunar zodiac year costume reptile asian">
+            <img src="images/Huggy Collection 2026/Snake Huggy.png" alt="Snake Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Snake Huggy</h5>
+              <button x-data="{ filename: 'Snake Huggy.png', imageUrl: 'images/Huggy Collection 2026/Snake Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Sprouting Huggy" data-tags="sprout plant growing head nature bored shy leaf">
+            <img src="images/Huggy Collection 2026/Sprouting Huggy.png" alt="Sprouting Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Sprouting Huggy</h5>
+              <button x-data="{ filename: 'Sprouting Huggy.png', imageUrl: 'images/Huggy Collection 2026/Sprouting Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Star Eyes Wave Huggy" data-tags="star stars amazed wow excited wave love">
+            <img src="images/Huggy Collection 2026/Star Eyes Wave Huggy.png" alt="Star Eyes Wave Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Star Eyes Wave Huggy</h5>
+              <button x-data="{ filename: 'Star Eyes Wave Huggy.png', imageUrl: 'images/Huggy Collection 2026/Star Eyes Wave Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Starry Eyes Huggy" data-tags="star stars starry amazed wow excited sparkle love">
+            <img src="images/Huggy Collection 2026/Starry Eyes Huggy.png" alt="Starry Eyes Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Starry Eyes Huggy</h5>
+              <button x-data="{ filename: 'Starry Eyes Huggy.png', imageUrl: 'images/Huggy Collection 2026/Starry Eyes Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Super Huggy" data-tags="super hero fly confetti celebrate power fist energy">
+            <img src="images/Huggy Collection 2026/Super Huggy.png" alt="Super Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Super Huggy</h5>
+              <button x-data="{ filename: 'Super Huggy.png', imageUrl: 'images/Huggy Collection 2026/Super Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Text Generation Wizard Huggy" data-tags="wizard text generation magic nlp staff spell language">
+            <img src="images/Huggy Collection 2026/Text Generation Wizard Huggy.png" alt="Text Generation Wizard Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Text Generation Wizard Huggy</h5>
+              <button x-data="{ filename: 'Text Generation Wizard Huggy.png', imageUrl: 'images/Huggy Collection 2026/Text Generation Wizard Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Tiptoe Huggy" data-tags="tiptoe sneak quiet shy creep stealth small">
+            <img src="images/Huggy Collection 2026/Tiptoe Huggy.png" alt="Tiptoe Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Tiptoe Huggy</h5>
+              <button x-data="{ filename: 'Tiptoe Huggy.png', imageUrl: 'images/Huggy Collection 2026/Tiptoe Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Transformer Agent Huggy" data-tags="transformer agent binary code ai matrix visor tokens">
+            <img src="images/Huggy Collection 2026/Transformer Agent Huggy.png" alt="Transformer Agent Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Transformer Agent Huggy</h5>
+              <button x-data="{ filename: 'Transformer Agent Huggy.png', imageUrl: 'images/Huggy Collection 2026/Transformer Agent Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Two Thumbs Up Huggy" data-tags="thumbs-up approve good yes happy agree great">
+            <img src="images/Huggy Collection 2026/Two Thumbs Up Huggy.png" alt="Two Thumbs Up Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Two Thumbs Up Huggy</h5>
+              <button x-data="{ filename: 'Two Thumbs Up Huggy.png', imageUrl: 'images/Huggy Collection 2026/Two Thumbs Up Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Vibing Huggy" data-tags="vibing vibe chill shaka groove happy animated">
+            <img src="images/Huggy Collection 2026/Vibing Huggy.gif" alt="Vibing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Vibing Huggy</h5>
+              <button x-data="{ filename: 'Vibing Huggy.gif', imageUrl: 'images/Huggy Collection 2026/Vibing Huggy.gif' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.gif</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Viking Huggy" data-tags="viking horns braids warrior nordic peaceful hug mustache">
+            <img src="images/Huggy Collection 2026/Viking Huggy.png" alt="Viking Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Viking Huggy</h5>
+              <button x-data="{ filename: 'Viking Huggy.png', imageUrl: 'images/Huggy Collection 2026/Viking Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Whistle Huggy" data-tags="whistle headphones music song tune calm audio">
+            <img src="images/Huggy Collection 2026/Whistle Huggy.png" alt="Whistle Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Whistle Huggy</h5>
+              <button x-data="{ filename: 'Whistle Huggy.png', imageUrl: 'images/Huggy Collection 2026/Whistle Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Wine Huggy" data-tags="wine drink glass alcohol relax shaka happy cheers">
+            <img src="images/Huggy Collection 2026/Wine Huggy.png" alt="Wine Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Wine Huggy</h5>
+              <button x-data="{ filename: 'Wine Huggy.png', imageUrl: 'images/Huggy Collection 2026/Wine Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Yelling Huggy" data-tags="yell shout angry mad scream frustrated loud">
+            <img src="images/Huggy Collection 2026/Yelling Huggy.png" alt="Yelling Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Yelling Huggy</h5>
+              <button x-data="{ filename: 'Yelling Huggy.png', imageUrl: 'images/Huggy Collection 2026/Yelling Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Acedemic Huggy" data-tags="academic graduation cap school teacher student professor education">
+            <img src="images/modern Huggies/Acedemic Huggy.png" alt="Acedemic Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Acedemic Huggy</h5>
+              <button x-data="{ filename: 'Acedemic Huggy.png', imageUrl: 'images/modern Huggies/Acedemic Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Back of a Huggy" data-tags="back behind notebook rear book study">
+            <img src="images/modern Huggies/Back of a Huggy.png" alt="Back of a Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Back of a Huggy</h5>
+              <button x-data="{ filename: 'Back of a Huggy.png', imageUrl: 'images/modern Huggies/Back of a Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="computer vision Huggy" data-tags="vision computer-vision ml ai book study labeling annotation">
+            <img src="images/modern Huggies/computer vision Huggy.png" alt="computer vision Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">computer vision Huggy</h5>
+              <button x-data="{ filename: 'computer vision Huggy.png', imageUrl: 'images/modern Huggies/computer vision Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="D Huggy" data-tags="detective magnifying glass investigate spy search clue curious">
+            <img src="images/modern Huggies/D Huggy.png" alt="D Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">D Huggy</h5>
+              <button x-data="{ filename: 'D Huggy.png', imageUrl: 'images/modern Huggies/D Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Doodle Huggy" data-tags="doodle sketch drawing messy music fun scribble rough">
+            <img src="images/modern Huggies/Doodle Huggy.gif" alt="Doodle Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Doodle Huggy</h5>
+              <button x-data="{ filename: 'Doodle Huggy.gif', imageUrl: 'images/modern Huggies/Doodle Huggy.gif' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.gif</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Dragon Huggy" data-tags="dragon costume lunar new-year mythical antlers asian zodiac">
+            <img src="images/modern Huggies/Dragon Huggy.png" alt="Dragon Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Dragon Huggy</h5>
+              <button x-data="{ filename: 'Dragon Huggy.png', imageUrl: 'images/modern Huggies/Dragon Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Game Jam Huggy" data-tags="game gaming controller jam play video-game console two">
+            <img src="images/modern Huggies/Game Jam Huggy.png" alt="Game Jam Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Game Jam Huggy</h5>
+              <button x-data="{ filename: 'Game Jam Huggy.png', imageUrl: 'images/modern Huggies/Game Jam Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy blink Okay" data-tags="okay ok wink blink fine approve happy">
+            <img src="images/modern Huggies/Huggy blink Okay.png" alt="Huggy blink Okay" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy blink Okay</h5>
+              <button x-data="{ filename: 'Huggy blink Okay.png', imageUrl: 'images/modern Huggies/Huggy blink Okay.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Chef" data-tags="chef cook kitchen hat food baking cooking sweet">
+            <img src="images/modern Huggies/Huggy Chef.png" alt="Huggy Chef" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Chef</h5>
+              <button x-data="{ filename: 'Huggy Chef.png', imageUrl: 'images/modern Huggies/Huggy Chef.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Hi" data-tags="hi hello hey wave greeting welcome friendly">
+            <img src="images/modern Huggies/Huggy Hi.png" alt="Huggy Hi" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Hi</h5>
+              <button x-data="{ filename: 'Huggy Hi.png', imageUrl: 'images/modern Huggies/Huggy Hi.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Lab" data-tags="lab scientist test-tube science chemistry research experiment">
+            <img src="images/modern Huggies/Huggy Lab.png" alt="Huggy Lab" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Lab</h5>
+              <button x-data="{ filename: 'Huggy Lab.png', imageUrl: 'images/modern Huggies/Huggy Lab.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Medic" data-tags="medic nurse doctor stethoscope health medical hospital care">
+            <img src="images/modern Huggies/Huggy Medic.png" alt="Huggy Medic" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Medic</h5>
+              <button x-data="{ filename: 'Huggy Medic.png', imageUrl: 'images/modern Huggies/Huggy Medic.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Okay" data-tags="okay ok fine smile happy approve satisfied">
+            <img src="images/modern Huggies/Huggy Okay.png" alt="Huggy Okay" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Okay</h5>
+              <button x-data="{ filename: 'Huggy Okay.png', imageUrl: 'images/modern Huggies/Huggy Okay.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Huggy Pop" data-tags="pop animated gif loop motion">
+            <img src="images/modern Huggies/Huggy Pop.gif" alt="Huggy Pop" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Pop</h5>
+              <button x-data="{ filename: 'Huggy Pop.gif', imageUrl: 'images/modern Huggies/Huggy Pop.gif' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.gif</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Sunny hello" data-tags="sunny hello hi wave greeting friendly blue">
+            <img src="images/modern Huggies/Huggy Sunny hello.png" alt="Huggy Sunny hello" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Sunny hello</h5>
+              <button x-data="{ filename: 'Huggy Sunny hello.png', imageUrl: 'images/modern Huggies/Huggy Sunny hello.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Sunny" data-tags="sunny wave happy hello blue background">
+            <img src="images/modern Huggies/Huggy Sunny.png" alt="Huggy Sunny" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Sunny</h5>
+              <button x-data="{ filename: 'Huggy Sunny.png', imageUrl: 'images/modern Huggies/Huggy Sunny.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy the Pooh meme" data-tags="meme pooh sunglasses tuxedo smug cool fancy comparison">
+            <img src="images/modern Huggies/Huggy the Pooh meme.png" alt="Huggy the Pooh meme" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy the Pooh meme</h5>
+              <button x-data="{ filename: 'Huggy the Pooh meme.png', imageUrl: 'images/modern Huggies/Huggy the Pooh meme.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Huggy Yolk" data-tags="yolk egg hatch born new shell baby chick">
+            <img src="images/modern Huggies/Huggy Yolk.png" alt="Huggy Yolk" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Huggy Yolk</h5>
+              <button x-data="{ filename: 'Huggy Yolk.png', imageUrl: 'images/modern Huggies/Huggy Yolk.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="IDEFICS Huggy" data-tags="idefics braids rabbit doll mustache pippi ml model">
+            <img src="images/modern Huggies/IDEFICS Huggy.png" alt="IDEFICS Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">IDEFICS Huggy</h5>
+              <button x-data="{ filename: 'IDEFICS Huggy.png', imageUrl: 'images/modern Huggies/IDEFICS Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Karaoke Huggy" data-tags="karaoke sing microphone music song mic performance">
+            <img src="images/modern Huggies/Karaoke Huggy.png" alt="Karaoke Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Karaoke Huggy</h5>
+              <button x-data="{ filename: 'Karaoke Huggy.png', imageUrl: 'images/modern Huggies/Karaoke Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Lora Huggy" data-tags="lora bob haircut purse bag fashion fine-tune adapter">
+            <img src="images/modern Huggies/Lora Huggy.png" alt="Lora Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Lora Huggy</h5>
+              <button x-data="{ filename: 'Lora Huggy.png', imageUrl: 'images/modern Huggies/Lora Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Optimum Huggy" data-tags="optimum weights barbell lift strong fitness gym performance">
+            <img src="images/modern Huggies/Optimum Huggy.png" alt="Optimum Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Optimum Huggy</h5>
+              <button x-data="{ filename: 'Optimum Huggy.png', imageUrl: 'images/modern Huggies/Optimum Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Robot Huggy" data-tags="robot camera robotics love machine device tech">
+            <img src="images/modern Huggies/Robot Huggy.png" alt="Robot Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Robot Huggy</h5>
+              <button x-data="{ filename: 'Robot Huggy.png', imageUrl: 'images/modern Huggies/Robot Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Snake Huggy" data-tags="snake lunar zodiac year costume reptile asian">
+            <img src="images/modern Huggies/Snake Huggy.png" alt="Snake Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Snake Huggy</h5>
+              <button x-data="{ filename: 'Snake Huggy.png', imageUrl: 'images/modern Huggies/Snake Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Super Huggy" data-tags="super hero fly confetti celebrate power fist energy">
+            <img src="images/modern Huggies/Super Huggy.png" alt="Super Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Super Huggy</h5>
+              <button x-data="{ filename: 'Super Huggy.png', imageUrl: 'images/modern Huggies/Super Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Text Generation Wizard Huggy" data-tags="wizard text generation magic nlp staff spell language">
+            <img src="images/modern Huggies/Text Generation Wizard Huggy.png" alt="Text Generation Wizard Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Text Generation Wizard Huggy</h5>
+              <button x-data="{ filename: 'Text Generation Wizard Huggy.png', imageUrl: 'images/modern Huggies/Text Generation Wizard Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Transformer Agent Huggy" data-tags="transformer agent binary code ai matrix visor tokens">
+            <img src="images/modern Huggies/Transformer Agent Huggy.png" alt="Transformer Agent Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Transformer Agent Huggy</h5>
+              <button x-data="{ filename: 'Transformer Agent Huggy.png', imageUrl: 'images/modern Huggies/Transformer Agent Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Vibing Huggy" data-tags="vibing vibe chill shaka groove happy animated gif">
+            <img src="images/modern Huggies/Vibing Huggy.gif" alt="Vibing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Vibing Huggy</h5>
+              <button x-data="{ filename: 'Vibing Huggy.gif', imageUrl: 'images/modern Huggies/Vibing Huggy.gif' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.gif</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Wine Huggy" data-tags="wine drink glass alcohol relax shaka happy cheers">
+            <img src="images/modern Huggies/Wine Huggy.png" alt="Wine Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Wine Huggy</h5>
+              <button x-data="{ filename: 'Wine Huggy.png', imageUrl: 'images/modern Huggies/Wine Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="OutlinedHuggies" class="mb-28">
+        <div class="flex items-center mb-5">
+          <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Outlined Huggies</div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+          <div class="w-full flex flex-col" data-display-name="Catching Huggy" data-tags="catch books stack fall save rescue papers data">
+            <img src="images/Outlined Huggies/Catching Huggy.png" alt="Catching Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Catching Huggy</h5>
+              <button x-data="{ filename: 'Catching Huggy.png', imageUrl: 'images/Outlined Huggies/Catching Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Comic Huggy" data-tags="comic art paint brush palette artist beret draw">
+            <img src="images/Outlined Huggies/Comic Huggy.png" alt="Comic Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Comic Huggy</h5>
+              <button x-data="{ filename: 'Comic Huggy.png', imageUrl: 'images/Outlined Huggies/Comic Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Curious Huggy" data-tags="curious magnifying search investigate question wonder examine">
+            <img src="images/Outlined Huggies/Curious Huggy.png" alt="Curious Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Curious Huggy</h5>
+              <button x-data="{ filename: 'Curious Huggy.png', imageUrl: 'images/Outlined Huggies/Curious Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Diffusor guide Huggy" data-tags="diffusion diffusor guide ruler crystal model tutorial">
+            <img src="images/Outlined Huggies/Diffusor guide Huggy.png" alt="Diffusor guide Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Diffusor guide Huggy</h5>
+              <button x-data="{ filename: 'Diffusor guide Huggy.png', imageUrl: 'images/Outlined Huggies/Diffusor guide Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Fishing Huggy" data-tags="fishing rod fish hat calm leisure outdoor river">
+            <img src="images/Outlined Huggies/Fishing Huggy.png" alt="Fishing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Fishing Huggy</h5>
+              <button x-data="{ filename: 'Fishing Huggy.png', imageUrl: 'images/Outlined Huggies/Fishing Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Global Huggy" data-tags="global world globe earth international geography travel">
+            <img src="images/Outlined Huggies/Global Huggy.png" alt="Global Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Global Huggy</h5>
+              <button x-data="{ filename: 'Global Huggy.png', imageUrl: 'images/Outlined Huggies/Global Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="GPU Huggy" data-tags="gpu chip compute hardware graphics card ml training">
+            <img src="images/Outlined Huggies/GPU Huggy.png" alt="GPU Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">GPU Huggy</h5>
+              <button x-data="{ filename: 'GPU Huggy.png', imageUrl: 'images/Outlined Huggies/GPU Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Greeting Huggy left" data-tags="greeting wave hi hello two thumbs-up left friends">
+            <img src="images/Outlined Huggies/Greeting Huggy left.png" alt="Greeting Huggy left" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Greeting Huggy left</h5>
+              <button x-data="{ filename: 'Greeting Huggy left.png', imageUrl: 'images/Outlined Huggies/Greeting Huggy left.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Greeting Huggy right" data-tags="greeting wave hi hello right smile friendly">
+            <img src="images/Outlined Huggies/Greeting Huggy right.png" alt="Greeting Huggy right" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Greeting Huggy right</h5>
+              <button x-data="{ filename: 'Greeting Huggy right.png', imageUrl: 'images/Outlined Huggies/Greeting Huggy right.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Growing model Huggy" data-tags="growing model watering plant grow training nurture ml">
+            <img src="images/Outlined Huggies/Growing model Huggy.png" alt="Growing model Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Growing model Huggy</h5>
+              <button x-data="{ filename: 'Growing model Huggy.png', imageUrl: 'images/Outlined Huggies/Growing model Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Guide Huggy" data-tags="guide ruler tutorial howto thermometer crystal smug expert">
+            <img src="images/Outlined Huggies/Guide Huggy.png" alt="Guide Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Guide Huggy</h5>
+              <button x-data="{ filename: 'Guide Huggy.png', imageUrl: 'images/Outlined Huggies/Guide Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Loving modelndataset Huggy" data-tags="love model dataset aquarium tank data ml fish">
+            <img src="images/Outlined Huggies/Loving modelndataset Huggy.png" alt="Loving modelndataset Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Loving modelndataset Huggy</h5>
+              <button x-data="{ filename: 'Loving modelndataset Huggy.png', imageUrl: 'images/Outlined Huggies/Loving modelndataset Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Manager Huggy" data-tags="manager clipboard checklist tasks todo organize work list">
+            <img src="images/Outlined Huggies/Manager Huggy.png" alt="Manager Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Manager Huggy</h5>
+              <button x-data="{ filename: 'Manager Huggy.png', imageUrl: 'images/Outlined Huggies/Manager Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Paper Huggy" data-tags="paper scroll research publication diploma backpack academic">
+            <img src="images/Outlined Huggies/Paper Huggy.png" alt="Paper Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Paper Huggy</h5>
+              <button x-data="{ filename: 'Paper Huggy.png', imageUrl: 'images/Outlined Huggies/Paper Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Rocket Huggy" data-tags="rocket launch fly space ship go fast startup">
+            <img src="images/Outlined Huggies/Rocket Huggy.png" alt="Rocket Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Rocket Huggy</h5>
+              <button x-data="{ filename: 'Rocket Huggy.png', imageUrl: 'images/Outlined Huggies/Rocket Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Scan Huggy" data-tags="scan laser visor binary data vision cyclops scanner">
+            <img src="images/Outlined Huggies/Scan Huggy.png" alt="Scan Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Scan Huggy</h5>
+              <button x-data="{ filename: 'Scan Huggy.png', imageUrl: 'images/Outlined Huggies/Scan Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="Violinist Huggy" data-tags="violin violinist music beret baguette play french instrument">
+            <img src="images/Outlined Huggies/Violinist Huggy.png" alt="Violinist Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">Violinist Huggy</h5>
+              <button x-data="{ filename: 'Violinist Huggy.png', imageUrl: 'images/Outlined Huggies/Violinist Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col" data-display-name="X-ray Huggy" data-tags="xray x-ray metadata labels task language license card">
+            <img src="images/Outlined Huggies/X-ray Huggy.png" alt="X-ray Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
+            <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
+              <h5 class="text-lg font-sans text-BluishDark">X-ray Huggy</h5>
+              <button x-data="{ filename: 'X-ray Huggy.png', imageUrl: 'images/Outlined Huggies/X-ray Huggy.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
+                <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
+                <p class="text-gray-500 font-mono hidden md:inline-block">.png</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
