@@ -133,6 +133,31 @@ def card_huggy(folder: str, filename: str, span: str = "") -> str:
           </div>"""
 
 
+def tiled_cards(folder: str, files: list[str], hero_set: set) -> list[str]:
+    """Render cards with 2x2 'hero' tiles spread evenly through the singles.
+
+    Mirrors the original Modern Huggies cadence: one large feature tile roughly
+    every (singles // heroes) cards. Combined with `grid-auto-flow: dense` on the
+    container, every cell beside a hero is backfilled by the next single card, so
+    the grid never shows skipped/empty cells at any column count.
+    """
+    heroes = [f for f in files if f in hero_set]
+    singles = [f for f in files if f not in hero_set]
+    if not heroes:
+        return [card_huggy(folder, f) for f in singles]
+
+    per = max(1, len(singles) // len(heroes))  # singles to trail each hero
+    cards: list[str] = []
+    si = 0
+    for hero in heroes:
+        cards.append(card_huggy(folder, hero, "col-span-2 row-span-2"))
+        chunk = singles[si:si + per]
+        si += len(chunk)
+        cards.extend(card_huggy(folder, s) for s in chunk)
+    cards.extend(card_huggy(folder, s) for s in singles[si:])
+    return cards
+
+
 def section_header(title: str, link_html: str = "") -> str:
     right = f"""<div class="text-BluishDark transform hover:text-gray-900">{link_html}</div>""" if link_html else ""
     return f"""        <div class="flex flex-row items-center justify-between mb-5">
@@ -198,11 +223,12 @@ def main() -> None:
       </section>"""
 
     # ---- Modern Huggies ----
-    # New 2026 batch (physically in images/Huggy Collection 2026/) is rendered on TOP,
-    # followed by the original modern set (images/modern Huggies/) untouched, in order.
+    # New 2026 batch (physically in images/Huggy Collection 2026/) renders on TOP with
+    # feature tiles spread evenly; the original modern set follows below, untouched.
+    # `grid-auto-flow: dense` guarantees no skipped cells around the 2x2 heroes.
     modern_cards = []
 
-    # New 2026 batch first. Featured 2x2 hero cards: the 3 GIFs + two standout statics.
+    # New 2026 batch first. Feature 2x2 tiles: the 3 GIFs + standout statics, spread evenly.
     new_files = list_images(IMAGES / "Huggy Collection 2026")
     new_wide = {
         "Doodle Huggy.gif",
@@ -210,12 +236,11 @@ def main() -> None:
         "Vibing Huggy.gif",
         "Super Huggy.png",
         "Dragon Huggy.png",
+        "Viking Huggy.png",
     }
-    for f in new_files:
-        span = "col-span-2 row-span-2" if f in new_wide else ""
-        modern_cards.append(card_huggy("Huggy Collection 2026", f, span))
+    modern_cards.extend(tiled_cards("Huggy Collection 2026", new_files, new_wide))
 
-    # Existing modern set below, unchanged.
+    # Existing modern set below, left in its current order; heroes marked in place.
     modern_files = list_images(IMAGES / "modern Huggies")
     modern_wide = {"Huggy Pop.gif", "Doodle Huggy.gif", "Vibing Huggy.gif", "Super Huggy.png"}
     for f in modern_files:
@@ -226,7 +251,7 @@ def main() -> None:
         <div class="flex items-center mb-5">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Modern Huggies</div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10" style="grid-auto-flow: dense">
 {chr(10).join(modern_cards)}
         </div>
       </section>"""
