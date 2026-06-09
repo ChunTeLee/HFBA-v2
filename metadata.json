@@ -1,46 +1,5 @@
 [
   {
-    "id": "modern__back-of-a-huggy",
-    "filename": "Back of a Huggy.png",
-    "folder": "modern Huggies",
-    "display_name": "Back of a Huggy",
-    "category": "modern",
-    "description": "View of Huggy from behind, holding a pink and blue notebook with both hands.",
-    "expression": "unknown",
-    "pose": "back_view",
-    "hands": "holding",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [
-      "notebook"
-    ],
-    "effects": [],
-    "colors": [
-      "yellow",
-      "blue",
-      "pink"
-    ],
-    "mood": [
-      "calm"
-    ],
-    "theme": [
-      "work"
-    ],
-    "tags": [
-      "back",
-      "behind",
-      "notebook",
-      "rear",
-      "book",
-      "study"
-    ],
-    "synonyms": [
-      "backside",
-      "rear-view"
-    ]
-  },
-  {
     "id": "modern__huggy-blink-okay",
     "filename": "Huggy blink Okay.png",
     "folder": "modern Huggies",
@@ -77,54 +36,6 @@
     "synonyms": [
       "alright",
       "agreed"
-    ]
-  },
-  {
-    "id": "modern__idefics-huggy",
-    "filename": "IDEFICS Huggy.png",
-    "folder": "modern Huggies",
-    "display_name": "IDEFICS Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy with red braided hair and mustache holding a black-and-white rabbit doll.",
-    "expression": "peaceful_closed",
-    "pose": "default",
-    "hands": "holding",
-    "headwear": [
-      "red braids",
-      "mustache"
-    ],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [
-      "rabbit doll"
-    ],
-    "effects": [],
-    "colors": [
-      "yellow",
-      "red",
-      "white"
-    ],
-    "mood": [
-      "calm",
-      "quirky"
-    ],
-    "theme": [
-      "model",
-      "ml"
-    ],
-    "tags": [
-      "idefics",
-      "braids",
-      "rabbit",
-      "doll",
-      "mustache",
-      "pippi",
-      "ml",
-      "model"
-    ],
-    "synonyms": [
-      "pigtails",
-      "bunny"
     ]
   },
   {
@@ -1139,9 +1050,9 @@
   },
   {
     "id": "collection-2026__breathing-huggy",
-    "filename": "Breathing Huggy.png",
+    "filename": "Running Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Breathing Huggy",
+    "display_name": "Running Huggy",
     "category": "modern",
     "description": "Yellow Huggy with closed eyes and pursed lips, hands raised in dance pose with a music note.",
     "expression": "peaceful_closed",
@@ -1322,54 +1233,10 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__dancing-huggy-2",
-    "filename": "Dancing Huggy 2.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Dancing Huggy 2",
-    "category": "modern",
-    "description": "Yellow Huggy with raised brows and crying-tear face, palms up in a dramatic pose.",
-    "expression": "crying",
-    "pose": "default",
-    "hands": "open_palm",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [
-      "tears"
-    ],
-    "colors": [
-      "yellow",
-      "blue"
-    ],
-    "mood": [
-      "sad",
-      "dramatic"
-    ],
-    "theme": [
-      "dance",
-      "drama"
-    ],
-    "tags": [
-      "dancing",
-      "dance",
-      "cry",
-      "tears",
-      "drama",
-      "sad",
-      "emotional"
-    ],
-    "synonyms": [
-      "weep",
-      "expressive"
-    ],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__dancing-huggy-3",
-    "filename": "Dancing Huggy 3.png",
+    "filename": "Emotional Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Dancing Huggy 3",
+    "display_name": "Emotional Huggy",
     "category": "modern",
     "description": "Yellow Huggy with crying-tear face giving a thumbs up while waving the other hand.",
     "expression": "crying",
@@ -1501,9 +1368,9 @@
   },
   {
     "id": "collection-2026__boxing-huggy",
-    "filename": "Boxing Huggy.png",
+    "filename": "Video Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Boxing Huggy",
+    "display_name": "Video Huggy",
     "category": "modern",
     "description": "Yellow Huggy in red and brown boxing helmet rushing forward with hands hugging a video player.",
     "expression": "happy_open_mouth",
@@ -1552,9 +1419,9 @@
   },
   {
     "id": "collection-2026__rushing-huggy",
-    "filename": "Rushing Huggy.png",
+    "filename": "Rushing Blinking Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Rushing Huggy",
+    "display_name": "Rushing Blinking Huggy",
     "category": "modern",
     "description": "Yellow Huggy rushing left with one eye winking and a thumbs up gesture.",
     "expression": "winking",
@@ -1594,9 +1461,9 @@
   },
   {
     "id": "collection-2026__athlete-frowning-huggy",
-    "filename": "Athlete Frowning Huggy.png",
+    "filename": "Athlete Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Athlete Frowning Huggy",
+    "display_name": "Athlete Huggy",
     "category": "modern",
     "description": "Yellow Huggy in blue wristband rushing left with a small frown and a closed mouth.",
     "expression": "sad",
@@ -1635,48 +1502,6 @@
     "synonyms": [
       "jog",
       "exhausted"
-    ],
-    "batch": "2026"
-  },
-  {
-    "id": "collection-2026__pointing-huggy",
-    "filename": "Pointing Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Pointing Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy with one eye winking, smiling, and pointing right with a thumbs up.",
-    "expression": "winking",
-    "pose": "rushing_right",
-    "hands": "pointing",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [
-      "sparkle"
-    ],
-    "colors": [
-      "yellow"
-    ],
-    "mood": [
-      "confident",
-      "happy"
-    ],
-    "theme": [
-      "direction"
-    ],
-    "tags": [
-      "pointing",
-      "wink",
-      "right",
-      "thumbs-up",
-      "directing",
-      "happy",
-      "confident"
-    ],
-    "synonyms": [
-      "gesture",
-      "indicate"
     ],
     "batch": "2026"
   },
@@ -1854,52 +1679,6 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__athlete-laughing-huggy",
-    "filename": "Athlete Laughing Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Athlete Laughing Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy in blue wristband rushing right, laughing with eyes scrunched closed.",
-    "expression": "peaceful_closed",
-    "pose": "rushing_right",
-    "hands": "default",
-    "headwear": [],
-    "outfit": [
-      "wristband"
-    ],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [
-      "motion lines"
-    ],
-    "colors": [
-      "yellow",
-      "blue"
-    ],
-    "mood": [
-      "happy",
-      "energetic"
-    ],
-    "theme": [
-      "sports"
-    ],
-    "tags": [
-      "athlete",
-      "rush",
-      "run",
-      "laugh",
-      "sport",
-      "wristband",
-      "happy",
-      "joy"
-    ],
-    "synonyms": [
-      "jog",
-      "sprint"
-    ],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__game-jam-huggy",
     "filename": "Game Jam Huggy.png",
     "folder": "Huggy Collection 2026",
@@ -2036,9 +1815,9 @@
   },
   {
     "id": "collection-2026__growing-model-huggy",
-    "filename": "Growing model Huggy.png",
+    "filename": "Discovery Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Growing model Huggy",
+    "display_name": "Discovery Huggy",
     "category": "modern",
     "description": "Outlined Huggy watering a plant pot growing a blue model crystal.",
     "expression": "happy_open_mouth",
@@ -2084,9 +1863,9 @@
   },
   {
     "id": "collection-2026__growing-model-huggy-2",
-    "filename": "Growing model Huggy 2.png",
+    "filename": "Discover Dataset Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Growing model Huggy 2",
+    "display_name": "Discover Dataset Huggy",
     "category": "modern",
     "description": "Yellow Huggy with smug smirk holding a thermometer-style ruler with a blue crystal.",
     "expression": "smug",
@@ -2129,9 +1908,9 @@
   },
   {
     "id": "collection-2026__growing-model-huggy-3",
-    "filename": "Growing model Huggy 3.png",
+    "filename": "Growing model Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Growing model Huggy 3",
+    "display_name": "Growing model Huggy",
     "category": "modern",
     "description": "Yellow Huggy watering a model crystal sprouting from a plant pot, looking joyful.",
     "expression": "happy_open_mouth",
@@ -2177,9 +1956,9 @@
   },
   {
     "id": "collection-2026__guide-huggy",
-    "filename": "Guide Huggy.png",
+    "filename": "Agent Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Guide Huggy",
+    "display_name": "Agent Huggy",
     "category": "modern",
     "description": "Outlined Huggy with a smug expression holding a large thermometer-ruler with crystal.",
     "expression": "smug",
@@ -2222,9 +2001,9 @@
   },
   {
     "id": "collection-2026__guide-huggy-2",
-    "filename": "Guide Huggy 2.png",
+    "filename": "Measure Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Guide Huggy 2",
+    "display_name": "Measure Huggy",
     "category": "modern",
     "description": "Outlined Huggy with magnifying glass eye looking with curiosity, question mark above.",
     "expression": "winking",
@@ -2408,103 +2187,10 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__bob-huggy",
-    "filename": "Bob Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Bob Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy with dark brown bob haircut, smiling and waving cheerfully.",
-    "expression": "happy_open_mouth",
-    "pose": "tilted_right",
-    "hands": "waving",
-    "headwear": [
-      "brown bob"
-    ],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [
-      "exclamation"
-    ],
-    "colors": [
-      "yellow",
-      "brown"
-    ],
-    "mood": [
-      "happy",
-      "friendly"
-    ],
-    "theme": [
-      "greeting",
-      "hairstyle"
-    ],
-    "tags": [
-      "bob",
-      "haircut",
-      "wave",
-      "hello",
-      "greet",
-      "happy",
-      "fashion"
-    ],
-    "synonyms": [
-      "bobcut",
-      "fringe"
-    ],
-    "batch": "2026"
-  },
-  {
-    "id": "collection-2026__athlete-huggy",
-    "filename": "Athlete Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Athlete Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy wearing a blue wristband rushing right with a competitive open mouth smile.",
-    "expression": "excited",
-    "pose": "rushing_right",
-    "hands": "fist_forward",
-    "headwear": [],
-    "outfit": [
-      "wristband"
-    ],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [
-      "motion lines"
-    ],
-    "colors": [
-      "yellow",
-      "blue",
-      "orange"
-    ],
-    "mood": [
-      "competitive",
-      "energetic"
-    ],
-    "theme": [
-      "sports"
-    ],
-    "tags": [
-      "athlete",
-      "rush",
-      "run",
-      "wristband",
-      "sport",
-      "race",
-      "compete",
-      "fast"
-    ],
-    "synonyms": [
-      "jog",
-      "sprint"
-    ],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__huggy-chef",
-    "filename": "Huggy Chef.png",
+    "filename": "Chef Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Huggy Chef",
+    "display_name": "Chef Huggy",
     "category": "modern",
     "description": "Yellow Huggy wearing a tall white chef's hat with a small sugar cube on a tray.",
     "expression": "starry_eyes",
@@ -2592,9 +2278,9 @@
   },
   {
     "id": "collection-2026__huggy-lab",
-    "filename": "Huggy Lab.png",
+    "filename": "Lab Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Huggy Lab",
+    "display_name": "Lab Huggy",
     "category": "modern",
     "description": "Yellow Huggy in a white lab coat holding up a teal test tube.",
     "expression": "happy_open_mouth",
@@ -2638,9 +2324,9 @@
   },
   {
     "id": "collection-2026__huggy-lab-2",
-    "filename": "Huggy Lab 2.png",
+    "filename": "Family Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Huggy Lab 2",
+    "display_name": "Family Huggy",
     "category": "modern",
     "description": "Yellow Huggy with closed eyes hugging two smaller Huggies tenderly.",
     "expression": "peaceful_closed",
@@ -2682,9 +2368,9 @@
   },
   {
     "id": "collection-2026__monopoly-huggy",
-    "filename": "Monopoly Huggy.png",
+    "filename": "Assistant Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Monopoly Huggy",
+    "display_name": "Assistant Huggy",
     "category": "modern",
     "description": "Yellow Huggy with mustache, monocle, and tuxedo, hands raised in a Monopoly-man pose.",
     "expression": "smug",
@@ -3012,9 +2698,9 @@
   },
   {
     "id": "collection-2026__starry-eyes-huggy",
-    "filename": "Starry Eyes Huggy.png",
+    "filename": "Super Excited Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Starry Eyes Huggy",
+    "display_name": "Super Excited Huggy",
     "category": "modern",
     "description": "Yellow Huggy with star-shaped sparkle eyes and a wide open-mouth smile.",
     "expression": "starry_eyes",
@@ -3055,9 +2741,9 @@
   },
   {
     "id": "collection-2026__smiling-huggy",
-    "filename": "Smiling Huggy.png",
+    "filename": "Nervous Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Smiling Huggy",
+    "display_name": "Nervous Huggy",
     "category": "modern",
     "description": "Yellow Huggy with a happy open-mouth smile and palms raised wide.",
     "expression": "happy_open_mouth",
@@ -3089,46 +2775,6 @@
     "synonyms": [
       "glad",
       "smiley"
-    ],
-    "batch": "2026"
-  },
-  {
-    "id": "collection-2026__bored-huggy",
-    "filename": "Bored Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Bored Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy with droopy bored eyes and a flat closed mouth, palms shrugging.",
-    "expression": "bored",
-    "pose": "default",
-    "hands": "open_palm",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [],
-    "colors": [
-      "yellow"
-    ],
-    "mood": [
-      "bored",
-      "indifferent"
-    ],
-    "theme": [
-      "reaction"
-    ],
-    "tags": [
-      "bored",
-      "shrug",
-      "meh",
-      "indifferent",
-      "tired",
-      "flat",
-      "uninterested"
-    ],
-    "synonyms": [
-      "dull",
-      "apathetic"
     ],
     "batch": "2026"
   },
@@ -3176,9 +2822,9 @@
   },
   {
     "id": "collection-2026__yelling-huggy",
-    "filename": "Yelling Huggy.png",
+    "filename": "Huggy Chad.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Yelling Huggy",
+    "display_name": "Huggy Chad",
     "category": "modern",
     "description": "Yellow Huggy with sharp angry eyebrows shouting with hands raised in protest.",
     "expression": "angry",
@@ -3304,86 +2950,6 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__pointing-huggy-2",
-    "filename": "Pointing Huggy 2.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Pointing Huggy 2",
-    "category": "modern",
-    "description": "Yellow Huggy smiling with one hand pointing to the side and other waving.",
-    "expression": "happy_open_mouth",
-    "pose": "default",
-    "hands": "pointing",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [],
-    "colors": [
-      "yellow"
-    ],
-    "mood": [
-      "happy",
-      "directing"
-    ],
-    "theme": [
-      "direction"
-    ],
-    "tags": [
-      "pointing",
-      "direct",
-      "look",
-      "smile",
-      "happy",
-      "indicate",
-      "show"
-    ],
-    "synonyms": [
-      "gesture",
-      "signal"
-    ],
-    "batch": "2026"
-  },
-  {
-    "id": "collection-2026__two-thumbs-up-huggy",
-    "filename": "Two Thumbs Up Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Two Thumbs Up Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy smiling broadly with both thumbs up.",
-    "expression": "happy_open_mouth",
-    "pose": "default",
-    "hands": "thumbs_up",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [],
-    "colors": [
-      "yellow"
-    ],
-    "mood": [
-      "happy",
-      "approving"
-    ],
-    "theme": [
-      "reaction"
-    ],
-    "tags": [
-      "thumbs-up",
-      "approve",
-      "good",
-      "yes",
-      "happy",
-      "agree",
-      "great"
-    ],
-    "synonyms": [
-      "like",
-      "kudos"
-    ],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__double-thumbs-up-huggy",
     "filename": "Double Thumbs Up Huggy.png",
     "folder": "Huggy Collection 2026",
@@ -3425,9 +2991,9 @@
   },
   {
     "id": "collection-2026__default-huggy",
-    "filename": "Default Huggy.png",
+    "filename": "OG Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Default Huggy",
+    "display_name": "OG Huggy",
     "category": "modern",
     "description": "Plain yellow Huggy with mouth open in default smile, palms raised wide.",
     "expression": "happy_open_mouth",
@@ -3854,49 +3420,10 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__karaoke-huggy-2",
-    "filename": "Karaoke Huggy 2.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Karaoke Huggy 2",
-    "category": "modern",
-    "description": "Yellow Huggy winking with a happy open mouth, hand raised.",
-    "expression": "winking",
-    "pose": "default",
-    "hands": "waving",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [],
-    "colors": [
-      "yellow"
-    ],
-    "mood": [
-      "happy",
-      "playful"
-    ],
-    "theme": [
-      "reaction"
-    ],
-    "tags": [
-      "wink",
-      "smile",
-      "happy",
-      "playful",
-      "wave",
-      "cute"
-    ],
-    "synonyms": [
-      "blink",
-      "cheeky"
-    ],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__karaoke-huggy-3",
-    "filename": "Karaoke Huggy 3.png",
+    "filename": "Leaning Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Karaoke Huggy 3",
+    "display_name": "Leaning Huggy",
     "category": "modern",
     "description": "Yellow Huggy with happy open-mouth smile and one hand raised in a friendly wave.",
     "expression": "happy_open_mouth",
@@ -3933,9 +3460,9 @@
   },
   {
     "id": "collection-2026__cowboy-wizard-huggy",
-    "filename": "Cowboy Wizard Huggy.png",
+    "filename": "Secret Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Cowboy Wizard Huggy",
+    "display_name": "Secret Huggy",
     "category": "modern",
     "description": "Yellow Huggy in big black wizard/cowboy hat and dark robe giving a thumbs up, sparkle nearby.",
     "expression": "closed_smile",
@@ -3981,53 +3508,10 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__headphones-wave-huggy",
-    "filename": "Headphones Wave Huggy.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Headphones Wave Huggy",
-    "category": "modern",
-    "description": "Yellow Huggy wearing blue headphones, smiling with one hand raised in a wave.",
-    "expression": "happy_open_mouth",
-    "pose": "default",
-    "hands": "waving",
-    "headwear": [
-      "headphones"
-    ],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [],
-    "colors": [
-      "yellow",
-      "blue"
-    ],
-    "mood": [
-      "happy",
-      "musical"
-    ],
-    "theme": [
-      "music"
-    ],
-    "tags": [
-      "headphones",
-      "music",
-      "wave",
-      "hello",
-      "audio",
-      "happy",
-      "listen"
-    ],
-    "synonyms": [
-      "headset",
-      "groove"
-    ],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__star-eyes-wave-huggy",
-    "filename": "Star Eyes Wave Huggy.png",
+    "filename": "Learning Excited Huggy.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Star Eyes Wave Huggy",
+    "display_name": "Learning Excited Huggy",
     "category": "modern",
     "description": "Yellow Huggy with star-shaped sparkle eyes and open-mouth smile, hand raised.",
     "expression": "starry_eyes",
@@ -4067,9 +3551,9 @@
   },
   {
     "id": "collection-2026__sad-huggy",
-    "filename": "Sad Huggy.png",
+    "filename": "Huggy Approved.png",
     "folder": "Huggy Collection 2026",
-    "display_name": "Sad Huggy",
+    "display_name": "Huggy Approved",
     "category": "modern",
     "description": "Yellow Huggy with sad worried eyes and frowning mouth, palms open.",
     "expression": "sad",
