@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HFBA v2 — Name Editor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bluishwhite:#F3F7FA; --bluishdark:#4D5862; --blue:#3B82F6; --border:#D2DAE1; --changed:#FEF3C7; --changedborder:#F59E0B; }
+      * { box-sizing: border-box; }
+      body { margin:0; background:var(--bluishwhite); color:var(--bluishdark); font-family:'Source Sans 3',sans-serif; }
+      header { position:sticky; top:0; z-index:20; background:rgba(243,247,250,.95); backdrop-filter:blur(6px); border-bottom:1px solid var(--border); padding:14px 20px; }
+      .bar { max-width:1280px; margin:0 auto; display:flex; flex-wrap:wrap; gap:12px 18px; align-items:center; justify-content:space-between; }
+      h1 { font-family:'IBM Plex Mono',monospace; font-size:20px; margin:0; }
+      h1 .pill { background:var(--blue); color:#fff; border-radius:999px; padding:3px 12px; font-size:15px; }
+      .hint { font-size:13px; max-width:560px; line-height:1.4; }
+      .actions { display:flex; gap:10px; align-items:center; }
+      button { font-family:'IBM Plex Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--border); background:#fff; color:var(--bluishdark); padding:9px 16px; border-radius:999px; transition:transform .12s, background .12s; }
+      button:active { transform:scale(.94); }
+      button.primary { background:var(--blue); color:#fff; border-color:var(--blue); }
+      button:disabled { opacity:.45; cursor:not-allowed; }
+      .count { font-family:'IBM Plex Mono',monospace; font-size:13px; }
+      .count b { color:var(--changedborder); }
+      main { max-width:1280px; margin:0 auto; padding:24px 20px 80px; }
+      .sec-title { font-family:'IBM Plex Mono',monospace; font-size:16px; background:var(--blue); color:#fff; display:inline-block; padding:8px 18px; border-radius:999px; margin:30px 0 16px; }
+      .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+      @media (min-width:720px){ .grid{ grid-template-columns:repeat(3,1fr); } }
+      @media (min-width:1080px){ .grid{ grid-template-columns:repeat(4,1fr); } }
+      .card { background:#fff; border:1px solid var(--border); border-radius:18px; padding:12px; display:flex; flex-direction:column; gap:8px; }
+      .card.changed { border-color:var(--changedborder); box-shadow:0 0 0 2px var(--changed); }
+      .thumb { width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border-radius:12px; }
+      .meta { font-family:'IBM Plex Mono',monospace; font-size:11px; color:#9aa6b1; display:flex; justify-content:space-between; gap:6px; }
+      input.name { width:100%; font-family:'Source Sans 3',sans-serif; font-size:15px; color:var(--bluishdark); border:1px solid var(--border); border-radius:10px; padding:8px 10px; outline:none; }
+      input.name:focus { border-color:var(--blue); }
+      .dupwarn { color:#dc2626; font-size:11px; min-height:13px; font-family:'IBM Plex Mono',monospace; }
+      dialog { border:none; border-radius:16px; padding:0; max-width:680px; width:92%; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+      .modal-in { padding:22px; }
+      .modal-in h2 { font-family:'IBM Plex Mono',monospace; font-size:17px; margin:0 0 8px; }
+      .modal-in p { font-size:13px; line-height:1.5; margin:0 0 12px; }
+      textarea { width:100%; height:240px; font-family:'IBM Plex Mono',monospace; font-size:12px; border:1px solid var(--border); border-radius:10px; padding:10px; resize:vertical; }
+      .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:14px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <div>
+          <h1>HFBA <span class="pill">Name Editor</span></h1>
+          <div class="hint">Edit any name below. The value you type becomes <b>both the file name and the display name</b>. When finished, click <b>Export renames</b> — a small JSON downloads and shows on screen. Then come back to chat and say you're done.</div>
+        </div>
+        <div class="actions">
+          <span class="count" id="count">0 changed</span>
+          <button id="resetBtn">Reset all</button>
+          <button id="exportBtn" class="primary" disabled>Export renames</button>
+        </div>
+      </div>
+    </header>
+    <main id="main">Loading assets…</main>
+
+    <dialog id="exportDlg">
+      <div class="modal-in">
+        <h2>Rename plan (<span id="planCount">0</span>)</h2>
+        <p>This file just downloaded to your <b>Downloads</b> folder as <code>hfba-renames.json</code>. You can also copy it from here. Return to chat and tell me you're set — I'll apply these to the real files and metadata, then push.</p>
+        <textarea id="planText" readonly></textarea>
+        <div class="modal-actions">
+          <button id="copyBtn">Copy JSON</button>
+          <button class="primary" id="closeBtn">Close</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script>
+      const SECTIONS = [
+        { folder: "Huggy Collection 2026", label: "Modern Huggies — 2026 batch" },
+        { folder: "modern Huggies", label: "Modern Huggies — original" },
+        { folder: "Outlined Huggies", label: "Outlined Huggies" },
+      ];
+      const stripExt = (fn) => fn.replace(/\.[^.]+$/, "");
+      const extOf = (fn) => (fn.match(/\.[^.]+$/) || [""])[0];
+
+      let records = [];
+
+      function render() {
+        const main = document.getElementById("main");
+        main.innerHTML = "";
+        for (const sec of SECTIONS) {
+          const rows = records.filter((r) => r.folder === sec.folder);
+          if (!rows.length) continue;
+          const h = document.createElement("div");
+          h.className = "sec-title";
+          h.textContent = `${sec.label} (${rows.length})`;
+          main.appendChild(h);
+          const grid = document.createElement("div");
+          grid.className = "grid";
+          for (const r of rows) {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.dataset.folder = r.folder;
+            card.dataset.filename = r.filename;
+            const orig = stripExt(r.filename);
+            card.innerHTML = `
+              <img class="thumb" loading="lazy" src="images/${r.folder}/${r.filename}" alt="">
+              <input class="name" type="text" value="${orig.replace(/"/g, "&quot;")}"
+                     data-orig="${orig.replace(/"/g, "&quot;")}" data-ext="${extOf(r.filename)}">
+              <div class="dupwarn"></div>
+              <div class="meta"><span>${extOf(r.filename)}</span><span>${sec.folder}</span></div>`;
+            grid.appendChild(card);
+          }
+          main.appendChild(grid);
+        }
+        main.querySelectorAll("input.name").forEach((inp) => {
+          inp.addEventListener("input", onEdit);
+        });
+        recompute();
+      }
+
+      function onEdit(e) {
+        const inp = e.target;
+        const card = inp.closest(".card");
+        card.classList.toggle("changed", inp.value.trim() !== inp.dataset.orig);
+        recompute();
+      }
+
+      function recompute() {
+        const inputs = [...document.querySelectorAll("input.name")];
+        // duplicate detection within each folder
+        const seen = {};
+        inputs.forEach((i) => {
+          const folder = i.closest(".card").dataset.folder;
+          const key = folder + "||" + i.value.trim().toLowerCase();
+          (seen[key] = seen[key] || []).push(i);
+        });
+        inputs.forEach((i) => {
+          const folder = i.closest(".card").dataset.folder;
+          const key = folder + "||" + i.value.trim().toLowerCase();
+          const warnEl = i.closest(".card").querySelector(".dupwarn");
+          if (!i.value.trim()) warnEl.textContent = "name can't be empty";
+          else if (seen[key].length > 1) warnEl.textContent = "duplicate name in this section";
+          else warnEl.textContent = "";
+        });
+        const changed = inputs.filter((i) => i.value.trim() !== i.dataset.orig);
+        document.getElementById("count").innerHTML = `<b>${changed.length}</b> changed`;
+        const hasProblem = inputs.some((i) => {
+          const w = i.closest(".card").querySelector(".dupwarn").textContent;
+          return w !== "";
+        });
+        document.getElementById("exportBtn").disabled = changed.length === 0 || hasProblem;
+      }
+
+      function buildPlan() {
+        const inputs = [...document.querySelectorAll("input.name")];
+        return inputs
+          .filter((i) => i.value.trim() !== i.dataset.orig)
+          .map((i) => ({
+            folder: i.closest(".card").dataset.folder,
+            old_filename: i.closest(".card").dataset.filename,
+            new_name: i.value.trim(),
+            ext: i.dataset.ext,
+          }));
+      }
+
+      document.getElementById("exportBtn").addEventListener("click", () => {
+        const plan = buildPlan();
+        const payload = { tool: "hfba-name-editor", count: plan.length, renames: plan };
+        const json = JSON.stringify(payload, null, 2);
+        const blob = new Blob([json], { type: "application/json" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "hfba-renames.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        document.getElementById("planCount").textContent = plan.length;
+        document.getElementById("planText").value = json;
+        document.getElementById("exportDlg").showModal();
+      });
+
+      document.getElementById("copyBtn").addEventListener("click", async () => {
+        try { await navigator.clipboard.writeText(document.getElementById("planText").value); document.getElementById("copyBtn").textContent = "Copied!"; }
+        catch { document.getElementById("planText").select(); document.execCommand("copy"); }
+      });
+      document.getElementById("closeBtn").addEventListener("click", () => document.getElementById("exportDlg").close());
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        document.querySelectorAll("input.name").forEach((i) => { i.value = i.dataset.orig; i.closest(".card").classList.remove("changed"); });
+        recompute();
+      });
+
+      fetch("metadata.json", { cache: "no-store" })
+        .then((r) => r.json())
+        .then((data) => { records = data; render(); })
+        .catch((e) => { document.getElementById("main").textContent = "Failed to load metadata.json: " + e; });
+    </script>
+  </body>
+</html>
