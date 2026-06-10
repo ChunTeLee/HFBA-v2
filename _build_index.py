@@ -380,8 +380,8 @@ def main() -> None:
       .chip:hover {{ background: #3B82F6; color: #fff; border-color: #3B82F6; }}
       #results-bar {{ display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }}
       #results-bar.show {{ display: flex; }}
-      #results-count {{ font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4D5862; }}
-      #results-count b {{ color: #3B82F6; }}
+      #results-count {{ font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #9aa6b1; }}
+      #results-count b {{ color: #6b7280; }}
       #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6b7280; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
       #searchResults {{ display: none; }}
       #searchResults.show {{ display: grid; }}
