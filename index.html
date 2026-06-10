@@ -36,24 +36,19 @@
       #search-header.condensed #chips { max-height: 0; opacity: 0; margin-top: 0; pointer-events: none; }
       .chip { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4D5862; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }
       .chip:hover { background: #3B82F6; color: #fff; border-color: #3B82F6; }
-      /* Section pills reuse the gallery's blue-pill header language.
-         Results = solid blue (primary); browse-all = ghost outline (secondary). */
-      .sec-pill { font-family: 'IBM Plex Mono', monospace; font-size: 16px; line-height: 1; padding: 11px 22px; border-radius: 999px; background: #3B82F6; color: #fff; white-space: nowrap; max-width: -moz-fit-content; max-width: fit-content; }
-      .sec-pill b { font-weight: 700; }
-      .sec-pill.ghost { background: #fff; color: #6b7280; border: 1.5px solid #CBD5E1; }
-      #results-bar { display: none; align-items: center; gap: 14px; margin-bottom: 22px; }
+      #results-bar { display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
       #results-bar.show { display: flex; }
-      #results-clear { margin-left: auto; flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6b7280; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 8px 16px; cursor: pointer; transition: color .12s, border-color .12s; }
-      #results-clear:hover { color: #374151; border-color: #9aa6b1; }
+      #results-count { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4D5862; }
+      #results-count b { color: #3B82F6; }
+      #results-clear { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6b7280; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 7px 14px; cursor: pointer; }
       #searchResults { display: none; }
       #searchResults.show { display: grid; }
       /* results + "more" render uniform (no 2x2 heroes) */
       #searchResults > *, #moreResults > * { grid-column: auto !important; grid-row: auto !important; }
-      /* Browse-all — every non-matching asset; clearly set off as a secondary section. */
+      /* "More to explore" — every non-matching asset, for seamless browsing */
       #more-section { display: none; }
       #more-section.show { display: block; }
-      #more-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px; margin: 48px 0 22px; padding-top: 30px; border-top: 2px dashed #C7D2E0; }
-      #more-sub { font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: #9aa6b1; }
+      #more-heading { font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; color: #9aa6b1; margin: 30px 0 18px; padding-top: 24px; border-top: 1px solid #E2E8EF; }
       #moreResults { display: grid; }
       #no-results { display: none; text-align: center; padding: 60px 20px; color: #6b7280; }
       #no-results.show { display: block; }
@@ -93,15 +88,12 @@
 
     <div class="container px-5 py-10 mx-auto">
       <div id="results-bar">
-        <span class="sec-pill" id="results-count"></span>
+        <span id="results-count"></span>
         <button id="results-clear">Clear search</button>
       </div>
       <div id="searchResults" class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10"></div>
       <div id="more-section">
-        <div id="more-head">
-          <span class="sec-pill ghost" id="more-label">Browse all other Huggies</span>
-          <span id="more-sub">everything that didn&rsquo;t match</span>
-        </div>
+        <div id="more-heading">More to explore</div>
         <div id="moreResults" class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10"></div>
       </div>
       <div id="no-results">

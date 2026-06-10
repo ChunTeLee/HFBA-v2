@@ -234,8 +234,7 @@
   var resultsClear = document.getElementById("results-clear");
   var moreSection = document.getElementById("more-section");
   var more = document.getElementById("moreResults");
-  var moreLabel = document.getElementById("more-label");
-  var moreSub = document.getElementById("more-sub");
+  var moreHeading = document.getElementById("more-heading");
 
   function highlight(id, tokens) {
     var t = titleEls[id];
@@ -301,19 +300,15 @@
       if (!matched[id]) { var el = byId[id]; if (el) more.appendChild(el); }
     });
     var n = res.hits.length;
-    var q = escapeHtml(query.trim());
     if (n > 0) {
-      countEl.innerHTML = "<b>" + n + "</b> " + (n === 1 ? "result" : "results") + " for &ldquo;" + q + "&rdquo;";
-      moreLabel.textContent = "Browse all other Huggies";
-      moreSub.innerHTML = "everything that didn&rsquo;t match";
+      countEl.innerHTML = "<b>" + n + "</b> " + (n === 1 ? "result" : "results") + " for &ldquo;" + escapeHtml(query.trim()) + "&rdquo;";
     } else {
-      countEl.innerHTML = "No matches for &ldquo;" + q + "&rdquo;";
-      moreLabel.textContent = "Browse all Huggies";
-      moreSub.innerHTML = "nothing matched &mdash; here&rsquo;s the full collection";
+      countEl.innerHTML = "No matches for &ldquo;" + escapeHtml(query.trim()) + "&rdquo; &mdash; browse everything below";
     }
     bar.classList.add("show");
     results.classList.toggle("show", n > 0);
     noRes.classList.remove("show"); // soft no-results: the bar message + full browse list below
+    moreHeading.textContent = n > 0 ? "More to explore" : "All Huggies";
     moreSection.classList.toggle("show", more.children.length > 0);
   }
 
