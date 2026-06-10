@@ -10,103 +10,83 @@
   if (!indexEl) return;
   var INDEX = JSON.parse(indexEl.textContent);
 
-  // ---------- Synonym dictionary (query word -> related concepts) ----------
-  // Curated query->name-word bridges. Every expansion target is a word that
-  // actually appears in an asset NAME, so synonym matches stay relevant.
-  var SYN = {
+  // ---------- Synonym clusters ----------
+  // Each cluster groups related terms; every member expands to all the others
+  // (bidirectional). Expansion targets that aren't asset-name words simply match
+  // nothing, and because metadata is name-only, expansion can't flood results —
+  // it only surfaces assets whose NAME contains a related word. So "headphones"
+  // reaches "dj" and vice-versa, "music" reaches the whole audio family, etc.
+  var CLUSTERS = [
     // music / audio
-    music: ["headphones", "dj", "karaoke", "violinist", "dancing", "vibing", "whistle", "baguette"],
-    audio: ["headphones", "dj"],
-    dj: ["headphones", "karaoke"],
-    song: ["karaoke", "whistle", "violinist"],
-    sing: ["karaoke", "whistle"],
-    dance: ["dancing", "vibing"],
-    party: ["dancing", "vibing", "karaoke"],
-    violin: ["violinist", "baguette"],
+    ["music", "audio", "sound", "headphones", "headphone", "dj", "earphones", "beats"],
+    ["music", "song", "sing", "singing", "karaoke", "whistle", "violin", "violinist", "baguette", "melody", "tune"],
+    ["music", "dance", "dancing", "vibing", "vibe", "party", "groove", "disco"],
     // tech / ai / ml
-    code: ["transformer", "agent", "robot", "gpu", "lab"],
-    coding: ["transformer", "agent", "robot", "gpu"],
-    developer: ["transformer", "agent", "robot"],
-    programming: ["transformer", "agent", "robot"],
-    dev: ["transformer", "agent", "robot"],
-    ai: ["transformer", "agent", "assistant", "model", "lora", "gpu"],
-    ml: ["model", "transformer", "lora", "gpu", "dataset"],
-    model: ["growing", "lora", "transformer"],
-    llm: ["transformer", "text", "generation", "agent"],
-    chip: ["gpu", "optimum"],
-    hardware: ["gpu", "optimum", "robot"],
-    compute: ["gpu", "optimum"],
-    data: ["dataset", "discover", "discovery", "scan"],
-    dataset: ["discover", "discovery"],
-    optimize: ["optimum"],
-    bot: ["robot", "agent", "assistant"],
+    ["code", "coding", "developer", "programming", "dev", "software", "engineer", "transformer", "agent", "robot", "terminal"],
+    ["ai", "ml", "model", "intelligence", "neural", "transformer", "agent", "assistant", "lora", "growing", "training"],
+    ["gpu", "chip", "hardware", "compute", "graphics", "processor", "optimum", "card"],
+    ["data", "dataset", "discover", "discovery", "scan", "database", "analytics"],
+    ["robot", "bot", "android", "optimum", "machine", "cyborg"],
+    ["text", "generation", "llm", "transformer", "prompt", "writing"],
     // roles / jobs
-    doctor: ["medic"],
-    nurse: ["medic"],
-    medical: ["medic", "scan", "ray"],
-    health: ["medic"],
-    cook: ["chef", "baguette"],
-    cooking: ["chef"],
-    kitchen: ["chef"],
-    lawyer: ["judge"],
-    law: ["lawyer", "judge"],
-    agent: ["assistant", "transformer"],
-    assistant: ["agent"],
+    ["doctor", "medic", "nurse", "medical", "health", "hospital", "clinic"],
+    ["cook", "cooking", "kitchen", "chef", "baguette", "meal", "recipe"],
+    ["law", "lawyer", "judge", "legal", "court", "justice", "attorney"],
+    ["manage", "manager", "management", "boss", "lead"],
+    ["assistant", "agent", "helper", "support", "butler"],
+    ["guide", "diffusor", "tutorial", "howto"],
     // food
-    food: ["baguette", "wine", "yolk", "chef"],
-    bread: ["baguette"],
-    drink: ["wine"],
-    egg: ["yolk"],
+    ["food", "baguette", "wine", "yolk", "egg", "bread", "drink", "meal", "snack"],
     // characters / costumes / animals
-    magic: ["wizard", "secret"],
-    wizard: ["magic", "secret"],
-    king: ["judge", "viking", "cowboy"],
-    animal: ["snake", "horse", "dragon"],
+    ["magic", "magical", "wizard", "spell", "sorcerer", "secret", "mystery", "hidden"],
+    ["royal", "king", "crown", "judge", "viking", "cowboy", "warrior", "hero"],
+    ["animal", "snake", "horse", "dragon", "creature", "beast", "reptile", "mascot"],
     // activities
-    play: ["gaming", "game", "video"],
-    gaming: ["game", "video"],
-    game: ["gaming", "jam", "video"],
-    sport: ["athlete", "running", "rushing"],
-    run: ["running", "rushing"],
-    running: ["rushing", "athlete"],
-    exercise: ["athlete", "running"],
-    fish: ["fishing"],
-    catch: ["catching", "fishing"],
-    space: ["rocket", "global"],
-    world: ["global"],
+    ["game", "gaming", "gamejam", "jam", "play", "controller", "console", "video", "esports", "arcade"],
+    ["sport", "sports", "athlete", "running", "run", "rushing", "rush", "jog", "fitness", "exercise", "gym", "race"],
+    ["fish", "fishing", "catch", "catching", "rod"],
+    ["space", "rocket", "launch", "moon", "global", "world", "earth", "planet", "orbit"],
+    ["grow", "growing", "sprout", "sprouting", "plant", "seed", "leaf", "bloom"],
     // study / science
-    study: ["acedemic", "learning", "paper", "guide", "measure"],
-    learn: ["learning", "acedemic", "paper"],
-    academic: ["acedemic", "paper", "learning"],
-    school: ["acedemic", "learning"],
-    student: ["acedemic", "learning"],
-    research: ["paper", "lab", "scan"],
-    science: ["lab", "vision", "scan", "ray", "medic"],
+    ["study", "learn", "learning", "education", "school", "academic", "acedemic", "student", "paper", "research", "measure", "guide", "knowledge"],
+    ["science", "lab", "laboratory", "research", "experiment", "vision", "scan", "ray", "xray", "microscope"],
+    ["vision", "sight", "eye", "computer", "see", "scan", "view", "look"],
     // greetings / reactions / emotions -> expressive named assets
-    hello: ["hi", "greeting", "sunny"],
-    hi: ["hello", "greeting"],
-    wave: ["greeting", "hi", "hello"],
-    greeting: ["hi", "hello"],
-    ok: ["okay", "approved", "thumbs"],
-    approve: ["approved", "thumbs", "okay"],
-    respect: ["approved"],
-    thumbs: ["approved", "okay", "double"],
-    like: ["approved", "thumbs"],
-    happy: ["sunny", "excited", "super", "vibing", "cool", "pop", "okay"],
-    excited: ["super", "learning", "starry"],
-    sad: ["nervous", "frustrated"],
-    angry: ["frustrated", "chad"],
-    cool: ["smug", "chad"],
-    sneaky: ["peeking", "tiptoe", "secret"],
-    peek: ["peeking"],
+    ["greeting", "greet", "hi", "hello", "hey", "wave", "waving", "sunny", "welcome"],
+    ["ok", "okay", "approve", "approved", "thumbs", "like", "yes", "respect", "nod", "double", "props", "good"],
+    ["happy", "joy", "smile", "smiling", "cheerful", "sunny", "excited", "super", "vibing", "cool", "pop", "glad", "okay"],
+    ["excited", "exciting", "thrilled", "amazed", "starry", "super", "learning", "wow"],
+    ["sad", "unhappy", "down", "nervous", "frustrated", "upset", "worried", "cry"],
+    ["angry", "mad", "frustrated", "rage", "chad", "yell", "furious"],
+    ["cool", "chill", "smug", "chad", "swag", "confident", "calm"],
+    ["sneaky", "sneak", "peek", "peeking", "tiptoe", "secret", "hidden", "quiet"],
+    ["curious", "wonder", "peeking", "question", "interested", "inquisitive"],
+    ["love", "loving", "heart", "hug", "hugging", "like", "adore", "family"],
+    ["family", "together", "group", "parents", "home", "loving"],
     // brand / logos / style
-    logo: ["brand", "mark", "icon", "hf", "hugging"],
-    brand: ["logo", "mark", "hf"],
-    rainbow: ["colorful"],
-    outline: ["outlined"],
-    outlined: ["outline"],
-    sketch: ["doodle"],
-  };
+    ["logo", "brand", "mark", "icon", "wordmark", "hf", "hugging", "emblem", "identity"],
+    ["rainbow", "colorful", "gradient", "pride", "color"],
+    ["outline", "outlined", "lineart", "line", "sketch", "doodle", "drawing"],
+    ["doodle", "sketch", "draw", "drawing", "scribble", "comic"],
+    ["comic", "cartoon", "manga", "strip"],
+    ["paper", "document", "report", "article", "read", "research"],
+    ["wine", "drink", "glass", "celebrate", "cheers"],
+    ["lean", "leaning", "tilt", "tilting", "side"],
+  ];
+
+  // Build a bidirectional synonym map from the clusters (deduped).
+  var SYN = (function () {
+    var acc = {};
+    CLUSTERS.forEach(function (cl) {
+      cl.forEach(function (w) {
+        var set = acc[w] || (acc[w] = {});
+        cl.forEach(function (o) { if (o !== w) set[o] = true; });
+      });
+    });
+    var out = {};
+    Object.keys(acc).forEach(function (k) { out[k] = Object.keys(acc[k]); });
+    return out;
+  })();
 
   // ---------- helpers ----------
   function tokenize(s) {
@@ -160,9 +140,12 @@
   });
 
   function expand(tok) {
-    var out = [{ t: tok, f: 1 }];
+    // The typed token gets full matching (prefix/substring/fuzzy for typo tolerance).
+    // Synonym expansions are matched EXACTLY — they're controlled vocab that maps to
+    // real name words, so fuzzy/prefix on them would create cross-noise.
+    var out = [{ t: tok, f: 1, syn: false }];
     var syns = SYN[tok];
-    if (syns) for (var i = 0; i < syns.length; i++) out.push({ t: syns[i], f: 0.82 });
+    if (syns) for (var i = 0; i < syns.length; i++) out.push({ t: syns[i], f: 0.8, syn: true });
     return out;
   }
 
@@ -181,6 +164,9 @@
     return 0;
   }
 
+  // Synonym expansions only count on an exact token hit (no prefix/substring/fuzzy).
+  function fieldScoreExact(t, f) { return f.set.has(t) ? f.w * 3 : 0; }
+
   function scoreRecord(rec, qtokens, rawQuery) {
     var total = 0;
     for (var i = 0; i < qtokens.length; i++) {
@@ -189,7 +175,9 @@
       for (var v = 0; v < variants.length; v++) {
         var vt = variants[v];
         for (var fi = 0; fi < rec.fields.length; fi++) {
-          var s = vt.f * fieldScore(vt.t, rec.fields[fi]);
+          var s = vt.syn
+            ? vt.f * fieldScoreExact(vt.t, rec.fields[fi])
+            : vt.f * fieldScore(vt.t, rec.fields[fi]);
           if (s > best) best = s;
         }
       }
