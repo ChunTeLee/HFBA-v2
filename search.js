@@ -228,6 +228,7 @@
   var originalOrder = grids.map(function (g) {
     return { grid: g, ids: [].slice.call(g.children).filter(function (c) { return c.dataset.id; }).map(function (c) { return c.dataset.id; }) };
   });
+  var allIdsInOrder = originalOrder.reduce(function (acc, o) { return acc.concat(o.ids); }, []);
   // store original heading text per card title (for un-highlighting)
   var titleEls = {};
   Object.keys(byId).forEach(function (id) {
@@ -243,6 +244,9 @@
   var countEl = document.getElementById("results-count");
   var noRes = document.getElementById("no-results");
   var resultsClear = document.getElementById("results-clear");
+  var moreSection = document.getElementById("more-section");
+  var more = document.getElementById("moreResults");
+  var moreHeading = document.getElementById("more-heading");
 
   function highlight(id, tokens) {
     var t = titleEls[id];
@@ -280,6 +284,7 @@
     results.classList.remove("show");
     bar.classList.remove("show");
     noRes.classList.remove("show");
+    moreSection.classList.remove("show");
     browse.style.display = "";
     // move every card back to its home grid in original order
     originalOrder.forEach(function (o) {
@@ -293,17 +298,30 @@
     if (!res) { enterBrowse(); return; }
     browse.style.display = "none";
     clearHighlights();
-    // place matched nodes into results grid in ranked order
     results.innerHTML = "";
+    more.innerHTML = "";
+    // ranked matches into the results grid (highlighted)
+    var matched = {};
     res.hits.forEach(function (h) {
+      matched[h.id] = true;
       var el = byId[h.id];
       if (el) { results.appendChild(el); highlight(h.id, res.tokens); }
     });
+    // every non-matching asset below, in original browse order — seamless browsing
+    allIdsInOrder.forEach(function (id) {
+      if (!matched[id]) { var el = byId[id]; if (el) more.appendChild(el); }
+    });
     var n = res.hits.length;
-    countEl.innerHTML = "<b>" + n + "</b> " + (n === 1 ? "result" : "results") + " for &ldquo;" + escapeHtml(query.trim()) + "&rdquo;";
+    if (n > 0) {
+      countEl.innerHTML = "<b>" + n + "</b> " + (n === 1 ? "result" : "results") + " for &ldquo;" + escapeHtml(query.trim()) + "&rdquo;";
+    } else {
+      countEl.innerHTML = "No matches for &ldquo;" + escapeHtml(query.trim()) + "&rdquo; &mdash; browse everything below";
+    }
     bar.classList.add("show");
     results.classList.toggle("show", n > 0);
-    noRes.classList.toggle("show", n === 0);
+    noRes.classList.remove("show"); // soft no-results: the bar message + full browse list below
+    moreHeading.textContent = n > 0 ? "More to explore" : "All Huggies";
+    moreSection.classList.toggle("show", more.children.length > 0);
   }
 
   var debounce;

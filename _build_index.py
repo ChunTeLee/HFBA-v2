@@ -374,8 +374,13 @@ def main() -> None:
       #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6b7280; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
       #searchResults {{ display: none; }}
       #searchResults.show {{ display: grid; }}
-      /* results render uniform (no 2x2 heroes) */
-      #searchResults > * {{ grid-column: auto !important; grid-row: auto !important; }}
+      /* results + "more" render uniform (no 2x2 heroes) */
+      #searchResults > *, #moreResults > * {{ grid-column: auto !important; grid-row: auto !important; }}
+      /* "More to explore" — every non-matching asset, for seamless browsing */
+      #more-section {{ display: none; }}
+      #more-section.show {{ display: block; }}
+      #more-heading {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; color: #9aa6b1; margin: 30px 0 18px; padding-top: 24px; border-top: 1px solid #E2E8EF; }}
+      #moreResults {{ display: grid; }}
       #no-results {{ display: none; text-align: center; padding: 60px 20px; color: #6b7280; }}
       #no-results.show {{ display: block; }}
       #no-results .big {{ font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #4D5862; margin-bottom: 8px; }}
@@ -409,6 +414,10 @@ def main() -> None:
         <button id="results-clear">Clear search</button>
       </div>
       <div id="searchResults" class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10"></div>
+      <div id="more-section">
+        <div id="more-heading">More to explore</div>
+        <div id="moreResults" class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10"></div>
+      </div>
       <div id="no-results">
         <div class="big">No Huggies match that</div>
         <div>Try a simpler word, an emotion, an object, or pick a chip above.</div>
