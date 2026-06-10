@@ -352,7 +352,9 @@ def main() -> None:
 
       /* ---- Search ---- */
       #search-header {{ position: sticky; top: 0; z-index: 30; background: rgba(243,247,250,.9); backdrop-filter: blur(8px); border-bottom: 1px solid #E2E8EF; }}
-      .search-inner {{ max-width: 1280px; margin: 0 auto; padding: 14px 20px; }}
+      /* .search-inner reuses the page `container mx-auto px-5` so its edges align
+         with the gallery grid at every breakpoint; only vertical padding is custom. */
+      .search-inner {{ padding-top: 14px; padding-bottom: 14px; }}
       .search-wrap {{ display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 10px 16px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
       .search-wrap:focus-within {{ border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }}
       .search-wrap svg {{ flex: 0 0 auto; color: #9aa6b1; }}
@@ -386,7 +388,7 @@ def main() -> None:
   </head>
   <body class="bg-BluishWhite">
     <header id="search-header">
-      <div class="search-inner">
+      <div class="container mx-auto px-5 search-inner">
         <div class="search-wrap" role="search">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <input id="q" type="text" autocomplete="off" spellcheck="false" aria-label="Search assets"
