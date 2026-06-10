@@ -344,10 +344,21 @@
 
   // collapse the quick-filter chips once scrolled away from the top;
   // they reappear when back near the top. Keeps the search field always visible.
+  // Hysteresis: collapse once scrolled past COLLAPSE_AT, re-expand only below
+  // EXPAND_AT. The dead zone between them stops jitter near a single threshold
+  // (trackpad/momentum) from rapidly toggling the class and flickering the chips.
   var header = document.getElementById("search-header");
+  var COLLAPSE_AT = 56, EXPAND_AT = 6;
+  var condensed = false;
   function syncCondensed() {
     var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    header.classList.toggle("condensed", y > 12);
+    if (!condensed && y > COLLAPSE_AT) {
+      condensed = true;
+      header.classList.add("condensed");
+    } else if (condensed && y < EXPAND_AT) {
+      condensed = false;
+      header.classList.remove("condensed");
+    }
   }
   window.addEventListener("scroll", syncCondensed, { passive: true });
   syncCondensed();

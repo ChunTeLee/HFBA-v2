@@ -371,8 +371,11 @@ def main() -> None:
       #q-clear {{ flex: 0 0 auto; border: none; background: #EEF2F6; color: #6b7280; width: 24px; height: 24px; border-radius: 999px; cursor: pointer; font-size: 15px; line-height: 1; display: none; }}
       #q-clear.show {{ display: inline-flex; align-items: center; justify-content: center; }}
       .kbd {{ flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9aa6b1; border: 1px solid #D2DAE1; border-radius: 6px; padding: 2px 6px; }}
-      #chips {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; max-height: 240px; overflow: hidden; transition: max-height .28s ease, opacity .2s ease, margin-top .28s ease; }}
-      #search-header.condensed #chips {{ max-height: 0; opacity: 0; margin-top: 0; pointer-events: none; }}
+      /* grid-template-rows 1fr->0fr animates the real content height to 0 smoothly,
+         regardless of how many rows the chips wrap to — no max-height guess, no clip. */
+      #chips-collapse {{ display: grid; grid-template-rows: 1fr; margin-top: 10px; transition: grid-template-rows .26s ease, opacity .18s ease, margin-top .26s ease; }}
+      #search-header.condensed #chips-collapse {{ grid-template-rows: 0fr; opacity: 0; margin-top: 0; pointer-events: none; }}
+      #chips {{ display: flex; flex-wrap: wrap; gap: 8px; overflow: hidden; min-height: 0; }}
       .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4D5862; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
       .chip:hover {{ background: #3B82F6; color: #fff; border-color: #3B82F6; }}
       #results-bar {{ display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }}
@@ -410,8 +413,10 @@ def main() -> None:
           <button id="q-clear" aria-label="Clear search">&times;</button>
           <span class="kbd">/</span>
         </div>
-        <div id="chips">
+        <div id="chips-collapse">
+          <div id="chips">
 {chips_html}
+          </div>
         </div>
       </div>
     </header>
