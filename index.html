@@ -18,6 +18,34 @@
     <style>
       .download-button { transition: transform 0.2s; }
       .download-button:active { transform: scale(0.80); }
+
+      /* ---- Search ---- */
+      #search-header { position: sticky; top: 0; z-index: 30; background: rgba(243,247,250,.9); backdrop-filter: blur(8px); border-bottom: 1px solid #E2E8EF; }
+      .search-inner { max-width: 1280px; margin: 0 auto; padding: 14px 20px; }
+      .search-wrap { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 10px 16px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }
+      .search-wrap:focus-within { border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
+      .search-wrap svg { flex: 0 0 auto; color: #9aa6b1; }
+      #q { flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 16px; color: #4D5862; }
+      #q::placeholder { color: #9aa6b1; }
+      #q-clear { flex: 0 0 auto; border: none; background: #EEF2F6; color: #6b7280; width: 24px; height: 24px; border-radius: 999px; cursor: pointer; font-size: 15px; line-height: 1; display: none; }
+      #q-clear.show { display: inline-flex; align-items: center; justify-content: center; }
+      .kbd { flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9aa6b1; border: 1px solid #D2DAE1; border-radius: 6px; padding: 2px 6px; }
+      #chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+      .chip { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4D5862; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }
+      .chip:hover { background: #3B82F6; color: #fff; border-color: #3B82F6; }
+      #results-bar { display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+      #results-bar.show { display: flex; }
+      #results-count { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4D5862; }
+      #results-count b { color: #3B82F6; }
+      #results-clear { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6b7280; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+      #searchResults { display: none; }
+      #searchResults.show { display: grid; }
+      /* results render uniform (no 2x2 heroes) */
+      #searchResults > * { grid-column: auto !important; grid-row: auto !important; }
+      #no-results { display: none; text-align: center; padding: 60px 20px; color: #6b7280; }
+      #no-results.show { display: block; }
+      #no-results .big { font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #4D5862; margin-bottom: 8px; }
+      mark { background: #FEF08A; color: inherit; border-radius: 3px; padding: 0 1px; }
     </style>
     <link rel="stylesheet" href="css/style.css" />
     <title>HFBA v2</title>
@@ -26,7 +54,42 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   </head>
   <body class="bg-BluishWhite">
+    <header id="search-header">
+      <div class="search-inner">
+        <div class="search-wrap" role="search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input id="q" type="text" autocomplete="off" spellcheck="false" aria-label="Search assets"
+                 placeholder="Search Huggies &mdash; try &ldquo;happy&rdquo;, &ldquo;headphones&rdquo;, &ldquo;coding&rdquo;, &ldquo;logo&rdquo;&hellip;">
+          <button id="q-clear" aria-label="Clear search">&times;</button>
+          <span class="kbd">/</span>
+        </div>
+        <div id="chips">
+          <button class="chip" data-q="happy">happy</button>
+          <button class="chip" data-q="sad">sad</button>
+          <button class="chip" data-q="headphones">headphones</button>
+          <button class="chip" data-q="coding">coding</button>
+          <button class="chip" data-q="gpu">gpu</button>
+          <button class="chip" data-q="wizard">wizard</button>
+          <button class="chip" data-q="dancing">dancing</button>
+          <button class="chip" data-q="chef">chef</button>
+          <button class="chip" data-q="logo">logo</button>
+          <button class="chip" data-q="outlined">outlined</button>
+        </div>
+      </div>
+    </header>
+
     <div class="container px-5 py-10 mx-auto">
+      <div id="results-bar">
+        <span id="results-count"></span>
+        <button id="results-clear">Clear search</button>
+      </div>
+      <div id="searchResults" class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10"></div>
+      <div id="no-results">
+        <div class="big">No Huggies match that</div>
+        <div>Try a simpler word, an emotion, an object, or pick a chip above.</div>
+      </div>
+
+      <div id="browse">
       <section id="HFlogos" class="mb-28">
         <div class="flex flex-row items-center justify-between">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white mb-5 py-3 px-6 rounded-full">HF Logos</div>
@@ -34,8 +97,8 @@
             <a href="https://huggingface.co/brand" target="_blank">View official HF branding guideline <svg xmlns="http://www.w3.org/2000/svg" class="inline w-6 h-6" width="32" height="32" viewBox="0 0 20 20"><path fill="currentColor" d="M9.516 6a.5.5 0 0 0 0 1h2.777l-4.147 4.146a.5.5 0 0 0 .708.708L13 7.707v2.777a.5.5 0 0 0 1 0V6.5a.5.5 0 0 0-.5-.5zm3.25 11a2.5 2.5 0 0 0 2.47-2.11A2.501 2.501 0 0 0 17 12.5v-7A2.5 2.5 0 0 0 14.5 3h-7a2.501 2.501 0 0 0-2.4 1.797A2.5 2.5 0 0 0 3 7.266V13.5A3.5 3.5 0 0 0 6.5 17zM4 7.266A1.5 1.5 0 0 1 5 5.85v6.65A2.5 2.5 0 0 0 7.5 15h6.68a1.5 1.5 0 0 1-1.414 1H6.5A2.5 2.5 0 0 1 4 13.5zM7.5 4h7A1.5 1.5 0 0 1 16 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 6 12.5v-7A1.5 1.5 0 0 1 7.5 4"/></svg></a>
           </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
-          <div class="w-full flex flex-col">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid">
+          <div class="w-full flex flex-col" data-id="logo__hf-logo">
             <img src="images/Brand Logos/Hugging Face.png" alt="HF Logo" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
               <h5 class="text-lg font-sans text-BluishDark">HF Logo</h5>
@@ -57,7 +120,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full flex flex-col">
+          <div class="w-full flex flex-col" data-id="logo__rainbow">
             <img src="images/Brand Logos/Rainbow Hugging Face.png" alt="Rainbow Hugging Face" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
               <h5 class="text-lg font-sans text-BluishDark">Rainbow Hugging Face</h5>
@@ -74,7 +137,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full flex flex-col">
+          <div class="w-full flex flex-col" data-id="logo__title">
             <img src="images/Brand Logos/hf-logo-with-title.png" alt="HF logo + title" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
               <h5 class="text-lg font-sans text-BluishDark">HF logo + title</h5>
@@ -96,7 +159,7 @@
               </div>
             </div>
           </div>
-          <div class="w-full flex flex-col">
+          <div class="w-full flex flex-col" data-id="logo__white-title">
             <img src="images/Brand Logos/hf-logo-with-white-title.png" alt="HF logo + white title" class="w-full h-full bg-black shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
               <h5 class="text-lg font-sans text-BluishDark">HF logo + white title</h5>
@@ -125,8 +188,8 @@
         <div class="flex items-center mb-5">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Modern Huggies</div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10" style="grid-auto-flow: dense">
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Doodle Huggy" data-tags="doodle sketch drawing messy music fun scribble">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid" style="grid-auto-flow: dense">
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__doodle-huggy" data-display-name="Doodle Huggy" data-tags="doodle sketch drawing messy music fun scribble">
             <img src="images/Huggy Collection 2026/Doodle Huggy.gif" alt="Doodle Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Doodle Huggy</h5>
@@ -136,7 +199,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Acedemic Huggy" data-tags="academic graduation cap school teacher professor education">
+          <div class="w-full flex flex-col" data-id="collection-2026__acedemic-huggy" data-display-name="Acedemic Huggy" data-tags="academic graduation cap school teacher professor education">
             <img src="images/Huggy Collection 2026/Acedemic Huggy.png" alt="Acedemic Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Acedemic Huggy</h5>
@@ -146,7 +209,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Agent Huggy" data-tags="guide ruler tutorial howto thermometer crystal smug">
+          <div class="w-full flex flex-col" data-id="collection-2026__guide-huggy" data-display-name="Agent Huggy" data-tags="guide ruler tutorial howto thermometer crystal smug">
             <img src="images/Huggy Collection 2026/Agent Huggy.png" alt="Agent Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Agent Huggy</h5>
@@ -156,7 +219,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Assistant Huggy" data-tags="monopoly rich tuxedo mustache monocle boss ceo fancy">
+          <div class="w-full flex flex-col" data-id="collection-2026__monopoly-huggy" data-display-name="Assistant Huggy" data-tags="monopoly rich tuxedo mustache monocle boss ceo fancy">
             <img src="images/Huggy Collection 2026/Assistant Huggy.png" alt="Assistant Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Assistant Huggy</h5>
@@ -166,7 +229,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Athlete Huggy" data-tags="athlete rush run frown sport wristband tired effort">
+          <div class="w-full flex flex-col" data-id="collection-2026__athlete-frowning-huggy" data-display-name="Athlete Huggy" data-tags="athlete rush run frown sport wristband tired effort">
             <img src="images/Huggy Collection 2026/Athlete Huggy.png" alt="Athlete Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Athlete Huggy</h5>
@@ -176,7 +239,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Baguette Violinist Huggy" data-tags="violin baguette music french play instrument bread">
+          <div class="w-full flex flex-col" data-id="collection-2026__baguette-violinist-huggy" data-display-name="Baguette Violinist Huggy" data-tags="violin baguette music french play instrument bread">
             <img src="images/Huggy Collection 2026/Baguette Violinist Huggy.png" alt="Baguette Violinist Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Baguette Violinist Huggy</h5>
@@ -186,7 +249,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Chef Huggy" data-tags="chef cook kitchen hat food baking cooking sweet">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-chef" data-display-name="Chef Huggy" data-tags="chef cook kitchen hat food baking cooking sweet">
             <img src="images/Huggy Collection 2026/Chef Huggy.png" alt="Chef Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Chef Huggy</h5>
@@ -196,7 +259,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="computer vision Huggy" data-tags="vision computer-vision ml ai book study labeling annotation">
+          <div class="w-full flex flex-col" data-id="collection-2026__computer-vision-huggy" data-display-name="computer vision Huggy" data-tags="vision computer-vision ml ai book study labeling annotation">
             <img src="images/Huggy Collection 2026/computer vision Huggy.png" alt="computer vision Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">computer vision Huggy</h5>
@@ -206,7 +269,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Cool Huggy" data-tags="cool sunglasses shades tie fancy smug stylish boss">
+          <div class="w-full flex flex-col" data-id="collection-2026__cool-huggy" data-display-name="Cool Huggy" data-tags="cool sunglasses shades tie fancy smug stylish boss">
             <img src="images/Huggy Collection 2026/Cool Huggy.png" alt="Cool Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Cool Huggy</h5>
@@ -216,7 +279,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Cowboy Huggy" data-tags="cowboy hat western sheriff bandana star rancher wild-west">
+          <div class="w-full flex flex-col" data-id="collection-2026__cowboy-huggy" data-display-name="Cowboy Huggy" data-tags="cowboy hat western sheriff bandana star rancher wild-west">
             <img src="images/Huggy Collection 2026/Cowboy Huggy.png" alt="Cowboy Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Cowboy Huggy</h5>
@@ -226,7 +289,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Dragon Huggy" data-tags="dragon costume lunar new-year mythical antlers zodiac">
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__dragon-huggy" data-display-name="Dragon Huggy" data-tags="dragon costume lunar new-year mythical antlers zodiac">
             <img src="images/Huggy Collection 2026/Dragon Huggy.png" alt="Dragon Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Dragon Huggy</h5>
@@ -236,7 +299,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="D Huggy" data-tags="detective magnifying investigate spy search clue curious">
+          <div class="w-full flex flex-col" data-id="collection-2026__d-huggy" data-display-name="D Huggy" data-tags="detective magnifying investigate spy search clue curious">
             <img src="images/Huggy Collection 2026/D Huggy.png" alt="D Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">D Huggy</h5>
@@ -246,7 +309,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Dancing Huggy" data-tags="dancing dance music whistle groove happy rhythm">
+          <div class="w-full flex flex-col" data-id="collection-2026__dancing-huggy" data-display-name="Dancing Huggy" data-tags="dancing dance music whistle groove happy rhythm">
             <img src="images/Huggy Collection 2026/Dancing Huggy.png" alt="Dancing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Dancing Huggy</h5>
@@ -256,7 +319,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Discover Dataset Huggy" data-tags="growing model guide ruler crystal smug training">
+          <div class="w-full flex flex-col" data-id="collection-2026__growing-model-huggy-2" data-display-name="Discover Dataset Huggy" data-tags="growing model guide ruler crystal smug training">
             <img src="images/Huggy Collection 2026/Discover Dataset Huggy.png" alt="Discover Dataset Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Discover Dataset Huggy</h5>
@@ -266,7 +329,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Discovery Huggy" data-tags="growing model watering plant grow training nurture ml">
+          <div class="w-full flex flex-col" data-id="collection-2026__growing-model-huggy" data-display-name="Discovery Huggy" data-tags="growing model watering plant grow training nurture ml">
             <img src="images/Huggy Collection 2026/Discovery Huggy.png" alt="Discovery Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Discovery Huggy</h5>
@@ -276,7 +339,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="DJ Huggy" data-tags="dj headphones music point lean audio sound song">
+          <div class="w-full flex flex-col" data-id="collection-2026__dj-huggy" data-display-name="DJ Huggy" data-tags="dj headphones music point lean audio sound song">
             <img src="images/Huggy Collection 2026/DJ Huggy.png" alt="DJ Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">DJ Huggy</h5>
@@ -286,7 +349,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Double Thumbs Up Huggy" data-tags="thumbs-up approve good yes happy great double">
+          <div class="w-full flex flex-col" data-id="collection-2026__double-thumbs-up-huggy" data-display-name="Double Thumbs Up Huggy" data-tags="thumbs-up approve good yes happy great double">
             <img src="images/Huggy Collection 2026/Double Thumbs Up Huggy.png" alt="Double Thumbs Up Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Double Thumbs Up Huggy</h5>
@@ -296,7 +359,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Emotional Huggy" data-tags="dancing dance cry tears thumbs-up drama bittersweet">
+          <div class="w-full flex flex-col" data-id="collection-2026__dancing-huggy-3" data-display-name="Emotional Huggy" data-tags="dancing dance cry tears thumbs-up drama bittersweet">
             <img src="images/Huggy Collection 2026/Emotional Huggy.png" alt="Emotional Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Emotional Huggy</h5>
@@ -306,7 +369,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Family Huggy" data-tags="lab hug love babies small family warmth tender">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-lab-2" data-display-name="Family Huggy" data-tags="lab hug love babies small family warmth tender">
             <img src="images/Huggy Collection 2026/Family Huggy.png" alt="Family Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Family Huggy</h5>
@@ -316,7 +379,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Frustrated Huggy" data-tags="angry frustrated mad irritated bored annoyed vexed">
+          <div class="w-full flex flex-col" data-id="collection-2026__frustrated-huggy" data-display-name="Frustrated Huggy" data-tags="angry frustrated mad irritated bored annoyed vexed">
             <img src="images/Huggy Collection 2026/Frustrated Huggy.png" alt="Frustrated Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Frustrated Huggy</h5>
@@ -326,7 +389,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Huggy Pop" data-tags="pop animated gif loop motion">
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__huggy-pop" data-display-name="Huggy Pop" data-tags="pop animated gif loop motion">
             <img src="images/Huggy Collection 2026/Huggy Pop.gif" alt="Huggy Pop" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Pop</h5>
@@ -336,7 +399,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Game Jam Huggy" data-tags="game gaming controller jam play video-game console">
+          <div class="w-full flex flex-col" data-id="collection-2026__game-jam-huggy" data-display-name="Game Jam Huggy" data-tags="game gaming controller jam play video-game console">
             <img src="images/Huggy Collection 2026/Game Jam Huggy.png" alt="Game Jam Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Game Jam Huggy</h5>
@@ -346,7 +409,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Gaming Huggy" data-tags="gaming game controller play video-game smirk console">
+          <div class="w-full flex flex-col" data-id="collection-2026__gaming-huggy" data-display-name="Gaming Huggy" data-tags="gaming game controller play video-game smirk console">
             <img src="images/Huggy Collection 2026/Gaming Huggy.png" alt="Gaming Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Gaming Huggy</h5>
@@ -356,7 +419,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Global Huggy" data-tags="global world globe earth international geography travel">
+          <div class="w-full flex flex-col" data-id="collection-2026__global-huggy" data-display-name="Global Huggy" data-tags="global world globe earth international geography travel">
             <img src="images/Huggy Collection 2026/Global Huggy.png" alt="Global Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Global Huggy</h5>
@@ -366,7 +429,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="GPU Huggy" data-tags="gpu chip compute hardware graphics card ml">
+          <div class="w-full flex flex-col" data-id="collection-2026__gpu-huggy" data-display-name="GPU Huggy" data-tags="gpu chip compute hardware graphics card ml">
             <img src="images/Huggy Collection 2026/GPU Huggy.png" alt="GPU Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">GPU Huggy</h5>
@@ -376,7 +439,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Growing model Huggy" data-tags="growing model watering plant grow training nurture">
+          <div class="w-full flex flex-col" data-id="collection-2026__growing-model-huggy-3" data-display-name="Growing model Huggy" data-tags="growing model watering plant grow training nurture">
             <img src="images/Huggy Collection 2026/Growing model Huggy.png" alt="Growing model Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Growing model Huggy</h5>
@@ -386,7 +449,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Headphones Huggy" data-tags="headphones music audio listen sound song happy">
+          <div class="w-full flex flex-col" data-id="collection-2026__headphones-huggy" data-display-name="Headphones Huggy" data-tags="headphones music audio listen sound song happy">
             <img src="images/Huggy Collection 2026/Headphones Huggy.png" alt="Headphones Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Headphones Huggy</h5>
@@ -396,7 +459,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Horse Huggy" data-tags="horse costume mane animal zodiac year stallion">
+          <div class="w-full flex flex-col" data-id="collection-2026__horse-huggy" data-display-name="Horse Huggy" data-tags="horse costume mane animal zodiac year stallion">
             <img src="images/Huggy Collection 2026/Horse Huggy.png" alt="Horse Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Horse Huggy</h5>
@@ -406,7 +469,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Approved" data-tags="sad worried frown upset concerned down blue">
+          <div class="w-full flex flex-col" data-id="collection-2026__sad-huggy" data-display-name="Huggy Approved" data-tags="sad worried frown upset concerned down blue">
             <img src="images/Huggy Collection 2026/Huggy Approved.png" alt="Huggy Approved" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Approved</h5>
@@ -416,7 +479,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Chad" data-tags="yell shout angry mad scream frustrated loud">
+          <div class="w-full flex flex-col" data-id="collection-2026__yelling-huggy" data-display-name="Huggy Chad" data-tags="yell shout angry mad scream frustrated loud">
             <img src="images/Huggy Collection 2026/Huggy Chad.png" alt="Huggy Chad" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Chad</h5>
@@ -426,7 +489,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Super Huggy" data-tags="super hero fly confetti celebrate power fist energy">
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__super-huggy" data-display-name="Super Huggy" data-tags="super hero fly confetti celebrate power fist energy">
             <img src="images/Huggy Collection 2026/Super Huggy.png" alt="Super Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Super Huggy</h5>
@@ -436,7 +499,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Hi" data-tags="hi hello hey wave greeting welcome friendly">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-hi" data-display-name="Huggy Hi" data-tags="hi hello hey wave greeting welcome friendly">
             <img src="images/Huggy Collection 2026/Huggy Hi.png" alt="Huggy Hi" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Hi</h5>
@@ -446,7 +509,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Lawyer" data-tags="lawyer law justice scales court attorney suit legal">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-lawyer" data-display-name="Huggy Lawyer" data-tags="lawyer law justice scales court attorney suit legal">
             <img src="images/Huggy Collection 2026/Huggy Lawyer.png" alt="Huggy Lawyer" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Lawyer</h5>
@@ -456,7 +519,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Medic" data-tags="medic nurse doctor stethoscope health medical hospital">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-medic" data-display-name="Huggy Medic" data-tags="medic nurse doctor stethoscope health medical hospital">
             <img src="images/Huggy Collection 2026/Huggy Medic.png" alt="Huggy Medic" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Medic</h5>
@@ -466,7 +529,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Okay" data-tags="okay ok fine smile happy approve satisfied">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-okay" data-display-name="Huggy Okay" data-tags="okay ok fine smile happy approve satisfied">
             <img src="images/Huggy Collection 2026/Huggy Okay.png" alt="Huggy Okay" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Okay</h5>
@@ -476,7 +539,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Sunny hello" data-tags="sunny hello hi wave greeting friendly blue">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-sunny-hello" data-display-name="Huggy Sunny hello" data-tags="sunny hello hi wave greeting friendly blue">
             <img src="images/Huggy Collection 2026/Huggy Sunny hello.png" alt="Huggy Sunny hello" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Sunny hello</h5>
@@ -486,7 +549,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Sunny" data-tags="sunny wave happy hello blue background">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-sunny" data-display-name="Huggy Sunny" data-tags="sunny wave happy hello blue background">
             <img src="images/Huggy Collection 2026/Huggy Sunny.png" alt="Huggy Sunny" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Sunny</h5>
@@ -496,7 +559,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy the Pooh meme" data-tags="meme pooh sunglasses tuxedo smug cool fancy comparison">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-the-pooh-meme" data-display-name="Huggy the Pooh meme" data-tags="meme pooh sunglasses tuxedo smug cool fancy comparison">
             <img src="images/Huggy Collection 2026/Huggy the Pooh meme.png" alt="Huggy the Pooh meme" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy the Pooh meme</h5>
@@ -506,7 +569,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy Yolk" data-tags="yolk egg hatch born new shell baby chick">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-yolk" data-display-name="Huggy Yolk" data-tags="yolk egg hatch born new shell baby chick">
             <img src="images/Huggy Collection 2026/Huggy Yolk.png" alt="Huggy Yolk" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy Yolk</h5>
@@ -516,7 +579,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Judge Huggy" data-tags="judge law justice scales court robe wig legal">
+          <div class="w-full flex flex-col" data-id="collection-2026__judge-huggy" data-display-name="Judge Huggy" data-tags="judge law justice scales court robe wig legal">
             <img src="images/Huggy Collection 2026/Judge Huggy.png" alt="Judge Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Judge Huggy</h5>
@@ -526,7 +589,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Vibing Huggy" data-tags="vibing vibe chill shaka groove happy animated">
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__vibing-huggy" data-display-name="Vibing Huggy" data-tags="vibing vibe chill shaka groove happy animated">
             <img src="images/Huggy Collection 2026/Vibing Huggy.gif" alt="Vibing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Vibing Huggy</h5>
@@ -536,7 +599,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Karaoke Huggy" data-tags="karaoke sing microphone music song mic performance">
+          <div class="w-full flex flex-col" data-id="collection-2026__karaoke-huggy" data-display-name="Karaoke Huggy" data-tags="karaoke sing microphone music song mic performance">
             <img src="images/Huggy Collection 2026/Karaoke Huggy.png" alt="Karaoke Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Karaoke Huggy</h5>
@@ -546,7 +609,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Lab Huggy" data-tags="lab scientist test-tube science chemistry research experiment">
+          <div class="w-full flex flex-col" data-id="collection-2026__huggy-lab" data-display-name="Lab Huggy" data-tags="lab scientist test-tube science chemistry research experiment">
             <img src="images/Huggy Collection 2026/Lab Huggy.png" alt="Lab Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Lab Huggy</h5>
@@ -556,7 +619,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Leaning Huggy" data-tags="wave hello smile happy greet friendly">
+          <div class="w-full flex flex-col" data-id="collection-2026__karaoke-huggy-3" data-display-name="Leaning Huggy" data-tags="wave hello smile happy greet friendly">
             <img src="images/Huggy Collection 2026/Leaning Huggy.png" alt="Leaning Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Leaning Huggy</h5>
@@ -566,7 +629,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Learning Excited Huggy" data-tags="star stars amazed wow excited wave love">
+          <div class="w-full flex flex-col" data-id="collection-2026__star-eyes-wave-huggy" data-display-name="Learning Excited Huggy" data-tags="star stars amazed wow excited wave love">
             <img src="images/Huggy Collection 2026/Learning Excited Huggy.png" alt="Learning Excited Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Learning Excited Huggy</h5>
@@ -576,7 +639,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Measure Huggy" data-tags="guide magnifying search investigate question wonder">
+          <div class="w-full flex flex-col" data-id="collection-2026__guide-huggy-2" data-display-name="Measure Huggy" data-tags="guide magnifying search investigate question wonder">
             <img src="images/Huggy Collection 2026/Measure Huggy.png" alt="Measure Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Measure Huggy</h5>
@@ -586,7 +649,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Nervous Huggy" data-tags="smile happy joy open-mouth cheerful grin laugh">
+          <div class="w-full flex flex-col" data-id="collection-2026__smiling-huggy" data-display-name="Nervous Huggy" data-tags="smile happy joy open-mouth cheerful grin laugh">
             <img src="images/Huggy Collection 2026/Nervous Huggy.png" alt="Nervous Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Nervous Huggy</h5>
@@ -596,7 +659,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="OG Huggy" data-tags="default smile happy plain basic standard open">
+          <div class="w-full flex flex-col" data-id="collection-2026__default-huggy" data-display-name="OG Huggy" data-tags="default smile happy plain basic standard open">
             <img src="images/Huggy Collection 2026/OG Huggy.png" alt="OG Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">OG Huggy</h5>
@@ -606,7 +669,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Peeking Huggy" data-tags="peek peeking shy smile hello hide happy">
+          <div class="w-full flex flex-col" data-id="collection-2026__peeking-huggy" data-display-name="Peeking Huggy" data-tags="peek peeking shy smile hello hide happy">
             <img src="images/Huggy Collection 2026/Peeking Huggy.png" alt="Peeking Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Peeking Huggy</h5>
@@ -616,7 +679,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Running Huggy" data-tags="breathe deeply calm meditation relax yoga zen music">
+          <div class="w-full flex flex-col" data-id="collection-2026__breathing-huggy" data-display-name="Running Huggy" data-tags="breathe deeply calm meditation relax yoga zen music">
             <img src="images/Huggy Collection 2026/Running Huggy.png" alt="Running Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Running Huggy</h5>
@@ -626,7 +689,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-display-name="Viking Huggy" data-tags="viking horns braids warrior nordic peaceful hug mustache">
+          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__viking-huggy" data-display-name="Viking Huggy" data-tags="viking horns braids warrior nordic peaceful hug mustache">
             <img src="images/Huggy Collection 2026/Viking Huggy.png" alt="Viking Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Viking Huggy</h5>
@@ -636,7 +699,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Rushing Blinking Huggy" data-tags="rush run fast wink thumbs-up go speedy">
+          <div class="w-full flex flex-col" data-id="collection-2026__rushing-huggy" data-display-name="Rushing Blinking Huggy" data-tags="rush run fast wink thumbs-up go speedy">
             <img src="images/Huggy Collection 2026/Rushing Blinking Huggy.png" alt="Rushing Blinking Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Rushing Blinking Huggy</h5>
@@ -646,7 +709,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Secret Huggy" data-tags="wizard cowboy hat robe thumbs-up magic mysterious cool">
+          <div class="w-full flex flex-col" data-id="collection-2026__cowboy-wizard-huggy" data-display-name="Secret Huggy" data-tags="wizard cowboy hat robe thumbs-up magic mysterious cool">
             <img src="images/Huggy Collection 2026/Secret Huggy.png" alt="Secret Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Secret Huggy</h5>
@@ -656,7 +719,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Smug Huggy" data-tags="smug smirk knowing bored satisfied confident cool">
+          <div class="w-full flex flex-col" data-id="collection-2026__smug-huggy" data-display-name="Smug Huggy" data-tags="smug smirk knowing bored satisfied confident cool">
             <img src="images/Huggy Collection 2026/Smug Huggy.png" alt="Smug Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Smug Huggy</h5>
@@ -666,7 +729,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Snake Huggy" data-tags="snake lunar zodiac year costume reptile asian">
+          <div class="w-full flex flex-col" data-id="collection-2026__snake-huggy" data-display-name="Snake Huggy" data-tags="snake lunar zodiac year costume reptile asian">
             <img src="images/Huggy Collection 2026/Snake Huggy.png" alt="Snake Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Snake Huggy</h5>
@@ -676,7 +739,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Sprouting Huggy" data-tags="sprout plant growing head nature bored shy leaf">
+          <div class="w-full flex flex-col" data-id="collection-2026__sprouting-huggy" data-display-name="Sprouting Huggy" data-tags="sprout plant growing head nature bored shy leaf">
             <img src="images/Huggy Collection 2026/Sprouting Huggy.png" alt="Sprouting Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Sprouting Huggy</h5>
@@ -686,7 +749,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Super Excited Huggy" data-tags="star stars starry amazed wow excited sparkle love">
+          <div class="w-full flex flex-col" data-id="collection-2026__starry-eyes-huggy" data-display-name="Super Excited Huggy" data-tags="star stars starry amazed wow excited sparkle love">
             <img src="images/Huggy Collection 2026/Super Excited Huggy.png" alt="Super Excited Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Super Excited Huggy</h5>
@@ -696,7 +759,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Text Generation Wizard Huggy" data-tags="wizard text generation magic nlp staff spell language">
+          <div class="w-full flex flex-col" data-id="collection-2026__text-generation-wizard-huggy" data-display-name="Text Generation Wizard Huggy" data-tags="wizard text generation magic nlp staff spell language">
             <img src="images/Huggy Collection 2026/Text Generation Wizard Huggy.png" alt="Text Generation Wizard Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Text Generation Wizard Huggy</h5>
@@ -706,7 +769,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Tiptoe Huggy" data-tags="tiptoe sneak quiet shy creep stealth small">
+          <div class="w-full flex flex-col" data-id="collection-2026__tiptoe-huggy" data-display-name="Tiptoe Huggy" data-tags="tiptoe sneak quiet shy creep stealth small">
             <img src="images/Huggy Collection 2026/Tiptoe Huggy.png" alt="Tiptoe Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Tiptoe Huggy</h5>
@@ -716,7 +779,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Transformer Agent Huggy" data-tags="transformer agent binary code ai matrix visor tokens">
+          <div class="w-full flex flex-col" data-id="collection-2026__transformer-agent-huggy" data-display-name="Transformer Agent Huggy" data-tags="transformer agent binary code ai matrix visor tokens">
             <img src="images/Huggy Collection 2026/Transformer Agent Huggy.png" alt="Transformer Agent Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Transformer Agent Huggy</h5>
@@ -726,7 +789,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Video Huggy" data-tags="boxing rush fast video play media energy helmet">
+          <div class="w-full flex flex-col" data-id="collection-2026__boxing-huggy" data-display-name="Video Huggy" data-tags="boxing rush fast video play media energy helmet">
             <img src="images/Huggy Collection 2026/Video Huggy.png" alt="Video Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Video Huggy</h5>
@@ -736,7 +799,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Whistle Huggy" data-tags="whistle headphones music song tune calm audio">
+          <div class="w-full flex flex-col" data-id="collection-2026__whistle-huggy" data-display-name="Whistle Huggy" data-tags="whistle headphones music song tune calm audio">
             <img src="images/Huggy Collection 2026/Whistle Huggy.png" alt="Whistle Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Whistle Huggy</h5>
@@ -746,7 +809,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Wine Huggy" data-tags="wine drink glass alcohol relax shaka happy cheers">
+          <div class="w-full flex flex-col" data-id="collection-2026__wine-huggy" data-display-name="Wine Huggy" data-tags="wine drink glass alcohol relax shaka happy cheers">
             <img src="images/Huggy Collection 2026/Wine Huggy.png" alt="Wine Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Wine Huggy</h5>
@@ -756,7 +819,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Huggy blink Okay" data-tags="okay ok wink blink fine approve happy">
+          <div class="w-full flex flex-col" data-id="modern__huggy-blink-okay" data-display-name="Huggy blink Okay" data-tags="okay ok wink blink fine approve happy">
             <img src="images/modern Huggies/Huggy blink Okay.png" alt="Huggy blink Okay" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Huggy blink Okay</h5>
@@ -766,7 +829,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Lora Huggy" data-tags="lora bob haircut purse bag fashion fine-tune adapter">
+          <div class="w-full flex flex-col" data-id="modern__lora-huggy" data-display-name="Lora Huggy" data-tags="lora bob haircut purse bag fashion fine-tune adapter">
             <img src="images/modern Huggies/Lora Huggy.png" alt="Lora Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Lora Huggy</h5>
@@ -776,7 +839,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Optimum Huggy" data-tags="optimum weights barbell lift strong fitness gym performance">
+          <div class="w-full flex flex-col" data-id="modern__optimum-huggy" data-display-name="Optimum Huggy" data-tags="optimum weights barbell lift strong fitness gym performance">
             <img src="images/modern Huggies/Optimum Huggy.png" alt="Optimum Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Optimum Huggy</h5>
@@ -786,7 +849,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Robot Huggy" data-tags="robot camera robotics love machine device tech">
+          <div class="w-full flex flex-col" data-id="modern__robot-huggy" data-display-name="Robot Huggy" data-tags="robot camera robotics love machine device tech">
             <img src="images/modern Huggies/Robot Huggy.png" alt="Robot Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Robot Huggy</h5>
@@ -803,8 +866,8 @@
         <div class="flex items-center mb-5">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Outlined Huggies</div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
-          <div class="w-full flex flex-col" data-display-name="Catching Huggy" data-tags="catch books stack fall save rescue papers data">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid">
+          <div class="w-full flex flex-col" data-id="outlined__catching-huggy" data-display-name="Catching Huggy" data-tags="catch books stack fall save rescue papers data">
             <img src="images/Outlined Huggies/Catching Huggy.png" alt="Catching Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Catching Huggy</h5>
@@ -814,7 +877,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Comic Huggy" data-tags="comic art paint brush palette artist beret draw">
+          <div class="w-full flex flex-col" data-id="outlined__comic-huggy" data-display-name="Comic Huggy" data-tags="comic art paint brush palette artist beret draw">
             <img src="images/Outlined Huggies/Comic Huggy.png" alt="Comic Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Comic Huggy</h5>
@@ -824,7 +887,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Curious Huggy" data-tags="curious magnifying search investigate question wonder examine">
+          <div class="w-full flex flex-col" data-id="outlined__curious-huggy" data-display-name="Curious Huggy" data-tags="curious magnifying search investigate question wonder examine">
             <img src="images/Outlined Huggies/Curious Huggy.png" alt="Curious Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Curious Huggy</h5>
@@ -834,7 +897,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Diffusor guide Huggy" data-tags="diffusion diffusor guide ruler crystal model tutorial">
+          <div class="w-full flex flex-col" data-id="outlined__diffusor-guide-huggy" data-display-name="Diffusor guide Huggy" data-tags="diffusion diffusor guide ruler crystal model tutorial">
             <img src="images/Outlined Huggies/Diffusor guide Huggy.png" alt="Diffusor guide Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Diffusor guide Huggy</h5>
@@ -844,7 +907,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Fishing Huggy" data-tags="fishing rod fish hat calm leisure outdoor river">
+          <div class="w-full flex flex-col" data-id="outlined__fishing-huggy" data-display-name="Fishing Huggy" data-tags="fishing rod fish hat calm leisure outdoor river">
             <img src="images/Outlined Huggies/Fishing Huggy.png" alt="Fishing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Fishing Huggy</h5>
@@ -854,7 +917,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Global Huggy" data-tags="global world globe earth international geography travel">
+          <div class="w-full flex flex-col" data-id="outlined__global-huggy" data-display-name="Global Huggy" data-tags="global world globe earth international geography travel">
             <img src="images/Outlined Huggies/Global Huggy.png" alt="Global Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Global Huggy</h5>
@@ -864,7 +927,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="GPU Huggy" data-tags="gpu chip compute hardware graphics card ml training">
+          <div class="w-full flex flex-col" data-id="outlined__gpu-huggy" data-display-name="GPU Huggy" data-tags="gpu chip compute hardware graphics card ml training">
             <img src="images/Outlined Huggies/GPU Huggy.png" alt="GPU Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">GPU Huggy</h5>
@@ -874,7 +937,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Greeting Huggy left" data-tags="greeting wave hi hello two thumbs-up left friends">
+          <div class="w-full flex flex-col" data-id="outlined__greeting-huggy-left" data-display-name="Greeting Huggy left" data-tags="greeting wave hi hello two thumbs-up left friends">
             <img src="images/Outlined Huggies/Greeting Huggy left.png" alt="Greeting Huggy left" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Greeting Huggy left</h5>
@@ -884,7 +947,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Greeting Huggy right" data-tags="greeting wave hi hello right smile friendly">
+          <div class="w-full flex flex-col" data-id="outlined__greeting-huggy-right" data-display-name="Greeting Huggy right" data-tags="greeting wave hi hello right smile friendly">
             <img src="images/Outlined Huggies/Greeting Huggy right.png" alt="Greeting Huggy right" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Greeting Huggy right</h5>
@@ -894,7 +957,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Growing model Huggy" data-tags="growing model watering plant grow training nurture ml">
+          <div class="w-full flex flex-col" data-id="outlined__growing-model-huggy" data-display-name="Growing model Huggy" data-tags="growing model watering plant grow training nurture ml">
             <img src="images/Outlined Huggies/Growing model Huggy.png" alt="Growing model Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Growing model Huggy</h5>
@@ -904,7 +967,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Guide Huggy" data-tags="guide ruler tutorial howto thermometer crystal smug expert">
+          <div class="w-full flex flex-col" data-id="outlined__guide-huggy" data-display-name="Guide Huggy" data-tags="guide ruler tutorial howto thermometer crystal smug expert">
             <img src="images/Outlined Huggies/Guide Huggy.png" alt="Guide Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Guide Huggy</h5>
@@ -914,7 +977,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Loving modelndataset Huggy" data-tags="love model dataset aquarium tank data ml fish">
+          <div class="w-full flex flex-col" data-id="outlined__loving-modelndataset-huggy" data-display-name="Loving modelndataset Huggy" data-tags="love model dataset aquarium tank data ml fish">
             <img src="images/Outlined Huggies/Loving modelndataset Huggy.png" alt="Loving modelndataset Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Loving modelndataset Huggy</h5>
@@ -924,7 +987,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Manager Huggy" data-tags="manager clipboard checklist tasks todo organize work list">
+          <div class="w-full flex flex-col" data-id="outlined__manager-huggy" data-display-name="Manager Huggy" data-tags="manager clipboard checklist tasks todo organize work list">
             <img src="images/Outlined Huggies/Manager Huggy.png" alt="Manager Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Manager Huggy</h5>
@@ -934,7 +997,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Paper Huggy" data-tags="paper scroll research publication diploma backpack academic">
+          <div class="w-full flex flex-col" data-id="outlined__paper-huggy" data-display-name="Paper Huggy" data-tags="paper scroll research publication diploma backpack academic">
             <img src="images/Outlined Huggies/Paper Huggy.png" alt="Paper Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Paper Huggy</h5>
@@ -944,7 +1007,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Rocket Huggy" data-tags="rocket launch fly space ship go fast startup">
+          <div class="w-full flex flex-col" data-id="outlined__rocket-huggy" data-display-name="Rocket Huggy" data-tags="rocket launch fly space ship go fast startup">
             <img src="images/Outlined Huggies/Rocket Huggy.png" alt="Rocket Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Rocket Huggy</h5>
@@ -954,7 +1017,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Scan Huggy" data-tags="scan laser visor binary data vision cyclops scanner">
+          <div class="w-full flex flex-col" data-id="outlined__scan-huggy" data-display-name="Scan Huggy" data-tags="scan laser visor binary data vision cyclops scanner">
             <img src="images/Outlined Huggies/Scan Huggy.png" alt="Scan Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Scan Huggy</h5>
@@ -964,7 +1027,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="Violinist Huggy" data-tags="violin violinist music beret baguette play french instrument">
+          <div class="w-full flex flex-col" data-id="outlined__violinist-huggy" data-display-name="Violinist Huggy" data-tags="violin violinist music beret baguette play french instrument">
             <img src="images/Outlined Huggies/Violinist Huggy.png" alt="Violinist Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">Violinist Huggy</h5>
@@ -974,7 +1037,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col" data-display-name="X-ray Huggy" data-tags="xray x-ray metadata labels task language license card">
+          <div class="w-full flex flex-col" data-id="outlined__x-ray-huggy" data-display-name="X-ray Huggy" data-tags="xray x-ray metadata labels task language license card">
             <img src="images/Outlined Huggies/X-ray Huggy.png" alt="X-ray Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">X-ray Huggy</h5>
@@ -986,6 +1049,10 @@
           </div>
         </div>
       </section>
+      </div>
     </div>
+
+    <script id="search-index" type="application/json">[{"id":"modern__huggy-blink-okay","name":"Huggy blink Okay","section":"Modern Huggies","tags":["okay","ok","wink","blink","fine","approve","happy"],"syn":["alright","agreed"],"attr":["winking","default","open_palm","happy","playful","reaction","yellow"],"desc":"Yellow Huggy with one eye winking and an OK hand sign, smiling.","file":"Huggy blink Okay.png"},{"id":"modern__lora-huggy","name":"Lora Huggy","section":"Modern Huggies","tags":["lora","bob","haircut","purse","bag","fashion","fine-tune","adapter"],"syn":["finetune","stylish"],"attr":["happy_open_mouth","default","waving","surprised","happy","fashion","ml","yellow","brown","purple","brown bob","purse","exclamation"],"desc":"Yellow Huggy with a brown bob haircut, surprised expression, and a purple handbag.","file":"Lora Huggy.png"},{"id":"modern__optimum-huggy","name":"Optimum Huggy","section":"Modern Huggies","tags":["optimum","weights","barbell","lift","strong","fitness","gym","performance"],"syn":["powerlift","strength"],"attr":["happy_open_mouth","default","holding","strong","confident","fitness","performance","yellow","blue","purple","weightlifter belt","barbell"],"desc":"Yellow Huggy lifting a barbell with two purple cubes, wearing an Optimum belt.","file":"Optimum Huggy.png"},{"id":"modern__robot-huggy","name":"Robot Huggy","section":"Modern Huggies","tags":["robot","camera","robotics","love","machine","device","tech"],"syn":["bot","android"],"attr":["starry_eyes","default","hugging","loving","excited","robotics","yellow","black","red","robot camera"],"desc":"Yellow Huggy with sparkling eyes hugging a black camera/robot device with a red heart screen.","file":"Robot Huggy.png"},{"id":"outlined__catching-huggy","name":"Catching Huggy","section":"Outlined Huggies","tags":["catch","books","stack","fall","save","rescue","papers","data"],"syn":["grab","snag"],"attr":["happy_open_mouth","default","holding","alert","happy","work","yellow","purple","red","blue","books","motion lines"],"desc":"Outlined Huggy catching a stack of falling colorful books or papers in its arms.","file":"Catching Huggy.png"},{"id":"outlined__comic-huggy","name":"Comic Huggy","section":"Outlined Huggies","tags":["comic","art","paint","brush","palette","artist","beret","draw"],"syn":["painter","illustrator"],"attr":["happy_open_mouth","default","holding","creative","playful","art","yellow","blue","red","beret","paintbrush","palette"],"desc":"Outlined Huggy with a beret holding an oversized paintbrush dripping red paint and a paint palette.","file":"Comic Huggy.png"},{"id":"outlined__curious-huggy","name":"Curious Huggy","section":"Outlined Huggies","tags":["curious","magnifying","search","investigate","question","wonder","examine"],"syn":["inquisitive","explore"],"attr":["winking","default","holding","curious","puzzled","search","yellow","pink","magnifying glass","question mark"],"desc":"Outlined Huggy holding a magnifying glass to one eye with a question mark, examining a pink object.","file":"Curious Huggy.png"},{"id":"outlined__diffusor-guide-huggy","name":"Diffusor guide Huggy","section":"Outlined Huggies","tags":["diffusion","diffusor","guide","ruler","crystal","model","tutorial"],"syn":["diffuser","howto"],"attr":["smug","default","holding","smug","knowing","diffusion","guide","yellow","blue","ruler","crystal"],"desc":"Outlined Huggy with a smug grin holding a thermometer-like ruler with a blue diffusion crystal.","file":"Diffusor guide Huggy.png"},{"id":"outlined__fishing-huggy","name":"Fishing Huggy","section":"Outlined Huggies","tags":["fishing","rod","fish","hat","calm","leisure","outdoor","river"],"syn":["angler","catch"],"attr":["happy_open_mouth","default","holding","calm","happy","leisure","yellow","green","red","bucket hat","fishing rod","music note"],"desc":"Outlined Huggy in green bucket hat fishing with a rod and red bobber in water, music notes nearby.","file":"Fishing Huggy.png"},{"id":"outlined__global-huggy","name":"Global Huggy","section":"Outlined Huggies","tags":["global","world","globe","earth","international","geography","travel"],"syn":["worldwide","planet"],"attr":["starry_eyes","default","pointing","excited","curious","global","world","yellow","blue","globe"],"desc":"Outlined Huggy with starry eyes pointing at a blue globe on a stand.","file":"Global Huggy.png"},{"id":"outlined__gpu-huggy","name":"GPU Huggy","section":"Outlined Huggies","tags":["gpu","chip","compute","hardware","graphics","card","ml","training"],"syn":["graphics","processor"],"attr":["starry_eyes","default","hugging","excited","tech","hardware","compute","yellow","black","teal","gpu chip","motion lines"],"desc":"Outlined Huggy with sparkle eyes hugging a black GPU chip with teal core, smiling.","file":"GPU Huggy.png"},{"id":"outlined__greeting-huggy-left","name":"Greeting Huggy left","section":"Outlined Huggies","tags":["greeting","wave","hi","hello","two","thumbs-up","left","friends"],"syn":["welcome","duo"],"attr":["happy_open_mouth","default","waving","friendly","happy","greeting","yellow"],"desc":"Two outlined Huggies side by side, one with a thumbs up and the other waving.","file":"Greeting Huggy left.png"},{"id":"outlined__greeting-huggy-right","name":"Greeting Huggy right","section":"Outlined Huggies","tags":["greeting","wave","hi","hello","right","smile","friendly"],"syn":["welcome","salute"],"attr":["happy_open_mouth","tilted_right","waving","friendly","happy","greeting","yellow","motion lines"],"desc":"Outlined Huggy facing right with mouth open and one hand waving from behind.","file":"Greeting Huggy right.png"},{"id":"outlined__growing-model-huggy","name":"Growing model Huggy","section":"Outlined Huggies","tags":["growing","model","watering","plant","grow","training","nurture","ml"],"syn":["cultivate","develop"],"attr":["happy_open_mouth","default","holding","nurturing","happy","model-training","growth","yellow","blue","green","watering can","water drops"],"desc":"Outlined Huggy watering a plant pot growing a blue model crystal with a blue watering can.","file":"Growing model Huggy.png"},{"id":"outlined__guide-huggy","name":"Guide Huggy","section":"Outlined Huggies","tags":["guide","ruler","tutorial","howto","thermometer","crystal","smug","expert"],"syn":["instruction","manual"],"attr":["smug","default","holding","confident","knowing","guide","tutorial","yellow","blue","ruler","crystal"],"desc":"Outlined Huggy with a smug expression holding a large thermometer-style ruler with a blue crystal.","file":"Guide Huggy.png"},{"id":"outlined__loving-modelndataset-huggy","name":"Loving modelndataset Huggy","section":"Outlined Huggies","tags":["love","model","dataset","aquarium","tank","data","ml","fish"],"syn":["adore","datapool"],"attr":["peaceful_closed","leaning_right","open_palm","loving","calm","model","dataset","yellow","purple","red","blue","aquarium","heart"],"desc":"Outlined Huggy with closed eyes leaning lovingly against an aquarium of model and dataset cubes.","file":"Loving modelndataset Huggy.png"},{"id":"outlined__manager-huggy","name":"Manager Huggy","section":"Outlined Huggies","tags":["manager","clipboard","checklist","tasks","todo","organize","work","list"],"syn":["pm","supervisor"],"attr":["happy_open_mouth","default","holding","organized","happy","work","management","yellow","orange","clipboard"],"desc":"Outlined Huggy holding an orange clipboard with a checklist, waving with the other hand.","file":"Manager Huggy.png"},{"id":"outlined__paper-huggy","name":"Paper Huggy","section":"Outlined Huggies","tags":["paper","scroll","research","publication","diploma","backpack","academic"],"syn":["thesis","report"],"attr":["happy_open_mouth","default","holding","proud","happy","research","academic","yellow","blue","backpack","scroll","paper"],"desc":"Outlined Huggy with blue backpack holding a rolled-up scroll/paper diploma.","file":"Paper Huggy.png"},{"id":"outlined__rocket-huggy","name":"Rocket Huggy","section":"Outlined Huggies","tags":["rocket","launch","fly","space","ship","go","fast","startup"],"syn":["liftoff","blastoff"],"attr":["happy_open_mouth","tilted_right","fist_forward","excited","ambitious","launch","space","yellow","white","blue","orange","backpack","rocket","flames"],"desc":"Outlined Huggy with backpack flying inside a white rocket with orange flames.","file":"Rocket Huggy.png"},{"id":"outlined__scan-huggy","name":"Scan Huggy","section":"Outlined Huggies","tags":["scan","laser","visor","binary","data","vision","cyclops","scanner"],"syn":["xray","beam"],"attr":["unknown","default","pointing","focused","tech","scan","data","yellow","red","black","laser visor","visor","binary stream"],"desc":"Outlined Huggy wearing a red laser visor projecting binary code in a red beam.","file":"Scan Huggy.png"},{"id":"outlined__violinist-huggy","name":"Violinist Huggy","section":"Outlined Huggies","tags":["violin","violinist","music","beret","baguette","play","french","instrument"],"syn":["fiddle","musician"],"attr":["peaceful_closed","default","holding","artistic","calm","music","yellow","blue","brown","beret","violin","baguette bow","music note"],"desc":"Outlined Huggy with blue beret playing a brown violin with a baguette as a bow, music notes floating.","file":"Violinist Huggy.png"},{"id":"outlined__x-ray-huggy","name":"X-ray Huggy","section":"Outlined Huggies","tags":["xray","x-ray","metadata","labels","task","language","license","card"],"syn":["analyze","inspect"],"attr":["winking","default","open_palm","analytical","happy","metadata","model-card","yellow","white","blue","labels"],"desc":"Outlined Huggy showing a yellow/white split-color body with task, language, and license labels.","file":"X-ray Huggy.png"},{"id":"collection-2026__acedemic-huggy","name":"Acedemic Huggy","section":"Modern Huggies","tags":["academic","graduation","cap","school","teacher","professor","education"],"syn":["scholar","diploma"],"attr":["happy_open_mouth","default","pointing","proud","smart","education","academic","yellow","purple","blue","graduation cap","pointer"],"desc":"Yellow Huggy wearing a graduation cap, smiling and holding a blue pointer stick.","file":"Acedemic Huggy.png"},{"id":"collection-2026__breathing-huggy","name":"Running Huggy","section":"Modern Huggies","tags":["breathe","deeply","calm","meditation","relax","yoga","zen","music"],"syn":["mindful","exhale"],"attr":["peaceful_closed","default","open_palm","calm","relaxed","meditation","yellow","purple","music note"],"desc":"Yellow Huggy with closed eyes and pursed lips, hands raised in dance pose with a music note.","file":"Running Huggy.png"},{"id":"collection-2026__computer-vision-huggy","name":"computer vision Huggy","section":"Modern Huggies","tags":["vision","computer-vision","ml","ai","book","study","labeling","annotation"],"syn":["cv","labels"],"attr":["happy_open_mouth","default","holding","focused","happy","ml","computer-vision","yellow","blue","red","book","pencil","emoji cards"],"desc":"Yellow Huggy reading a blue book while holding a pencil and emoji cards.","file":"computer vision Huggy.png"},{"id":"collection-2026__d-huggy","name":"D Huggy","section":"Modern Huggies","tags":["detective","magnifying","investigate","spy","search","clue","curious"],"syn":["sherlock","sleuth"],"attr":["winking","default","holding","curious","investigative","detective","yellow","pink","magnifying glass","magnifying glass","eraser","question mark"],"desc":"Yellow Huggy as a detective with a magnifying glass, headphones, and a pink eraser.","file":"D Huggy.png"},{"id":"collection-2026__dancing-huggy","name":"Dancing Huggy","section":"Modern Huggies","tags":["dancing","dance","music","whistle","groove","happy","rhythm"],"syn":["jam","boogie"],"attr":["peaceful_closed","default","open_palm","fun","happy","dance","music","yellow","purple","music note"],"desc":"Yellow Huggy with closed eyes whistling a tune, hands raised in playful dance gesture.","file":"Dancing Huggy.png"},{"id":"collection-2026__dancing-huggy-3","name":"Emotional Huggy","section":"Modern Huggies","tags":["dancing","dance","cry","tears","thumbs-up","drama","bittersweet"],"syn":["weep","approve"],"attr":["crying","default","thumbs_up","bittersweet","dramatic","dance","drama","yellow","blue","tears","sparkle"],"desc":"Yellow Huggy with crying-tear face giving a thumbs up while waving the other hand.","file":"Emotional Huggy.png"},{"id":"collection-2026__doodle-huggy","name":"Doodle Huggy","section":"Modern Huggies","tags":["doodle","sketch","drawing","messy","music","fun","scribble"],"syn":["doodled","handdrawn"],"attr":["happy_open_mouth","default","open_palm","fun","playful","doodle","art","yellow","pink","music note"],"desc":"Hand-drawn doodle style Huggy with messy yellow hair and a music note.","file":"Doodle Huggy.gif"},{"id":"collection-2026__dragon-huggy","name":"Dragon Huggy","section":"Modern Huggies","tags":["dragon","costume","lunar","new-year","mythical","antlers","zodiac"],"syn":["chinese-new-year","wyrm"],"attr":["happy_open_mouth","default","open_palm","festive","playful","lunar-new-year","mythical","yellow","green","pink","dragon costume"],"desc":"Yellow Huggy wearing a green dragon-head costume with antlers and pink scales.","file":"Dragon Huggy.png"},{"id":"collection-2026__boxing-huggy","name":"Video Huggy","section":"Modern Huggies","tags":["boxing","rush","fast","video","play","media","energy","helmet"],"syn":["sport","punch"],"attr":["happy_open_mouth","rushing_left","holding","energetic","happy","sports","media","yellow","red","brown","blue","boxing helmet","video player","motion lines"],"desc":"Yellow Huggy in red and brown boxing helmet rushing forward with hands hugging a video player.","file":"Video Huggy.png"},{"id":"collection-2026__rushing-huggy","name":"Rushing Blinking Huggy","section":"Modern Huggies","tags":["rush","run","fast","wink","thumbs-up","go","speedy"],"syn":["dash","hurry"],"attr":["winking","rushing_left","thumbs_up","energetic","happy","motion","yellow","sparkle"],"desc":"Yellow Huggy rushing left with one eye winking and a thumbs up gesture.","file":"Rushing Blinking Huggy.png"},{"id":"collection-2026__athlete-frowning-huggy","name":"Athlete Huggy","section":"Modern Huggies","tags":["athlete","rush","run","frown","sport","wristband","tired","effort"],"syn":["jog","exhausted"],"attr":["sad","rushing_left","default","determined","frustrated","sports","yellow","blue","wristband","motion lines"],"desc":"Yellow Huggy in blue wristband rushing left with a small frown and a closed mouth.","file":"Athlete Huggy.png"},{"id":"collection-2026__sprouting-huggy","name":"Sprouting Huggy","section":"Modern Huggies","tags":["sprout","plant","growing","head","nature","bored","shy","leaf"],"syn":["seedling","bud"],"attr":["bored","tilted_down","default","calm","shy","growth","nature","yellow","green","brown","sprout","motion lines"],"desc":"Yellow Huggy with a small green sprout growing from its head, looking down at folded hands.","file":"Sprouting Huggy.png"},{"id":"collection-2026__gaming-huggy","name":"Gaming Huggy","section":"Modern Huggies","tags":["gaming","game","controller","play","video-game","smirk","console"],"syn":["esports","gamepad"],"attr":["smug","default","holding","focused","smug","gaming","yellow","black","controller"],"desc":"Yellow Huggy with smug smirk holding a black video game controller in both hands.","file":"Gaming Huggy.png"},{"id":"collection-2026__peeking-huggy","name":"Peeking Huggy","section":"Modern Huggies","tags":["peek","peeking","shy","smile","hello","hide","happy"],"syn":["peep","bashful"],"attr":["happy_open_mouth","default","open_palm","shy","happy","greeting","yellow"],"desc":"Yellow Huggy peeking out shyly with both hands raised, smiling.","file":"Peeking Huggy.png"},{"id":"collection-2026__tiptoe-huggy","name":"Tiptoe Huggy","section":"Modern Huggies","tags":["tiptoe","sneak","quiet","shy","creep","stealth","small"],"syn":["sneaky","stealthy"],"attr":["closed_smile","tilted_left","default","sneaky","shy","sneak","yellow","motion lines"],"desc":"Yellow Huggy tiptoeing left with a tiny smile and pursed mouth, hands clasped.","file":"Tiptoe Huggy.png"},{"id":"collection-2026__game-jam-huggy","name":"Game Jam Huggy","section":"Modern Huggies","tags":["game","gaming","controller","jam","play","video-game","console"],"syn":["esports","gamepad"],"attr":["winking","default","holding","fun","competitive","gaming","yellow","controller","sparkles"],"desc":"Two yellow Huggies sitting together holding video game controllers, one winking.","file":"Game Jam Huggy.png"},{"id":"collection-2026__global-huggy","name":"Global Huggy","section":"Modern Huggies","tags":["global","world","globe","earth","international","geography","travel"],"syn":["worldwide","planet"],"attr":["starry_eyes","default","pointing","excited","curious","global","world","yellow","blue","globe"],"desc":"Outlined Huggy with starry eyes pointing at a blue globe on a stand.","file":"Global Huggy.png"},{"id":"collection-2026__gpu-huggy","name":"GPU Huggy","section":"Modern Huggies","tags":["gpu","chip","compute","hardware","graphics","card","ml"],"syn":["graphics","processor"],"attr":["starry_eyes","default","hugging","excited","tech","hardware","compute","yellow","black","teal","gpu chip","motion lines"],"desc":"Outlined Huggy hugging a black GPU chip with a teal core.","file":"GPU Huggy.png"},{"id":"collection-2026__growing-model-huggy","name":"Discovery Huggy","section":"Modern Huggies","tags":["growing","model","watering","plant","grow","training","nurture","ml"],"syn":["cultivate","develop"],"attr":["happy_open_mouth","default","holding","nurturing","happy","model-training","growth","yellow","blue","green","watering can","water drops"],"desc":"Outlined Huggy watering a plant pot growing a blue model crystal.","file":"Discovery Huggy.png"},{"id":"collection-2026__growing-model-huggy-2","name":"Discover Dataset Huggy","section":"Modern Huggies","tags":["growing","model","guide","ruler","crystal","smug","training"],"syn":["develop","manual"],"attr":["smug","default","holding","confident","knowing","model-training","guide","yellow","blue","ruler","crystal"],"desc":"Yellow Huggy with smug smirk holding a thermometer-style ruler with a blue crystal.","file":"Discover Dataset Huggy.png"},{"id":"collection-2026__growing-model-huggy-3","name":"Growing model Huggy","section":"Modern Huggies","tags":["growing","model","watering","plant","grow","training","nurture"],"syn":["cultivate","develop"],"attr":["happy_open_mouth","default","holding","nurturing","happy","model-training","growth","yellow","blue","green","watering can","crystal","water drops"],"desc":"Yellow Huggy watering a model crystal sprouting from a plant pot, looking joyful.","file":"Growing model Huggy.png"},{"id":"collection-2026__guide-huggy","name":"Agent Huggy","section":"Modern Huggies","tags":["guide","ruler","tutorial","howto","thermometer","crystal","smug"],"syn":["instruction","manual"],"attr":["smug","default","holding","confident","knowing","guide","tutorial","yellow","blue","ruler","crystal"],"desc":"Outlined Huggy with a smug expression holding a large thermometer-ruler with crystal.","file":"Agent Huggy.png"},{"id":"collection-2026__guide-huggy-2","name":"Measure Huggy","section":"Modern Huggies","tags":["guide","magnifying","search","investigate","question","wonder"],"syn":["inquisitive","explore"],"attr":["winking","default","holding","curious","puzzled","search","guide","yellow","pink","blue","magnifying glass","question mark"],"desc":"Outlined Huggy with magnifying glass eye looking with curiosity, question mark above.","file":"Measure Huggy.png"},{"id":"collection-2026__viking-huggy","name":"Viking Huggy","section":"Modern Huggies","tags":["viking","horns","braids","warrior","nordic","peaceful","hug","mustache"],"syn":["norse","berserker"],"attr":["peaceful_closed","leaning_right","hugging","calm","fierce","nordic","warrior","yellow","red","white","red braids","mustache","rabbit doll"],"desc":"Yellow Huggy with red braided hair and mustache holding a black-and-white rabbit doll.","file":"Viking Huggy.png"},{"id":"collection-2026__dj-huggy","name":"DJ Huggy","section":"Modern Huggies","tags":["dj","headphones","music","point","lean","audio","sound","song"],"syn":["disc-jockey","beats"],"attr":["happy_open_mouth","leaning_left","pointing","cool","happy","music","yellow","blue","headphones"],"desc":"Yellow Huggy wearing big blue headphones, leaning and pointing with a wide smile.","file":"DJ Huggy.png"},{"id":"collection-2026__horse-huggy","name":"Horse Huggy","section":"Modern Huggies","tags":["horse","costume","mane","animal","zodiac","year","stallion"],"syn":["pony","equine"],"attr":["happy_open_mouth","default","open_palm","festive","playful","zodiac","costume","yellow","brown","black","horse costume","black mane","sparkle"],"desc":"Yellow Huggy wearing a brown horse-head costume with flowing black mane.","file":"Horse Huggy.png"},{"id":"collection-2026__huggy-chef","name":"Chef Huggy","section":"Modern Huggies","tags":["chef","cook","kitchen","hat","food","baking","cooking","sweet"],"syn":["baker","cuisine"],"attr":["starry_eyes","default","open_palm","passionate","happy","cooking","food","yellow","white","chef hat","sugar cube","sparkles","hearts"],"desc":"Yellow Huggy wearing a tall white chef's hat with a small sugar cube on a tray.","file":"Chef Huggy.png"},{"id":"collection-2026__huggy-hi","name":"Huggy Hi","section":"Modern Huggies","tags":["hi","hello","hey","wave","greeting","welcome","friendly"],"syn":["howdy","salute"],"attr":["happy_open_mouth","default","waving","friendly","happy","greeting","yellow"],"desc":"Yellow Huggy with a wide smile and both hands raised in a friendly greeting.","file":"Huggy Hi.png"},{"id":"collection-2026__huggy-lab","name":"Lab Huggy","section":"Modern Huggies","tags":["lab","scientist","test-tube","science","chemistry","research","experiment"],"syn":["chemist","researcher"],"attr":["happy_open_mouth","default","holding","curious","scientific","science","yellow","white","teal","lab coat","test tube"],"desc":"Yellow Huggy in a white lab coat holding up a teal test tube.","file":"Lab Huggy.png"},{"id":"collection-2026__huggy-lab-2","name":"Family Huggy","section":"Modern Huggies","tags":["lab","hug","love","babies","small","family","warmth","tender"],"syn":["embrace","cuddle"],"attr":["peaceful_closed","default","hugging","loving","warm","family","hug","yellow","small huggies"],"desc":"Yellow Huggy with closed eyes hugging two smaller Huggies tenderly.","file":"Family Huggy.png"},{"id":"collection-2026__monopoly-huggy","name":"Assistant Huggy","section":"Modern Huggies","tags":["monopoly","rich","tuxedo","mustache","monocle","boss","ceo","fancy"],"syn":["wealthy","tycoon"],"attr":["smug","default","open_palm","wealthy","smug","business","rich","yellow","black","white","monocle","mustache","tuxedo","monocle"],"desc":"Yellow Huggy with mustache, monocle, and tuxedo, hands raised in a Monopoly-man pose.","file":"Assistant Huggy.png"},{"id":"collection-2026__huggy-lawyer","name":"Huggy Lawyer","section":"Modern Huggies","tags":["lawyer","law","justice","scales","court","attorney","suit","legal"],"syn":["counsel","barrister"],"attr":["happy_open_mouth","default","holding","formal","happy","law","justice","yellow","black","brown","suit","scales","handkerchief"],"desc":"Yellow Huggy in black suit holding scales of justice and a white napkin/handkerchief.","file":"Huggy Lawyer.png"},{"id":"collection-2026__judge-huggy","name":"Judge Huggy","section":"Modern Huggies","tags":["judge","law","justice","scales","court","robe","wig","legal"],"syn":["magistrate","verdict"],"attr":["peaceful_closed","default","holding","calm","wise","law","justice","yellow","white","brown","judicial wig","robe","scales"],"desc":"Yellow Huggy in white judicial robe and wig, eyes closed, holding scales of justice.","file":"Judge Huggy.png"},{"id":"collection-2026__baguette-violinist-huggy","name":"Baguette Violinist Huggy","section":"Modern Huggies","tags":["violin","baguette","music","french","play","instrument","bread"],"syn":["fiddle","musician"],"attr":["peaceful_closed","default","holding","artistic","calm","music","french","yellow","brown","violin","baguette bow"],"desc":"Yellow Huggy with closed eyes playing a brown violin using a baguette as the bow.","file":"Baguette Violinist Huggy.png"},{"id":"collection-2026__huggy-medic","name":"Huggy Medic","section":"Modern Huggies","tags":["medic","nurse","doctor","stethoscope","health","medical","hospital"],"syn":["physician","healthcare"],"attr":["happy_open_mouth","default","holding","caring","happy","medical","yellow","white","red","nurse cap","stethoscope"],"desc":"Yellow Huggy with a white nurse cap and red cross, holding a stethoscope.","file":"Huggy Medic.png"},{"id":"collection-2026__headphones-huggy","name":"Headphones Huggy","section":"Modern Huggies","tags":["headphones","music","audio","listen","sound","song","happy"],"syn":["headset","beats"],"attr":["happy_open_mouth","default","open_palm","happy","musical","music","yellow","blue","headphones"],"desc":"Yellow Huggy wearing big blue over-ear headphones, smiling with palms forward.","file":"Headphones Huggy.png"},{"id":"collection-2026__whistle-huggy","name":"Whistle Huggy","section":"Modern Huggies","tags":["whistle","headphones","music","song","tune","calm","audio"],"syn":["humming","melody"],"attr":["peaceful_closed","default","open_palm","calm","musical","music","yellow","blue","purple","headphones","music note"],"desc":"Yellow Huggy with closed eyes whistling a tune while wearing blue headphones.","file":"Whistle Huggy.png"},{"id":"collection-2026__starry-eyes-huggy","name":"Super Excited Huggy","section":"Modern Huggies","tags":["star","stars","starry","amazed","wow","excited","sparkle","love"],"syn":["dazzled","wonder"],"attr":["starry_eyes","default","open_palm","excited","amazed","reaction","yellow","sparkles"],"desc":"Yellow Huggy with star-shaped sparkle eyes and a wide open-mouth smile.","file":"Super Excited Huggy.png"},{"id":"collection-2026__smiling-huggy","name":"Nervous Huggy","section":"Modern Huggies","tags":["smile","happy","joy","open-mouth","cheerful","grin","laugh"],"syn":["glad","smiley"],"attr":["happy_open_mouth","default","open_palm","happy","reaction","yellow"],"desc":"Yellow Huggy with a happy open-mouth smile and palms raised wide.","file":"Nervous Huggy.png"},{"id":"collection-2026__frustrated-huggy","name":"Frustrated Huggy","section":"Modern Huggies","tags":["angry","frustrated","mad","irritated","bored","annoyed","vexed"],"syn":["upset","fury"],"attr":["angry","default","open_palm","angry","frustrated","reaction","yellow","anger mark"],"desc":"Yellow Huggy with bored droopy eyes, clenched mouth, and an angry mark on the head.","file":"Frustrated Huggy.png"},{"id":"collection-2026__yelling-huggy","name":"Huggy Chad","section":"Modern Huggies","tags":["yell","shout","angry","mad","scream","frustrated","loud"],"syn":["rage","outburst"],"attr":["angry","default","open_palm","angry","intense","reaction","yellow"],"desc":"Yellow Huggy with sharp angry eyebrows shouting with hands raised in protest.","file":"Huggy Chad.png"},{"id":"collection-2026__smug-huggy","name":"Smug Huggy","section":"Modern Huggies","tags":["smug","smirk","knowing","bored","satisfied","confident","cool"],"syn":["snarky","haughty"],"attr":["smug","default","open_palm","smug","knowing","reaction","yellow"],"desc":"Yellow Huggy with bored half-closed eyes and a smug closed-mouth expression.","file":"Smug Huggy.png"},{"id":"collection-2026__cool-huggy","name":"Cool Huggy","section":"Modern Huggies","tags":["cool","sunglasses","shades","tie","fancy","smug","stylish","boss"],"syn":["dapper","swag"],"attr":["cool_smirk","default","open_palm","cool","smug","meme","fashion","yellow","black","pixel sunglasses","bow tie","wavy hair","pixel sunglasses"],"desc":"Yellow Huggy with pixel sunglasses, bow tie, and stylized hair, looking cool.","file":"Cool Huggy.png"},{"id":"collection-2026__double-thumbs-up-huggy","name":"Double Thumbs Up Huggy","section":"Modern Huggies","tags":["thumbs-up","approve","good","yes","happy","great","double"],"syn":["like","kudos"],"attr":["happy_open_mouth","default","thumbs_up","happy","approving","reaction","yellow"],"desc":"Yellow Huggy with mouth open in a delighted smile, both hands giving thumbs up.","file":"Double Thumbs Up Huggy.png"},{"id":"collection-2026__default-huggy","name":"OG Huggy","section":"Modern Huggies","tags":["default","smile","happy","plain","basic","standard","open"],"syn":["base","standard"],"attr":["happy_open_mouth","default","open_palm","happy","neutral","default","yellow"],"desc":"Plain yellow Huggy with mouth open in default smile, palms raised wide.","file":"OG Huggy.png"},{"id":"collection-2026__cowboy-huggy","name":"Cowboy Huggy","section":"Modern Huggies","tags":["cowboy","hat","western","sheriff","bandana","star","rancher","wild-west"],"syn":["ranger","yeehaw"],"attr":["happy_open_mouth","default","open_palm","happy","western","cowboy","western","yellow","brown","blue","cowboy hat","bandana"],"desc":"Yellow Huggy in a brown cowboy hat with a star and blue bandana, smiling.","file":"Cowboy Huggy.png"},{"id":"collection-2026__wine-huggy","name":"Wine Huggy","section":"Modern Huggies","tags":["wine","drink","glass","alcohol","relax","shaka","happy","cheers"],"syn":["sip","merlot"],"attr":["peaceful_closed","default","holding","relaxed","happy","drink","social","yellow","purple","wine glass"],"desc":"Yellow Huggy with closed eyes drinking from a wine glass, shaka hand gesture.","file":"Wine Huggy.png"},{"id":"collection-2026__huggy-okay","name":"Huggy Okay","section":"Modern Huggies","tags":["okay","ok","fine","smile","happy","approve","satisfied"],"syn":["alright","good"],"attr":["peaceful_closed","default","open_palm","happy","calm","reaction","yellow"],"desc":"Yellow Huggy with closed eyes, big smile, and an OK hand gesture.","file":"Huggy Okay.png"},{"id":"collection-2026__huggy-pop","name":"Huggy Pop","section":"Modern Huggies","tags":["pop","animated","gif","loop","motion"],"syn":["bounce","wiggle"],"attr":["unknown","default","default","fun","animated","yellow"],"desc":"Animated pop-style Huggy (animated GIF, frame may appear blank).","file":"Huggy Pop.gif"},{"id":"collection-2026__huggy-sunny-hello","name":"Huggy Sunny hello","section":"Modern Huggies","tags":["sunny","hello","hi","wave","greeting","friendly","blue"],"syn":["howdy","welcome"],"attr":["happy_open_mouth","default","waving","friendly","happy","greeting","banner","yellow","blue","motion lines"],"desc":"Yellow Huggy peeking from edge with a friendly wave on a blue background.","file":"Huggy Sunny hello.png"},{"id":"collection-2026__huggy-sunny","name":"Huggy Sunny","section":"Modern Huggies","tags":["sunny","wave","happy","hello","blue","background"],"syn":["bright","cheery"],"attr":["happy_open_mouth","default","waving","happy","calm","banner","yellow","blue"],"desc":"Yellow Huggy partially shown smiling on a blue background, hand raised.","file":"Huggy Sunny.png"},{"id":"collection-2026__huggy-the-pooh-meme","name":"Huggy the Pooh meme","section":"Modern Huggies","tags":["meme","pooh","sunglasses","tuxedo","smug","cool","fancy","comparison"],"syn":["bear","drake"],"attr":["smug","default","open_palm","smug","cool","meme","yellow","gray","black","pixel sunglasses","bow tie"],"desc":"Two-panel meme of Huggy: top plain, bottom wearing pixel sunglasses and bow tie.","file":"Huggy the Pooh meme.png"},{"id":"collection-2026__huggy-yolk","name":"Huggy Yolk","section":"Modern Huggies","tags":["yolk","egg","hatch","born","new","shell","baby","chick"],"syn":["hatching","newborn"],"attr":["happy_open_mouth","default","open_palm","new","happy","birth","yellow","white","egg shell"],"desc":"Yellow Huggy hatching out of a cracked white egg shell, smiling.","file":"Huggy Yolk.png"},{"id":"collection-2026__karaoke-huggy","name":"Karaoke Huggy","section":"Modern Huggies","tags":["karaoke","sing","microphone","music","song","mic","performance"],"syn":["singing","vocal"],"attr":["peaceful_closed","default","holding","happy","musical","music","yellow","blue","black","microphone","music note"],"desc":"Yellow Huggy with eyes closed singing into a black microphone with a music note.","file":"Karaoke Huggy.png"},{"id":"collection-2026__karaoke-huggy-3","name":"Leaning Huggy","section":"Modern Huggies","tags":["wave","hello","smile","happy","greet","friendly"],"syn":["howdy","welcome"],"attr":["happy_open_mouth","default","waving","happy","friendly","greeting","yellow"],"desc":"Yellow Huggy with happy open-mouth smile and one hand raised in a friendly wave.","file":"Leaning Huggy.png"},{"id":"collection-2026__cowboy-wizard-huggy","name":"Secret Huggy","section":"Modern Huggies","tags":["wizard","cowboy","hat","robe","thumbs-up","magic","mysterious","cool"],"syn":["sorcerer","outlaw"],"attr":["closed_smile","tilted_left","thumbs_up","mysterious","cool","wizard","cowboy","yellow","black","wizard hat","robe","sparkle"],"desc":"Yellow Huggy in big black wizard/cowboy hat and dark robe giving a thumbs up, sparkle nearby.","file":"Secret Huggy.png"},{"id":"collection-2026__star-eyes-wave-huggy","name":"Learning Excited Huggy","section":"Modern Huggies","tags":["star","stars","amazed","wow","excited","wave","love"],"syn":["dazzled","wonder"],"attr":["starry_eyes","default","waving","excited","amazed","reaction","yellow","sparkles"],"desc":"Yellow Huggy with star-shaped sparkle eyes and open-mouth smile, hand raised.","file":"Learning Excited Huggy.png"},{"id":"collection-2026__sad-huggy","name":"Huggy Approved","section":"Modern Huggies","tags":["sad","worried","frown","upset","concerned","down","blue"],"syn":["sorrow","unhappy"],"attr":["sad","default","open_palm","sad","worried","reaction","yellow"],"desc":"Yellow Huggy with sad worried eyes and frowning mouth, palms open.","file":"Huggy Approved.png"},{"id":"collection-2026__snake-huggy","name":"Snake Huggy","section":"Modern Huggies","tags":["snake","lunar","zodiac","year","costume","reptile","asian"],"syn":["serpent","viper"],"attr":["happy_open_mouth","default","open_palm","festive","playful","lunar-new-year","zodiac","yellow","green","red","snake hat"],"desc":"Yellow Huggy wearing a green snake hat with big white eyes and red tongue.","file":"Snake Huggy.png"},{"id":"collection-2026__super-huggy","name":"Super Huggy","section":"Modern Huggies","tags":["super","hero","fly","confetti","celebrate","power","fist","energy"],"syn":["superhero","victory"],"attr":["happy_open_mouth","rushing_right","fist_forward","excited","powerful","super","celebration","yellow","red","blue","purple","confetti","speed lines"],"desc":"Yellow Huggy in a dynamic flying pose with confetti streaks, fist raised triumphantly.","file":"Super Huggy.png"},{"id":"collection-2026__text-generation-wizard-huggy","name":"Text Generation Wizard Huggy","section":"Modern Huggies","tags":["wizard","text","generation","magic","nlp","staff","spell","language"],"syn":["mage","sorcerer"],"attr":["happy_open_mouth","default","holding","magical","creative","nlp","magic","yellow","blue","purple","wizard hat","staff","crystal","floating letters"],"desc":"Yellow Huggy in dark wizard hat holding a wooden staff and glowing diamond crystal.","file":"Text Generation Wizard Huggy.png"},{"id":"collection-2026__transformer-agent-huggy","name":"Transformer Agent Huggy","section":"Modern Huggies","tags":["transformer","agent","binary","code","ai","matrix","visor","tokens"],"syn":["coder","hacker"],"attr":["cool_smirk","default","holding","cool","tech","agents","ml","yellow","black","green","binary visor","star tokens"],"desc":"Yellow Huggy with binary-code visor sunglasses holding star-shaped tokens and a star ornament.","file":"Transformer Agent Huggy.png"},{"id":"collection-2026__vibing-huggy","name":"Vibing Huggy","section":"Modern Huggies","tags":["vibing","vibe","chill","shaka","groove","happy","animated"],"syn":["relax","mood"],"attr":["peaceful_closed","default","open_palm","chill","happy","vibe","animated","yellow"],"desc":"Yellow Huggy with closed eyes and big smile making finger-gun shaka gestures.","file":"Vibing Huggy.gif"},{"id":"logo__hf-logo","name":"HF Logo","section":"Logos","tags":["logo","brand","hugging face","hf","mark","icon","emoji"],"syn":[],"attr":[],"desc":"official hugging face brand logo","file":"HF Logo"},{"id":"logo__rainbow","name":"Rainbow Hugging Face","section":"Logos","tags":["logo","brand","rainbow","colorful","gradient","pride","hf"],"syn":[],"attr":[],"desc":"official hugging face brand logo","file":"Rainbow Hugging Face"},{"id":"logo__title","name":"HF logo + title","section":"Logos","tags":["logo","brand","wordmark","title","text","hugging face","hf"],"syn":[],"attr":[],"desc":"official hugging face brand logo","file":"HF logo + title"},{"id":"logo__white-title","name":"HF logo + white title","section":"Logos","tags":["logo","brand","wordmark","title","white","dark","hugging face","hf"],"syn":[],"attr":[],"desc":"official hugging face brand logo","file":"HF logo + white title"}]</script>
+    <script src="search.js" defer></script>
   </body>
 </html>

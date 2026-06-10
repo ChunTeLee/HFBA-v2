@@ -41,6 +41,19 @@ def _load_metadata() -> tuple[dict, dict]:
 _DISPLAY_MAP, _TAGS_MAP = _load_metadata()
 
 
+def _load_records() -> list:
+    if not METADATA_PATH.exists():
+        return []
+    try:
+        return json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+
+
+_RECORDS = _load_records()
+_ID_MAP = {(r.get("folder"), r.get("filename")): r.get("id") for r in _RECORDS}
+
+
 def display_title(filename: str, folder: str = "") -> str:
     name = _DISPLAY_MAP.get((folder, filename))
     if name:
@@ -79,7 +92,7 @@ def list_logo_basenames(folder: Path) -> list[tuple[str, list[str]]]:
     return [(stem, nice.get(stem, stem), exts) for stem, exts in sorted(groups.items())]
 
 
-def card_logo(stem: str, title: str, exts: list[str], dark: bool = False) -> str:
+def card_logo(stem: str, title: str, exts: list[str], dark: bool = False, data_id: str = "") -> str:
     bg = "bg-black" if dark else "bg-white"
     primary_ext = "png" if "png" in exts else exts[0]
     img = f"images/Brand Logos/{stem}.{primary_ext}"
@@ -97,7 +110,8 @@ def card_logo(stem: str, title: str, exts: list[str], dark: bool = False) -> str
                 </button>"""
         )
     buttons_html = "\n".join(buttons)
-    return f"""          <div class="w-full flex flex-col">
+    id_attr = f' data-id="{html.escape(data_id)}"' if data_id else ""
+    return f"""          <div class="w-full flex flex-col"{id_attr}>
             <img src="{html.escape(img)}" alt="{html.escape(title)}" class="w-full h-full {bg} shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
               <h5 class="text-lg font-sans text-BluishDark">{html.escape(title)}</h5>
@@ -121,7 +135,9 @@ def card_huggy(folder: str, filename: str, span: str = "") -> str:
             f' data-display-name="{html.escape(_DISPLAY_MAP[key])}"'
             f' data-tags="{html.escape(_TAGS_MAP[key])}"'
         )
-    return f"""          <div class="w-full flex flex-col{span_class}"{data_attrs}>
+    asset_id = _ID_MAP.get(key)
+    id_attr = f' data-id="{html.escape(asset_id)}"' if asset_id else ""
+    return f"""          <div class="w-full flex flex-col{span_class}"{id_attr}{data_attrs}>
             <img src="{html.escape(img_path)}" alt="{html.escape(title)}" class="w-full h-full bg-white shadow-DropShadow {pad_class} rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg font-sans text-BluishDark">{html.escape(title)}</h5>
@@ -166,6 +182,45 @@ def section_header(title: str, link_html: str = "") -> str:
         </div>"""
 
 
+def build_search_index() -> str:
+    """Compact JSON search index over every card (Huggies + logos), embedded inline.
+    Each entry holds the fields the client search engine scores against."""
+    entries = []
+    for r in _RECORDS:
+        section = "Outlined Huggies" if r.get("category") == "outlined" else "Modern Huggies"
+        entries.append({
+            "id": r.get("id"),
+            "name": r.get("display_name", ""),
+            "section": section,
+            "tags": [str(t).lower() for t in (r.get("tags") or [])],
+            "syn": [str(t).lower() for t in (r.get("synonyms") or [])],
+            "attr": [str(x).lower() for x in (
+                [r.get("expression"), r.get("pose"), r.get("hands")]
+                + (r.get("mood") or []) + (r.get("theme") or []) + (r.get("colors") or [])
+                + (r.get("headwear") or []) + (r.get("outfit") or [])
+                + (r.get("face_accessories") or []) + (r.get("held_objects") or [])
+                + (r.get("effects") or [])
+            ) if x],
+            "desc": r.get("description", ""),
+            "file": r.get("filename", ""),
+        })
+
+    # HF logos (no metadata record — describe them for search)
+    logos = [
+        ("logo__hf-logo", "HF Logo", ["logo", "brand", "hugging face", "hf", "mark", "icon", "emoji"]),
+        ("logo__rainbow", "Rainbow Hugging Face", ["logo", "brand", "rainbow", "colorful", "gradient", "pride", "hf"]),
+        ("logo__title", "HF logo + title", ["logo", "brand", "wordmark", "title", "text", "hugging face", "hf"]),
+        ("logo__white-title", "HF logo + white title", ["logo", "brand", "wordmark", "title", "white", "dark", "hugging face", "hf"]),
+    ]
+    for lid, name, tags in logos:
+        entries.append({
+            "id": lid, "name": name, "section": "Logos",
+            "tags": tags, "syn": [], "attr": [], "desc": "official hugging face brand logo", "file": name,
+        })
+
+    return json.dumps(entries, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
+
+
 def main() -> None:
     # ---- HF Logos ----
     logo_groups = list_logo_basenames(IMAGES / "Brand Logos")
@@ -183,7 +238,7 @@ def main() -> None:
         primary_logos[0] = ("Hugging Face", "HF Logo", ["png"])
     logos_html_cards = []
     # Custom-build the HF Logo card so it pulls .svg/.ai from hf-logo.* but the .png from Hugging Face.png
-    hf_logo_card = """          <div class="w-full flex flex-col">
+    hf_logo_card = """          <div class="w-full flex flex-col" data-id="logo__hf-logo">
             <img src="images/Brand Logos/Hugging Face.png" alt="HF Logo" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
               <h5 class="text-lg font-sans text-BluishDark">HF Logo</h5>
@@ -206,9 +261,9 @@ def main() -> None:
             </div>
           </div>"""
     logos_html_cards.append(hf_logo_card)
-    logos_html_cards.append(card_logo("Rainbow Hugging Face", "Rainbow Hugging Face", ["png", "svg"]))
-    logos_html_cards.append(card_logo("hf-logo-with-title", "HF logo + title", ["png", "svg", "ai"]))
-    logos_html_cards.append(card_logo("hf-logo-with-white-title", "HF logo + white title", ["png", "svg", "ai"], dark=True))
+    logos_html_cards.append(card_logo("Rainbow Hugging Face", "Rainbow Hugging Face", ["png", "svg"], data_id="logo__rainbow"))
+    logos_html_cards.append(card_logo("hf-logo-with-title", "HF logo + title", ["png", "svg", "ai"], data_id="logo__title"))
+    logos_html_cards.append(card_logo("hf-logo-with-white-title", "HF logo + white title", ["png", "svg", "ai"], dark=True, data_id="logo__white-title"))
 
     logos_section = f"""      <section id="HFlogos" class="mb-28">
         <div class="flex flex-row items-center justify-between">
@@ -217,7 +272,7 @@ def main() -> None:
             <a href="https://huggingface.co/brand" target="_blank">View official HF branding guideline <svg xmlns="http://www.w3.org/2000/svg" class="inline w-6 h-6" width="32" height="32" viewBox="0 0 20 20"><path fill="currentColor" d="M9.516 6a.5.5 0 0 0 0 1h2.777l-4.147 4.146a.5.5 0 0 0 .708.708L13 7.707v2.777a.5.5 0 0 0 1 0V6.5a.5.5 0 0 0-.5-.5zm3.25 11a2.5 2.5 0 0 0 2.47-2.11A2.501 2.501 0 0 0 17 12.5v-7A2.5 2.5 0 0 0 14.5 3h-7a2.501 2.501 0 0 0-2.4 1.797A2.5 2.5 0 0 0 3 7.266V13.5A3.5 3.5 0 0 0 6.5 17zM4 7.266A1.5 1.5 0 0 1 5 5.85v6.65A2.5 2.5 0 0 0 7.5 15h6.68a1.5 1.5 0 0 1-1.414 1H6.5A2.5 2.5 0 0 1 4 13.5zM7.5 4h7A1.5 1.5 0 0 1 16 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 6 12.5v-7A1.5 1.5 0 0 1 7.5 4"/></svg></a>
           </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid">
 {chr(10).join(logos_html_cards)}
         </div>
       </section>"""
@@ -251,7 +306,7 @@ def main() -> None:
         <div class="flex items-center mb-5">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Modern Huggies</div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10" style="grid-auto-flow: dense">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid" style="grid-auto-flow: dense">
 {chr(10).join(modern_cards)}
         </div>
       </section>"""
@@ -263,10 +318,16 @@ def main() -> None:
         <div class="flex items-center mb-5">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Outlined Huggies</div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid">
 {chr(10).join(outlined_cards)}
         </div>
       </section>"""
+
+    search_index_json = build_search_index()
+    chips = ["happy", "sad", "headphones", "coding", "gpu", "wizard", "dancing", "chef", "logo", "outlined"]
+    chips_html = "\n".join(
+        f'          <button class="chip" data-q="{c}">{c}</button>' for c in chips
+    )
 
     page = f"""<!DOCTYPE html>
 <html lang="en">
@@ -288,6 +349,34 @@ def main() -> None:
     <style>
       .download-button {{ transition: transform 0.2s; }}
       .download-button:active {{ transform: scale(0.80); }}
+
+      /* ---- Search ---- */
+      #search-header {{ position: sticky; top: 0; z-index: 30; background: rgba(243,247,250,.9); backdrop-filter: blur(8px); border-bottom: 1px solid #E2E8EF; }}
+      .search-inner {{ max-width: 1280px; margin: 0 auto; padding: 14px 20px; }}
+      .search-wrap {{ display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 10px 16px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
+      .search-wrap:focus-within {{ border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }}
+      .search-wrap svg {{ flex: 0 0 auto; color: #9aa6b1; }}
+      #q {{ flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 16px; color: #4D5862; }}
+      #q::placeholder {{ color: #9aa6b1; }}
+      #q-clear {{ flex: 0 0 auto; border: none; background: #EEF2F6; color: #6b7280; width: 24px; height: 24px; border-radius: 999px; cursor: pointer; font-size: 15px; line-height: 1; display: none; }}
+      #q-clear.show {{ display: inline-flex; align-items: center; justify-content: center; }}
+      .kbd {{ flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9aa6b1; border: 1px solid #D2DAE1; border-radius: 6px; padding: 2px 6px; }}
+      #chips {{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }}
+      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4D5862; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
+      .chip:hover {{ background: #3B82F6; color: #fff; border-color: #3B82F6; }}
+      #results-bar {{ display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }}
+      #results-bar.show {{ display: flex; }}
+      #results-count {{ font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #4D5862; }}
+      #results-count b {{ color: #3B82F6; }}
+      #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #6b7280; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
+      #searchResults {{ display: none; }}
+      #searchResults.show {{ display: grid; }}
+      /* results render uniform (no 2x2 heroes) */
+      #searchResults > * {{ grid-column: auto !important; grid-row: auto !important; }}
+      #no-results {{ display: none; text-align: center; padding: 60px 20px; color: #6b7280; }}
+      #no-results.show {{ display: block; }}
+      #no-results .big {{ font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #4D5862; margin-bottom: 8px; }}
+      mark {{ background: #FEF08A; color: inherit; border-radius: 3px; padding: 0 1px; }}
     </style>
     <link rel="stylesheet" href="css/style.css" />
     <title>HFBA v2</title>
@@ -296,13 +385,43 @@ def main() -> None:
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   </head>
   <body class="bg-BluishWhite">
+    <header id="search-header">
+      <div class="search-inner">
+        <div class="search-wrap" role="search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input id="q" type="text" autocomplete="off" spellcheck="false" aria-label="Search assets"
+                 placeholder="Search Huggies &mdash; try &ldquo;happy&rdquo;, &ldquo;headphones&rdquo;, &ldquo;coding&rdquo;, &ldquo;logo&rdquo;&hellip;">
+          <button id="q-clear" aria-label="Clear search">&times;</button>
+          <span class="kbd">/</span>
+        </div>
+        <div id="chips">
+{chips_html}
+        </div>
+      </div>
+    </header>
+
     <div class="container px-5 py-10 mx-auto">
+      <div id="results-bar">
+        <span id="results-count"></span>
+        <button id="results-clear">Clear search</button>
+      </div>
+      <div id="searchResults" class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10"></div>
+      <div id="no-results">
+        <div class="big">No Huggies match that</div>
+        <div>Try a simpler word, an emotion, an object, or pick a chip above.</div>
+      </div>
+
+      <div id="browse">
 {logos_section}
 
 {modern_section}
 
 {outlined_section}
+      </div>
     </div>
+
+    <script id="search-index" type="application/json">{search_index_json}</script>
+    <script src="search.js" defer></script>
   </body>
 </html>
 """
