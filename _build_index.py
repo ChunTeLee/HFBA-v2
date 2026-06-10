@@ -4,6 +4,7 @@ Re-runnable: deletes existing index.html and rebuilds.
 """
 
 from pathlib import Path
+import hashlib
 import html
 import json
 
@@ -324,6 +325,13 @@ def main() -> None:
       </section>"""
 
     search_index_json = build_search_index()
+    # Content-hash cache-buster so browsers always fetch the search.js that matches
+    # this index.html (prevents stale-cache mismatches breaking search after edits).
+    search_js_path = ROOT / "search.js"
+    search_js_v = (
+        hashlib.md5(search_js_path.read_bytes()).hexdigest()[:8]
+        if search_js_path.exists() else "0"
+    )
     chips = ["headphones", "coding", "gpu", "wizard", "dancing", "chef", "robot", "dragon", "logo", "outlined"]
     chips_html = "\n".join(
         f'          <button class="chip" data-q="{c}">{c}</button>' for c in chips
@@ -433,7 +441,7 @@ def main() -> None:
     </div>
 
     <script id="search-index" type="application/json">{search_index_json}</script>
-    <script src="search.js" defer></script>
+    <script src="search.js?v={search_js_v}" defer></script>
   </body>
 </html>
 """
