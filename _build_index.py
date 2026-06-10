@@ -324,7 +324,7 @@ def main() -> None:
       </section>"""
 
     search_index_json = build_search_index()
-    chips = ["happy", "sad", "headphones", "coding", "gpu", "wizard", "dancing", "chef", "logo", "outlined"]
+    chips = ["headphones", "coding", "gpu", "wizard", "dancing", "chef", "robot", "dragon", "logo", "outlined"]
     chips_html = "\n".join(
         f'          <button class="chip" data-q="{c}">{c}</button>' for c in chips
     )
