@@ -3550,15 +3550,15 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__sad-huggy",
+    "id": "collection-2026__huggy-approved",
     "filename": "Huggy Approved.png",
     "folder": "Huggy Collection 2026",
     "display_name": "Huggy Approved",
     "category": "modern",
-    "description": "Yellow Huggy with sad worried eyes and frowning mouth, palms open.",
-    "expression": "sad",
+    "description": "Yellow Huggy with eyes closed and a serious, impressed expression, one hand making an OK sign — a nod of respect and approval.",
+    "expression": "impressed",
     "pose": "default",
-    "hands": "open_palm",
+    "hands": "ok_sign",
     "headwear": [],
     "outfit": [],
     "face_accessories": [],
@@ -3568,24 +3568,36 @@
       "yellow"
     ],
     "mood": [
-      "sad",
-      "worried"
+      "respectful",
+      "impressed",
+      "approving",
+      "serious"
     ],
     "theme": [
-      "reaction"
+      "reaction",
+      "approval"
     ],
     "tags": [
-      "sad",
-      "worried",
-      "frown",
-      "upset",
-      "concerned",
-      "down",
-      "blue"
+      "approve",
+      "approved",
+      "respect",
+      "respectful",
+      "impressed",
+      "nod",
+      "ok",
+      "okay",
+      "not bad",
+      "salute",
+      "props",
+      "kudos",
+      "well done",
+      "nice"
     ],
     "synonyms": [
-      "sorrow",
-      "unhappy"
+      "endorse",
+      "bravo",
+      "acknowledge",
+      "recognition"
     ],
     "batch": "2026"
   },
