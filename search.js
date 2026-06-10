@@ -316,6 +316,16 @@
     });
   });
 
+  // collapse the quick-filter chips once scrolled away from the top;
+  // they reappear when back near the top. Keeps the search field always visible.
+  var header = document.getElementById("search-header");
+  function syncCondensed() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    header.classList.toggle("condensed", y > 12);
+  }
+  window.addEventListener("scroll", syncCondensed, { passive: true });
+  syncCondensed();
+
   // keyboard: "/" or Cmd/Ctrl+K focuses; Esc clears
   document.addEventListener("keydown", function (e) {
     if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k")) &&
