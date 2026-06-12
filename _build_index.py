@@ -381,7 +381,7 @@ def main() -> None:
       /* .search-inner reuses the page `container mx-auto px-5` so its edges align
          with the gallery grid at every breakpoint; only vertical padding is custom. */
       .search-inner {{ padding-top: 14px; padding-bottom: 14px; }}
-      .search-wrap {{ display: flex; align-items: center; gap: 12px; max-width: 620px; margin: 0 auto; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
+      .search-wrap {{ display: flex; align-items: center; gap: 12px; max-width: 820px; margin: 0 auto; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
       .search-wrap:focus-within {{ border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }}
       .search-wrap svg {{ flex: 0 0 auto; color: #9aa6b1; }}
       #q {{ flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: #4D5862; }}
@@ -446,7 +446,7 @@ def main() -> None:
         <div class="search-wrap" role="search">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <input id="q" type="text" autocomplete="off" spellcheck="false" aria-label="Search assets"
-                 placeholder="Search Huggies &mdash; try &ldquo;happy&rdquo;, &ldquo;headphones&rdquo;, &ldquo;coding&rdquo;, &ldquo;logo&rdquo;&hellip;">
+                 placeholder="Search Huggies">
           <button id="q-clear" aria-label="Clear search">&times;</button>
           <span class="kbd">/</span>
         </div>
