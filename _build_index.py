@@ -361,10 +361,10 @@ def main() -> None:
       /* ---- Color themes (toggle, bottom-right) ----
          "motion" = motiondesign.school palette: warm cream page, charcoal ink +
          dark inverted pills. "bluish" = the previous HFBA blue theme. */
-      :root, [data-theme="motion"] {{ --bg: #E9E6DD; --header-bg: rgba(233,230,221,.92); --ink: #232323; --muted: #8C8C8C; --muted-2: #555555; --accent: #232323; --accent-text: #ffffff; --border: #D8D3C8; --focus-ring: rgba(35,35,35,.12); }}
-      [data-theme="bluish"] {{ --bg: #F3F7FA; --header-bg: rgba(243,247,250,.9); --ink: #4D5862; --muted: #9aa6b1; --muted-2: #6b7280; --accent: #3B82F6; --accent-text: #ffffff; --border: #D2DAE1; --focus-ring: rgba(59,130,246,.15); }}
+      :root, [data-theme="motion"] {{ --bg: #E9E6DD; --header-bg: rgba(233,230,221,.92); --surface: #FBF8F1; --ink: #232323; --muted: #8C8C8C; --muted-2: #555555; --accent: #232323; --accent-text: #ffffff; --border: #D8D3C8; --focus-ring: rgba(35,35,35,.12); }}
+      [data-theme="bluish"] {{ --bg: #F3F7FA; --header-bg: rgba(243,247,250,.9); --surface: #FFFFFF; --ink: #4D5862; --muted: #9aa6b1; --muted-2: #6b7280; --accent: #3B82F6; --accent-text: #ffffff; --border: #D2DAE1; --focus-ring: rgba(59,130,246,.15); }}
       body {{ background-color: var(--bg); }}
-      #theme-toggle {{ position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 8px; padding: 7px; background: #fff; border: 1px solid var(--border); border-radius: 999px; box-shadow: 0 4px 18px rgba(0,0,0,.14); }}
+      #theme-toggle {{ position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 8px; padding: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; box-shadow: 0 4px 18px rgba(0,0,0,.14); }}
       #theme-toggle button {{ width: 24px; height: 24px; border-radius: 50%; cursor: pointer; padding: 0; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .12s; }}
       #theme-toggle button.active {{ outline-color: var(--ink); }}
       .sw-motion {{ background: #E9E6DD; border: 3px solid #232323; }}
@@ -384,7 +384,7 @@ def main() -> None:
       .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: var(--ink); margin: 0; }}
       .font-toggle {{ display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }}
       .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
-      .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
+      .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
       .font-toggle button:hover {{ border-color: var(--muted); }}
       .font-toggle button.active {{ background: var(--accent); color: var(--accent-text); border-color: var(--accent); }}
 
@@ -393,7 +393,7 @@ def main() -> None:
       /* .search-inner reuses the page `container mx-auto px-5` so its edges align
          with the gallery grid at every breakpoint; only vertical padding is custom. */
       .search-inner {{ padding-top: 14px; padding-bottom: 14px; }}
-      .search-wrap {{ display: flex; align-items: center; gap: 12px; max-width: 820px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
+      .search-wrap {{ display: flex; align-items: center; gap: 12px; max-width: 820px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
       .search-wrap:focus-within {{ border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }}
       .search-wrap svg {{ flex: 0 0 auto; color: var(--muted); }}
       #q {{ flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: var(--ink); }}
@@ -406,13 +406,13 @@ def main() -> None:
       #chips-collapse {{ display: grid; grid-template-rows: 1fr; margin-top: 10px; transition: grid-template-rows .26s ease, opacity .18s ease, margin-top .26s ease; }}
       #search-header.condensed #chips-collapse {{ grid-template-rows: 0fr; opacity: 0; margin-top: 0; pointer-events: none; }}
       #chips {{ display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; overflow: hidden; min-height: 0; }}
-      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
+      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
       .chip:hover {{ background: var(--accent); color: var(--accent-text); border-color: var(--accent); }}
       #results-bar {{ display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }}
       #results-bar.show {{ display: flex; }}
       #results-count {{ font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: var(--muted); }}
       #results-count b {{ color: var(--muted-2); }}
-      #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted-2); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
+      #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted-2); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
       #searchResults {{ display: none; }}
       #searchResults.show {{ display: grid; }}
       /* results + "more" render uniform (no 2x2 heroes) */
@@ -430,6 +430,7 @@ def main() -> None:
     <link rel="stylesheet" href="css/style.css" />
     <style>
       .bg-blue-500 {{ background-color: var(--accent) !important; }}
+      .bg-white {{ background-color: var(--surface) !important; }}
       .text-BluishDark {{ color: var(--ink) !important; }}
     </style>
     <title>HF Huggiverse &mdash; Hugging Face Brand Assets</title>
