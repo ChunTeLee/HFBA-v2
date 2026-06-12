@@ -20,34 +20,29 @@
       .download-button:active { transform: scale(0.80); }
 
       /* ---- Brand header + swappable display font ---- */
-      :root { --font-display: 'Fredoka', 'Source Sans 3', sans-serif; }
-      [data-font="fredoka"] { --font-display: 'Fredoka', 'Source Sans 3', sans-serif; }
-      [data-font="baloo"] { --font-display: 'Baloo 2', 'Source Sans 3', cursive; }
-      [data-font="quicksand"] { --font-display: 'Quicksand', 'Source Sans 3', sans-serif; }
+      :root { --font-display: 'Chewy', 'Source Sans 3', cursive; }
       [data-font="chewy"] { --font-display: 'Chewy', 'Source Sans 3', cursive; }
+      [data-font="titan"] { --font-display: 'Titan One', 'Source Sans 3', cursive; }
+      [data-font="bagel"] { --font-display: 'Bagel Fat One', 'Source Sans 3', cursive; }
+      [data-font="luckiest"] { --font-display: 'Luckiest Guy', 'Source Sans 3', cursive; }
       #site-header { background: #F3F7FA; }
-      .site-inner { padding-top: 24px; padding-bottom: 6px; }
-      #site-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-      .wordmark { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 16px; color: #4D5862; }
-      .nav-link { font-size: 14px; color: #6b7280; text-decoration: none; white-space: nowrap; transition: color .12s; }
-      .nav-link:hover { color: #374151; }
-      /* Hero is center-aligned (matches motiondesign.school/blog); the filter row
-         below — search + chips — stays left-aligned with the grid. */
-      #hero { padding: 40px 0 10px; text-align: center; }
-      .huggiverse-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.6rem, 6.5vw, 4.5rem); line-height: 1.0; letter-spacing: -.01em; color: #2A3138; margin: 0; }
-      .hero-sub { font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: #6b7280; margin: 16px auto 0; max-width: 52ch; line-height: 1.5; }
-      .font-toggle { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+      .site-inner { padding-top: 8px; padding-bottom: 6px; }
+      /* Centered hero (matches motiondesign.school/blog); filter row below stays
+         left-aligned with the grid. */
+      #hero { padding: 46px 0 14px; text-align: center; }
+      .huggiverse-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: #2A3138; margin: 0; }
+      .font-toggle { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
       .font-toggle .ft-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #9aa6b1; margin-right: 2px; }
       .font-toggle button { font-size: 15px; line-height: 1; color: #4D5862; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }
       .font-toggle button:hover { border-color: #9aa6b1; }
       .font-toggle button.active { background: #3B82F6; color: #fff; border-color: #3B82F6; }
 
       /* ---- Search ---- */
-      #search-header { position: sticky; top: 0; z-index: 30; background: rgba(243,247,250,.9); backdrop-filter: blur(8px); border-bottom: 1px solid #E2E8EF; }
+      #search-header { position: sticky; top: 0; z-index: 30; background: rgba(243,247,250,.9); backdrop-filter: blur(8px); }
       /* .search-inner reuses the page `container mx-auto px-5` so its edges align
          with the gallery grid at every breakpoint; only vertical padding is custom. */
       .search-inner { padding-top: 14px; padding-bottom: 14px; }
-      .search-wrap { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 15px 24px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }
+      .search-wrap { display: flex; align-items: center; gap: 12px; max-width: 620px; margin: 0 auto; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }
       .search-wrap:focus-within { border-color: #3B82F6; box-shadow: 0 0 0 3px rgba(59,130,246,.15); }
       .search-wrap svg { flex: 0 0 auto; color: #9aa6b1; }
       #q { flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: #4D5862; }
@@ -59,7 +54,7 @@
          regardless of how many rows the chips wrap to — no max-height guess, no clip. */
       #chips-collapse { display: grid; grid-template-rows: 1fr; margin-top: 10px; transition: grid-template-rows .26s ease, opacity .18s ease, margin-top .26s ease; }
       #search-header.condensed #chips-collapse { grid-template-rows: 0fr; opacity: 0; margin-top: 0; pointer-events: none; }
-      #chips { display: flex; flex-wrap: wrap; gap: 8px; overflow: hidden; min-height: 0; }
+      #chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; overflow: hidden; min-height: 0; }
       .chip { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4D5862; background: #fff; border: 1px solid #D2DAE1; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }
       .chip:hover { background: #3B82F6; color: #fff; border-color: #3B82F6; }
       #results-bar { display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
@@ -85,7 +80,7 @@
     <title>HF Huggiverse &mdash; Hugging Face Brand Assets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Fredoka:wght@400;500;600&family=Baloo+2:wght@500;600;700&family=Quicksand:wght@500;600;700&family=Chewy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Chewy&family=Titan+One&family=Bagel+Fat+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
   </head>
   <body class="bg-BluishWhite">
     <script>
@@ -94,22 +89,14 @@
 
     <div id="site-header">
       <div class="container mx-auto px-5 site-inner">
-        <nav id="site-nav">
-          <div class="wordmark">
-            <svg width="28" height="28" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="#FFD21E"/><circle cx="15.5" cy="18" r="1.8" fill="#3A3A3A"/><circle cx="24.5" cy="18" r="1.8" fill="#3A3A3A"/><path d="M15 23.5 q5 4 10 0" stroke="#3A3A3A" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
-            <span>Hugging Face</span>
-          </div>
-          <a class="nav-link" href="https://huggingface.co/brand" target="_blank" rel="noopener">Brand guidelines &#8599;</a>
-        </nav>
         <div id="hero">
           <h1 class="huggiverse-title">HF Huggiverse</h1>
-          <p class="hero-sub">Every Huggy, logo, and brand asset &mdash; search, browse, and download.</p>
           <div class="font-toggle" role="group" aria-label="Title font">
             <span class="ft-label">Title font</span>
-            <button type="button" data-setfont="fredoka" style="font-family:'Fredoka',sans-serif;">Fredoka</button>
-            <button type="button" data-setfont="baloo" style="font-family:'Baloo 2',cursive;">Baloo</button>
-            <button type="button" data-setfont="quicksand" style="font-family:'Quicksand',sans-serif;">Quicksand</button>
             <button type="button" data-setfont="chewy" style="font-family:'Chewy',cursive;">Chewy</button>
+            <button type="button" data-setfont="titan" style="font-family:'Titan One',cursive;">Titan One</button>
+            <button type="button" data-setfont="bagel" style="font-family:'Bagel Fat One',cursive;">Bagel Fat One</button>
+            <button type="button" data-setfont="luckiest" style="font-family:'Luckiest Guy',cursive;">Luckiest Guy</button>
           </div>
         </div>
       </div>
@@ -1123,9 +1110,12 @@
     <script src="search.js?v=759c866f" defer></script>
     <script>
       (function () {
+        var KNOWN = ['chewy', 'titan', 'bagel', 'luckiest'];
         var btns = document.querySelectorAll('.font-toggle button');
         function setActive(f) { btns.forEach(function (b) { b.classList.toggle('active', b.dataset.setfont === f); }); }
-        setActive(document.documentElement.getAttribute('data-font') || 'fredoka');
+        var cur = document.documentElement.getAttribute('data-font');
+        if (KNOWN.indexOf(cur) < 0) { cur = 'chewy'; document.documentElement.setAttribute('data-font', 'chewy'); }
+        setActive(cur);
         btns.forEach(function (b) {
           b.addEventListener('click', function () {
             var f = b.dataset.setfont;
