@@ -358,49 +358,61 @@ def main() -> None:
       .download-button {{ transition: transform 0.2s; }}
       .download-button:active {{ transform: scale(0.80); }}
 
+      /* ---- Color themes (toggle, bottom-right) ----
+         "motion" = motiondesign.school palette: warm cream page, charcoal ink +
+         dark inverted pills. "bluish" = the previous HFBA blue theme. */
+      :root, [data-theme="motion"] {{ --bg: #E9E6DD; --header-bg: rgba(233,230,221,.92); --ink: #232323; --muted: #8C8C8C; --muted-2: #555555; --accent: #232323; --accent-text: #ffffff; --border: #D8D3C8; --focus-ring: rgba(35,35,35,.12); }}
+      [data-theme="bluish"] {{ --bg: #F3F7FA; --header-bg: rgba(243,247,250,.9); --ink: #4D5862; --muted: #9aa6b1; --muted-2: #6b7280; --accent: #3B82F6; --accent-text: #ffffff; --border: #D2DAE1; --focus-ring: rgba(59,130,246,.15); }}
+      body {{ background-color: var(--bg); }}
+      #theme-toggle {{ position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 8px; padding: 7px; background: #fff; border: 1px solid var(--border); border-radius: 999px; box-shadow: 0 4px 18px rgba(0,0,0,.14); }}
+      #theme-toggle button {{ width: 24px; height: 24px; border-radius: 50%; cursor: pointer; padding: 0; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .12s; }}
+      #theme-toggle button.active {{ outline-color: var(--ink); }}
+      .sw-motion {{ background: #E9E6DD; border: 3px solid #232323; }}
+      .sw-bluish {{ background: #F3F7FA; border: 3px solid #3B82F6; }}
+
       /* ---- Brand header + swappable display font ---- */
       :root {{ --font-display: 'Chewy', 'Source Sans 3', cursive; }}
       [data-font="chewy"] {{ --font-display: 'Chewy', 'Source Sans 3', cursive; }}
       [data-font="titan"] {{ --font-display: 'Titan One', 'Source Sans 3', cursive; }}
       [data-font="bagel"] {{ --font-display: 'Bagel Fat One', 'Source Sans 3', cursive; }}
       [data-font="luckiest"] {{ --font-display: 'Luckiest Guy', 'Source Sans 3', cursive; }}
-      #site-header {{ background: #FFFFFF; }}
+      #site-header {{ background: var(--bg); }}
       .site-inner {{ padding-top: 8px; padding-bottom: 6px; }}
       /* Centered hero (matches motiondesign.school/blog); filter row below stays
          left-aligned with the grid. */
       #hero {{ padding: 46px 0 14px; text-align: center; }}
-      .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: #232323; margin: 0; }}
+      .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: var(--ink); margin: 0; }}
       .font-toggle {{ display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }}
-      .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8C8C8C; margin-right: 2px; }}
-      .font-toggle button {{ font-size: 15px; line-height: 1; color: #232323; background: #fff; border: 1px solid #DDDDDD; border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
-      .font-toggle button:hover {{ border-color: #8C8C8C; }}
-      .font-toggle button.active {{ background: #232323; color: #fff; border-color: #232323; }}
+      .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
+      .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
+      .font-toggle button:hover {{ border-color: var(--muted); }}
+      .font-toggle button.active {{ background: var(--accent); color: var(--accent-text); border-color: var(--accent); }}
 
       /* ---- Search ---- */
-      #search-header {{ position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.9); backdrop-filter: blur(8px); }}
+      #search-header {{ position: sticky; top: 0; z-index: 30; background: var(--header-bg); backdrop-filter: blur(8px); }}
       /* .search-inner reuses the page `container mx-auto px-5` so its edges align
          with the gallery grid at every breakpoint; only vertical padding is custom. */
       .search-inner {{ padding-top: 14px; padding-bottom: 14px; }}
-      .search-wrap {{ display: flex; align-items: center; gap: 12px; max-width: 820px; margin: 0 auto; background: #fff; border: 1px solid #DDDDDD; border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
-      .search-wrap:focus-within {{ border-color: #232323; box-shadow: 0 0 0 3px rgba(35,35,35,.12); }}
-      .search-wrap svg {{ flex: 0 0 auto; color: #8C8C8C; }}
-      #q {{ flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: #232323; }}
-      #q::placeholder {{ color: #8C8C8C; }}
-      #q-clear {{ flex: 0 0 auto; border: none; background: #EFEFEF; color: #555555; width: 24px; height: 24px; border-radius: 999px; cursor: pointer; font-size: 15px; line-height: 1; display: none; }}
+      .search-wrap {{ display: flex; align-items: center; gap: 12px; max-width: 820px; margin: 0 auto; background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 13px 22px; box-shadow: 0 8.5px 28.4px rgba(192,198,204,.25); transition: border-color .15s, box-shadow .15s; }}
+      .search-wrap:focus-within {{ border-color: var(--accent); box-shadow: 0 0 0 3px var(--focus-ring); }}
+      .search-wrap svg {{ flex: 0 0 auto; color: var(--muted); }}
+      #q {{ flex: 1 1 auto; border: none; outline: none; background: transparent; font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: var(--ink); }}
+      #q::placeholder {{ color: var(--muted); }}
+      #q-clear {{ flex: 0 0 auto; border: none; background: #EFEFEF; color: var(--muted-2); width: 24px; height: 24px; border-radius: 999px; cursor: pointer; font-size: 15px; line-height: 1; display: none; }}
       #q-clear.show {{ display: inline-flex; align-items: center; justify-content: center; }}
-      .kbd {{ flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #8C8C8C; border: 1px solid #DDDDDD; border-radius: 6px; padding: 2px 6px; }}
+      .kbd {{ flex: 0 0 auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 2px 6px; }}
       /* grid-template-rows 1fr->0fr animates the real content height to 0 smoothly,
          regardless of how many rows the chips wrap to — no max-height guess, no clip. */
       #chips-collapse {{ display: grid; grid-template-rows: 1fr; margin-top: 10px; transition: grid-template-rows .26s ease, opacity .18s ease, margin-top .26s ease; }}
       #search-header.condensed #chips-collapse {{ grid-template-rows: 0fr; opacity: 0; margin-top: 0; pointer-events: none; }}
       #chips {{ display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; overflow: hidden; min-height: 0; }}
-      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #232323; background: #fff; border: 1px solid #DDDDDD; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
-      .chip:hover {{ background: #232323; color: #fff; border-color: #232323; }}
+      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
+      .chip:hover {{ background: var(--accent); color: var(--accent-text); border-color: var(--accent); }}
       #results-bar {{ display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }}
       #results-bar.show {{ display: flex; }}
-      #results-count {{ font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: #8C8C8C; }}
-      #results-count b {{ color: #555555; }}
-      #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #555555; background: #fff; border: 1px solid #DDDDDD; border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
+      #results-count {{ font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: var(--muted); }}
+      #results-count b {{ color: var(--muted-2); }}
+      #results-clear {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted-2); background: #fff; border: 1px solid var(--border); border-radius: 999px; padding: 7px 14px; cursor: pointer; }}
       #searchResults {{ display: none; }}
       #searchResults.show {{ display: grid; }}
       /* results + "more" render uniform (no 2x2 heroes) */
@@ -408,26 +420,26 @@ def main() -> None:
       /* "More to explore" — every non-matching asset, for seamless browsing */
       #more-section {{ display: none; }}
       #more-section.show {{ display: block; }}
-      #more-heading {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; color: #8C8C8C; margin: 30px 0 18px; padding-top: 24px; border-top: 1px solid #E5E5E5; }}
+      #more-heading {{ font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin: 30px 0 18px; padding-top: 24px; border-top: 1px solid var(--border); }}
       #moreResults {{ display: grid; }}
-      #no-results {{ display: none; text-align: center; padding: 60px 20px; color: #555555; }}
+      #no-results {{ display: none; text-align: center; padding: 60px 20px; color: var(--muted-2); }}
       #no-results.show {{ display: block; }}
-      #no-results .big {{ font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: #232323; margin-bottom: 8px; }}
+      #no-results .big {{ font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: var(--ink); margin-bottom: 8px; }}
       mark {{ background: #FEF08A; color: inherit; border-radius: 3px; padding: 0 1px; }}
     </style>
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      .bg-blue-500 {{ background-color: #232323 !important; }}
-      .text-BluishDark {{ color: #232323 !important; }}
+      .bg-blue-500 {{ background-color: var(--accent) !important; }}
+      .text-BluishDark {{ color: var(--ink) !important; }}
     </style>
     <title>HF Huggiverse &mdash; Hugging Face Brand Assets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Chewy&family=Titan+One&family=Bagel+Fat+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-white">
+  <body>
     <script>
-      (function () {{ try {{ var f = localStorage.getItem('hfba-font'); if (f) document.documentElement.setAttribute('data-font', f); }} catch (e) {{}} }})();
+      (function () {{ try {{ var d = document.documentElement; var f = localStorage.getItem('hfba-font'); if (f) d.setAttribute('data-font', f); var t = localStorage.getItem('hfba-theme'); if (t) d.setAttribute('data-theme', t); }} catch (e) {{}} }})();
     </script>
 
     <div id="site-header">
@@ -486,6 +498,28 @@ def main() -> None:
       </div>
     </div>
 
+    <div id="theme-toggle" role="group" aria-label="Color theme">
+      <button type="button" class="sw-motion" data-settheme="motion" title="Cream theme" aria-label="Cream theme"></button>
+      <button type="button" class="sw-bluish" data-settheme="bluish" title="Blue theme" aria-label="Blue theme"></button>
+    </div>
+    <script>
+      (function () {{
+        var KNOWN = ['motion', 'bluish'];
+        var btns = document.querySelectorAll('#theme-toggle button');
+        function setActive(t) {{ btns.forEach(function (b) {{ b.classList.toggle('active', b.dataset.settheme === t); }}); }}
+        var cur = document.documentElement.getAttribute('data-theme');
+        if (KNOWN.indexOf(cur) < 0) cur = 'motion';
+        setActive(cur);
+        btns.forEach(function (b) {{
+          b.addEventListener('click', function () {{
+            var t = b.dataset.settheme;
+            document.documentElement.setAttribute('data-theme', t);
+            try {{ localStorage.setItem('hfba-theme', t); }} catch (e) {{}}
+            setActive(t);
+          }});
+        }});
+      }})();
+    </script>
     <script id="search-index" type="application/json">{search_index_json}</script>
     <script src="search.js?v={search_js_v}" defer></script>
     <script>
