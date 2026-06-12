@@ -371,11 +371,17 @@ def main() -> None:
       .sw-bluish {{ background: #F3F7FA; border: 3px solid #3B82F6; }}
 
       /* ---- Brand header + swappable display font ---- */
-      :root {{ --font-display: 'Chewy', 'Source Sans 3', cursive; }}
+      :root {{ --font-display: 'Shantell Sans', 'Source Sans 3', cursive; }}
+      [data-font="shantell"] {{ --font-display: 'Shantell Sans', 'Source Sans 3', cursive; }}
       [data-font="chewy"] {{ --font-display: 'Chewy', 'Source Sans 3', cursive; }}
       [data-font="titan"] {{ --font-display: 'Titan One', 'Source Sans 3', cursive; }}
       [data-font="bagel"] {{ --font-display: 'Bagel Fat One', 'Source Sans 3', cursive; }}
       [data-font="luckiest"] {{ --font-display: 'Luckiest Guy', 'Source Sans 3', cursive; }}
+      /* Shantell Sans is a variable font with glyph-level irregularity: the BNCE
+         (bounce) axis + contextual alternates make repeated letters render as
+         different drawings — organic variation from the font itself, no hacks. */
+      :root .huggiverse-title, [data-font="shantell"] .huggiverse-title {{ font-variation-settings: 'BNCE' 38, 'INFM' 72; font-weight: 800; font-feature-settings: 'calt' 1; }}
+      [data-font="chewy"] .huggiverse-title, [data-font="titan"] .huggiverse-title, [data-font="bagel"] .huggiverse-title, [data-font="luckiest"] .huggiverse-title {{ font-variation-settings: normal; font-weight: 600; }}
       #site-header {{ background: var(--bg); }}
       .site-inner {{ padding-top: 8px; padding-bottom: 6px; }}
       /* Centered hero (matches motiondesign.school/blog); filter row below stays
@@ -437,6 +443,7 @@ def main() -> None:
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=Chewy&family=Titan+One&family=Bagel+Fat+One&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:BNCE,INFM,wght@-100..100,0..100,300..800&display=swap" rel="stylesheet">
   </head>
   <body>
     <script>
@@ -449,6 +456,7 @@ def main() -> None:
           <h1 class="huggiverse-title">HF Huggiverse</h1>
           <div class="font-toggle" role="group" aria-label="Title font">
             <span class="ft-label">Title font</span>
+            <button type="button" data-setfont="shantell" style="font-family:'Shantell Sans',cursive;font-variation-settings:'BNCE' 38,'INFM' 72;font-weight:700;">Shantell</button>
             <button type="button" data-setfont="chewy" style="font-family:'Chewy',cursive;">Chewy</button>
             <button type="button" data-setfont="titan" style="font-family:'Titan One',cursive;">Titan One</button>
             <button type="button" data-setfont="bagel" style="font-family:'Bagel Fat One',cursive;">Bagel Fat One</button>
@@ -525,11 +533,11 @@ def main() -> None:
     <script src="search.js?v={search_js_v}" defer></script>
     <script>
       (function () {{
-        var KNOWN = ['chewy', 'titan', 'bagel', 'luckiest'];
+        var KNOWN = ['shantell', 'chewy', 'titan', 'bagel', 'luckiest'];
         var btns = document.querySelectorAll('.font-toggle button');
         function setActive(f) {{ btns.forEach(function (b) {{ b.classList.toggle('active', b.dataset.setfont === f); }}); }}
         var cur = document.documentElement.getAttribute('data-font');
-        if (KNOWN.indexOf(cur) < 0) {{ cur = 'chewy'; document.documentElement.setAttribute('data-font', 'chewy'); }}
+        if (KNOWN.indexOf(cur) < 0) {{ cur = 'shantell'; document.documentElement.setAttribute('data-font', 'shantell'); }}
         setActive(cur);
         btns.forEach(function (b) {{
           b.addEventListener('click', function () {{
