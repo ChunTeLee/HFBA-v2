@@ -382,22 +382,6 @@ def main() -> None:
          left-aligned with the grid. */
       #hero {{ padding: 46px 0 14px; text-align: center; }}
       .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: var(--ink); margin: 0; }}
-      /* Hand-lettered feel: every glyph gets its own micro rotation/offset/scale so
-         repeated letters (H, the gg pair, e) never render identically. Values are
-         hand-tuned, subtle, and deterministic — no JS, no layout jank. */
-      .huggiverse-title i {{ display: inline-block; font-style: normal; }}
-      .huggiverse-title i:nth-child(1)  {{ transform: rotate(-2.6deg) translateY(2px); }}
-      .huggiverse-title i:nth-child(2)  {{ transform: rotate(1.8deg) translateY(-2px) scale(.992); }}
-      .huggiverse-title i:nth-child(4)  {{ transform: rotate(2.4deg) translateY(-1px) scale(1.015); }}
-      .huggiverse-title i:nth-child(5)  {{ transform: rotate(-1.6deg) translateY(2px); }}
-      .huggiverse-title i:nth-child(6)  {{ transform: rotate(-3.2deg) translateY(3px) scale(.985); }}
-      .huggiverse-title i:nth-child(7)  {{ transform: rotate(2.8deg) translateY(-2px) scale(1.02); }}
-      .huggiverse-title i:nth-child(8)  {{ transform: rotate(-1.2deg) translateY(1px); }}
-      .huggiverse-title i:nth-child(9)  {{ transform: rotate(1.5deg) translateY(-1px) scale(.995); }}
-      .huggiverse-title i:nth-child(10) {{ transform: rotate(-2.2deg) translateY(2px) scale(1.012); }}
-      .huggiverse-title i:nth-child(11) {{ transform: rotate(.9deg) translateY(-2px); }}
-      .huggiverse-title i:nth-child(12) {{ transform: rotate(-1.4deg) translateY(1px) scale(.99); }}
-      .huggiverse-title i:nth-child(13) {{ transform: rotate(2.1deg) translateY(-1px) scale(1.008); }}
       .font-toggle {{ display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }}
       .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
       .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
@@ -462,7 +446,7 @@ def main() -> None:
     <div id="site-header">
       <div class="container mx-auto px-5 site-inner">
         <div id="hero">
-          <h1 class="huggiverse-title" aria-label="HF Huggiverse"><span aria-hidden="true"><i>H</i><i>F</i><i>&nbsp;</i><i>H</i><i>u</i><i>g</i><i>g</i><i>i</i><i>v</i><i>e</i><i>r</i><i>s</i><i>e</i></span></h1>
+          <h1 class="huggiverse-title">HF Huggiverse</h1>
           <div class="font-toggle" role="group" aria-label="Title font">
             <span class="ft-label">Title font</span>
             <button type="button" data-setfont="chewy" style="font-family:'Chewy',cursive;">Chewy</button>
