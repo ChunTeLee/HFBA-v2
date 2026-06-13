@@ -4,6 +4,7 @@ emoji: 🤗
 colorFrom: yellow
 colorTo: pink
 sdk: static
+header: mini
 pinned: false
 short_description: Hugging Face brand assets — Huggies, logos, and graphics
 ---
