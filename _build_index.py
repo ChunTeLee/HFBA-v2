@@ -355,7 +355,10 @@ def main() -> None:
       }}
     </script>
     <style>
-      .download-button {{ transition: transform 0.2s; }}
+      /* Hover: a fill slightly darker than the card surface (ink-tinted so it
+         tracks both themes). Padding + negative margin keep layout unshifted. */
+      .download-button {{ transition: transform 0.2s, background-color .15s; padding: 5px 8px; margin: -5px -8px; border-radius: 9px; }}
+      .download-button:hover {{ background-color: color-mix(in srgb, var(--ink) 9%, transparent); }}
       .download-button:active {{ transform: scale(0.80); }}
 
       /* ---- Color themes (toggle, bottom-right) ----
