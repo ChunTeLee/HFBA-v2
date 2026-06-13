@@ -391,6 +391,7 @@ def main() -> None:
          left-aligned with the grid. */
       #hero {{ padding: 46px 0 14px; text-align: center; }}
       .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: var(--ink); margin: 0; }}
+      .hero-sub {{ font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: var(--muted-2); margin: 16px auto 0; max-width: 54ch; line-height: 1.55; }}
       .font-toggle {{ display: none; }}
       .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
       .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
@@ -459,6 +460,7 @@ def main() -> None:
       <div class="container mx-auto px-5 site-inner">
         <div id="hero">
           <h1 class="huggiverse-title">HF Huggiverse</h1>
+          <p class="hero-sub">Every Huggy, logo, and brand asset in the &lsquo;verse &mdash; free to search and download.</p>
           <div class="font-toggle" role="group" aria-label="Title font">
             <span class="ft-label">Title font</span>
             <button type="button" data-setfont="shantell" style="font-family:'Shantell Sans',cursive;font-variation-settings:'BNCE' 38,'INFM' 72;font-weight:700;">Shantell</button>
