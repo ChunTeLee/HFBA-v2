@@ -374,7 +374,7 @@ def main() -> None:
       .sw-bluish {{ background: #F3F7FA; border: 3px solid #3B82F6; }}
 
       /* ---- Brand header + swappable display font ---- */
-      :root {{ --font-display: 'Shantell Sans', 'Source Sans 3', cursive; }}
+      :root {{ --font-display: 'Chewy', 'Source Sans 3', cursive; }}
       [data-font="shantell"] {{ --font-display: 'Shantell Sans', 'Source Sans 3', cursive; }}
       [data-font="chewy"] {{ --font-display: 'Chewy', 'Source Sans 3', cursive; }}
       [data-font="titan"] {{ --font-display: 'Titan One', 'Source Sans 3', cursive; }}
@@ -383,7 +383,7 @@ def main() -> None:
       /* Shantell Sans is a variable font with glyph-level irregularity: the BNCE
          (bounce) axis + contextual alternates make repeated letters render as
          different drawings — organic variation from the font itself, no hacks. */
-      :root .huggiverse-title, [data-font="shantell"] .huggiverse-title {{ font-variation-settings: 'BNCE' 38, 'INFM' 72; font-weight: 800; font-feature-settings: 'calt' 1; }}
+      [data-font="shantell"] .huggiverse-title {{ font-variation-settings: 'BNCE' 38, 'INFM' 72; font-weight: 800; font-feature-settings: 'calt' 1; }}
       [data-font="chewy"] .huggiverse-title, [data-font="titan"] .huggiverse-title, [data-font="bagel"] .huggiverse-title, [data-font="luckiest"] .huggiverse-title {{ font-variation-settings: normal; font-weight: 600; }}
       #site-header {{ background: var(--bg); }}
       .site-inner {{ padding-top: 8px; padding-bottom: 6px; }}
@@ -391,7 +391,7 @@ def main() -> None:
          left-aligned with the grid. */
       #hero {{ padding: 46px 0 14px; text-align: center; }}
       .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: var(--ink); margin: 0; }}
-      .font-toggle {{ display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 28px; }}
+      .font-toggle {{ display: none; }}
       .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
       .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
       .font-toggle button:hover {{ border-color: var(--muted); }}
@@ -452,7 +452,7 @@ def main() -> None:
   </head>
   <body>
     <script>
-      (function () {{ try {{ var d = document.documentElement; var f = localStorage.getItem('hfba-font'); if (f) d.setAttribute('data-font', f); var t = localStorage.getItem('hfba-theme'); if (t) d.setAttribute('data-theme', t); }} catch (e) {{}} }})();
+      (function () {{ try {{ var d = document.documentElement; var t = localStorage.getItem('hfba-theme'); if (t) d.setAttribute('data-theme', t); }} catch (e) {{}} }})();
     </script>
 
     <div id="site-header">
@@ -542,7 +542,7 @@ def main() -> None:
         var btns = document.querySelectorAll('.font-toggle button');
         function setActive(f) {{ btns.forEach(function (b) {{ b.classList.toggle('active', b.dataset.setfont === f); }}); }}
         var cur = document.documentElement.getAttribute('data-font');
-        if (KNOWN.indexOf(cur) < 0) {{ cur = 'shantell'; document.documentElement.setAttribute('data-font', 'shantell'); }}
+        if (KNOWN.indexOf(cur) < 0) {{ cur = 'chewy'; document.documentElement.setAttribute('data-font', 'chewy'); }}
         setActive(cur);
         btns.forEach(function (b) {{
           b.addEventListener('click', function () {{
