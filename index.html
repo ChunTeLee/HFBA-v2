@@ -28,7 +28,7 @@
       :root, [data-theme="motion"] { --bg: #E9E6DD; --header-bg: rgba(233,230,221,.92); --surface: #FBF8F1; --ink: #232323; --muted: #8C8C8C; --muted-2: #555555; --accent: #232323; --accent-text: #ffffff; --border: #D8D3C8; --focus-ring: rgba(35,35,35,.12); }
       [data-theme="bluish"] { --bg: #F3F7FA; --header-bg: rgba(243,247,250,.9); --surface: #FFFFFF; --ink: #4D5862; --muted: #9aa6b1; --muted-2: #6b7280; --accent: #3B82F6; --accent-text: #ffffff; --border: #D2DAE1; --focus-ring: rgba(59,130,246,.15); }
       body { background-color: var(--bg); }
-      #theme-toggle { position: fixed; right: 18px; bottom: 18px; z-index: 60; display: flex; align-items: center; gap: 8px; padding: 7px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; box-shadow: 0 4px 18px rgba(0,0,0,.14); }
+      #theme-toggle { display: none; }
       #theme-toggle button { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; padding: 0; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color .12s; }
       #theme-toggle button.active { outline-color: var(--ink); }
       .sw-motion { background: #E9E6DD; border: 3px solid #232323; }
@@ -123,7 +123,7 @@
   </head>
   <body>
     <script>
-      (function () { try { var d = document.documentElement; var t = localStorage.getItem('hfba-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {} })();
+      /* theme locked to default (motion) — toggle hidden */
     </script>
 
     <div id="site-header">
