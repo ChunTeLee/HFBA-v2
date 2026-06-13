@@ -115,7 +115,7 @@ def card_logo(stem: str, title: str, exts: list[str], dark: bool = False, data_i
     return f"""          <div class="w-full flex flex-col"{id_attr}>
             <img src="{html.escape(img)}" alt="{html.escape(title)}" class="w-full h-full {bg} shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
-              <h5 class="text-lg font-sans text-BluishDark">{html.escape(title)}</h5>
+              <h5 class="text-lg asset-name">{html.escape(title)}</h5>
               <div class="flex flex-wrap gap-y-1 items-center mt-2 text-sm">
 {buttons_html}
               </div>
@@ -141,7 +141,7 @@ def card_huggy(folder: str, filename: str, span: str = "") -> str:
     return f"""          <div class="w-full flex flex-col{span_class}"{id_attr}{data_attrs}>
             <img src="{html.escape(img_path)}" alt="{html.escape(title)}" class="w-full h-full bg-white shadow-DropShadow {pad_class} rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
-              <h5 class="text-lg font-sans text-BluishDark">{html.escape(title)}</h5>
+              <h5 class="text-lg asset-name">{html.escape(title)}</h5>
               <button x-data="{{ filename: '{html.escape(filename)}', imageUrl: '{html.escape(img_path)}' }}" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
                 <img src="images/download icon.svg" class="w-4 h-4 hidden md:inline-block" alt="">
                 <p class="text-gray-500 font-mono hidden md:inline-block">.{ext}</p>
@@ -242,7 +242,7 @@ def main() -> None:
     hf_logo_card = """          <div class="w-full flex flex-col" data-id="logo__hf-logo">
             <img src="images/Brand Logos/Hugging Face.png" alt="HF Logo" class="w-full h-full bg-white shadow-DropShadow md:p-14 p-7 rounded-3xl object-contain">
             <div class="pl-3 pt-3">
-              <h5 class="text-lg font-sans text-BluishDark">HF Logo</h5>
+              <h5 class="text-lg asset-name">HF Logo</h5>
               <div class="flex flex-wrap gap-y-1 items-center mt-2 text-sm">
                 <button x-data="{ filename: 'Hugging Face.png', imageUrl: 'images/Brand Logos/Hugging Face.png' }" x-on:click="downloadImage(imageUrl, filename)" class="flex items-center space-x-1 download-button">
                   <img src="images/download icon.svg" class="w-4 h-4" alt="">
@@ -396,6 +396,10 @@ def main() -> None:
          the theme, darkens to ink on hover. */
       .brand-link {{ color: var(--muted-2); }}
       .brand-link:hover {{ color: var(--ink); }}
+      /* Asset name (the file name under each card). Tailwind's font-sans resolves to
+         'Source Sans Pro', which we don't load — pin it to the loaded Source Sans 3
+         at a clearer weight, themed ink. Extension labels track the theme too. */
+      .asset-name {{ font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--ink); letter-spacing: -.005em; }}
       .font-toggle {{ display: none; }}
       .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
       .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
@@ -448,6 +452,7 @@ def main() -> None:
       .bg-blue-500 {{ background-color: var(--accent) !important; }}
       .bg-white {{ background-color: var(--surface) !important; }}
       .text-BluishDark {{ color: var(--ink) !important; }}
+      .text-gray-500 {{ color: var(--muted-2) !important; }}
     </style>
     <title>HF Huggiverse &mdash; Hugging Face Brand Assets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
