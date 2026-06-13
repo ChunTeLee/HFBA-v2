@@ -415,7 +415,9 @@ def main() -> None:
       #chips-collapse {{ display: grid; grid-template-rows: 1fr; margin-top: 10px; transition: grid-template-rows .26s ease, opacity .18s ease, margin-top .26s ease; }}
       #search-header.condensed #chips-collapse {{ grid-template-rows: 0fr; opacity: 0; margin-top: 0; pointer-events: none; }}
       #chips {{ display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; overflow: hidden; min-height: 0; }}
-      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
+      /* Chip fill matches motiondesign.school's filter pills: a ~5% ink tint over
+         the page bg, borderless. color-mix keeps it correct in both themes. */
+      .chip {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink); background: color-mix(in srgb, var(--ink) 6%, var(--bg)); border: 1px solid transparent; border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
       .chip:hover {{ background: var(--accent); color: var(--accent-text); border-color: var(--accent); }}
       #results-bar {{ display: none; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }}
       #results-bar.show {{ display: flex; }}
