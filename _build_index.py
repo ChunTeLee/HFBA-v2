@@ -269,7 +269,7 @@ def main() -> None:
     logos_section = f"""      <section id="HFlogos" class="mb-28">
         <div class="flex flex-row items-center justify-between">
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white mb-5 py-3 px-6 rounded-full">HF Logos</div>
-          <div class="text-BluishDark transform hover:text-gray-900">
+          <div class="brand-link">
             <a href="https://huggingface.co/brand" target="_blank">View official HF branding guideline <svg xmlns="http://www.w3.org/2000/svg" class="inline w-6 h-6" width="32" height="32" viewBox="0 0 20 20"><path fill="currentColor" d="M9.516 6a.5.5 0 0 0 0 1h2.777l-4.147 4.146a.5.5 0 0 0 .708.708L13 7.707v2.777a.5.5 0 0 0 1 0V6.5a.5.5 0 0 0-.5-.5zm3.25 11a2.5 2.5 0 0 0 2.47-2.11A2.501 2.501 0 0 0 17 12.5v-7A2.5 2.5 0 0 0 14.5 3h-7a2.501 2.501 0 0 0-2.4 1.797A2.5 2.5 0 0 0 3 7.266V13.5A3.5 3.5 0 0 0 6.5 17zM4 7.266A1.5 1.5 0 0 1 5 5.85v6.65A2.5 2.5 0 0 0 7.5 15h6.68a1.5 1.5 0 0 1-1.414 1H6.5A2.5 2.5 0 0 1 4 13.5zM7.5 4h7A1.5 1.5 0 0 1 16 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 6 12.5v-7A1.5 1.5 0 0 1 7.5 4"/></svg></a>
           </div>
         </div>
@@ -392,6 +392,10 @@ def main() -> None:
       #hero {{ padding: 46px 0 14px; text-align: center; }}
       .huggiverse-title {{ font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 9vw, 6.75rem); line-height: 1.0; letter-spacing: -.01em; color: var(--ink); margin: 0; }}
       .hero-sub {{ font-family: 'Source Sans 3', sans-serif; font-size: 17px; color: var(--muted-2); margin: 16px auto 0; max-width: 54ch; line-height: 1.55; }}
+      /* Secondary link (e.g. "View official HF branding guideline"): muted, tracks
+         the theme, darkens to ink on hover. */
+      .brand-link {{ color: var(--muted-2); }}
+      .brand-link:hover {{ color: var(--ink); }}
       .font-toggle {{ display: none; }}
       .font-toggle .ft-label {{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }}
       .font-toggle button {{ font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }}
