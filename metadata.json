@@ -1647,30 +1647,6 @@
     "batch": "2026"
   },
   {
-    "id": "collection-2026__huggy-okay",
-    "filename": "Huggy Okay.png",
-    "folder": "Huggy Collection 2026",
-    "display_name": "Huggy Okay",
-    "category": "modern",
-    "description": "Huggy Okay",
-    "expression": "unknown",
-    "pose": "unknown",
-    "hands": "unknown",
-    "headwear": [],
-    "outfit": [],
-    "face_accessories": [],
-    "held_objects": [],
-    "effects": [],
-    "colors": [],
-    "mood": [],
-    "theme": [],
-    "tags": [
-      "okay"
-    ],
-    "synonyms": [],
-    "batch": "2026"
-  },
-  {
     "id": "collection-2026__huggy-pop",
     "filename": "Huggy Pop.gif",
     "folder": "Huggy Collection 2026",
