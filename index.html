@@ -60,7 +60,10 @@
       /* Asset name (the file name under each card). Tailwind's font-sans resolves to
          'Source Sans Pro', which we don't load — pin it to the loaded Source Sans 3
          at a clearer weight, themed ink. Extension labels track the theme too. */
-      .asset-name { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--ink); letter-spacing: -.005em; }
+      /* Always one line: truncate long names with an ellipsis so every card is the
+         same height and the grid stays aligned at any screen size. min-width:0 lets
+         the title shrink beside the download button in the flex row. */
+      .asset-name { font-family: 'Source Sans 3', sans-serif; font-weight: 600; color: var(--ink); letter-spacing: -.005em; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .font-toggle { display: none; }
       .font-toggle .ft-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-right: 2px; }
       .font-toggle button { font-size: 15px; line-height: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 7px 15px; cursor: pointer; transition: background .12s, color .12s, border-color .12s; }
