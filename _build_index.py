@@ -290,7 +290,7 @@ def main() -> None:
     featured_new = [
         ("Huguma.png", "col-span-2 row-span-2"),
         ("Spock Huggy.png", ""),
-        ("Discovery Huggy.png", ""),
+        ("Scanner Huggy.png", ""),
         ("ProtoStar Huggy.png", ""),
     ]
     featured_names = {fn for fn, _ in featured_new}

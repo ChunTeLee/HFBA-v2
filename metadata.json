@@ -2106,10 +2106,10 @@
   "batch": "protostar"
  },
  {
-  "id": "collection-2026__discovery-huggy",
-  "filename": "Discovery Huggy.png",
+  "id": "collection-2026__scanner-huggy",
+  "filename": "Scanner Huggy.png",
   "folder": "Huggy Collection 2026",
-  "display_name": "Discovery Huggy",
+  "display_name": "Scanner Huggy",
   "category": "modern",
   "description": "Huggy scanning a planet with a handheld scanner",
   "expression": "unknown",
@@ -2151,7 +2151,8 @@
    "probe",
    "sensor",
    "discover",
-   "scanning"
+   "scanning",
+   "discovery"
   ],
   "batch": "protostar"
  },
