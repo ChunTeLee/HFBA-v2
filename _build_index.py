@@ -284,8 +284,21 @@ def main() -> None:
     # `grid-auto-flow: dense` guarantees no skipped cells around the 2x2 heroes.
     modern_cards = []
 
-    # New 2026 batch first. Feature 2x2 tiles: the 3 GIFs + standout statics, spread evenly.
-    new_files = list_images(IMAGES / "Huggy Collection 2026")
+    # Newest hand-finished mascots (Project ProtoStar set) render at the very top
+    # of Modern Huggies. Huguma is the 2x2 special feature tile; the other three
+    # trail it as singles. grid-auto-flow:dense backfills the cells beside Huguma.
+    featured_new = [
+        ("Huguma.png", "col-span-2 row-span-2"),
+        ("Spock Huggy.png", ""),
+        ("Discovery Huggy.png", ""),
+        ("ProtoStar Huggy.png", ""),
+    ]
+    featured_names = {fn for fn, _ in featured_new}
+    for fn, span in featured_new:
+        modern_cards.append(card_huggy("Huggy Collection 2026", fn, span))
+
+    # New 2026 batch next. Feature 2x2 tiles: the 3 GIFs + standout statics, spread evenly.
+    new_files = [f for f in list_images(IMAGES / "Huggy Collection 2026") if f not in featured_names]
     new_wide = {
         "Doodle Huggy.gif",
         "Huggy Pop.gif",
