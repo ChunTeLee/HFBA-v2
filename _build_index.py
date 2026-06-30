@@ -150,13 +150,17 @@ def card_huggy(folder: str, filename: str, span: str = "") -> str:
           </div>"""
 
 
-def tiled_cards(folder: str, files: list[str], hero_set: set) -> list[str]:
+def tiled_cards(folder: str, files: list[str], hero_set: set, hero_span_fn=None) -> list[str]:
     """Render cards with 2x2 'hero' tiles spread evenly through the singles.
 
     Mirrors the original Modern Huggies cadence: one large feature tile roughly
     every (singles // heroes) cards. Combined with `grid-auto-flow: dense` on the
     container, every cell beside a hero is backfilled by the next single card, so
     the grid never shows skipped/empty cells at any column count.
+
+    `hero_span_fn` (optional) returns the span+side class for each hero in turn so
+    heroes alternate between the left (cols 1-2) and right (cols 3-4) halves of the
+    4-col grid instead of all stacking on the left.
     """
     heroes = [f for f in files if f in hero_set]
     singles = [f for f in files if f not in hero_set]
@@ -167,7 +171,8 @@ def tiled_cards(folder: str, files: list[str], hero_set: set) -> list[str]:
     cards: list[str] = []
     si = 0
     for hero in heroes:
-        cards.append(card_huggy(folder, hero, "col-span-2 row-span-2"))
+        span = hero_span_fn() if hero_span_fn else "col-span-2 row-span-2"
+        cards.append(card_huggy(folder, hero, span))
         chunk = singles[si:si + per]
         si += len(chunk)
         cards.extend(card_huggy(folder, s) for s in chunk)
@@ -284,11 +289,21 @@ def main() -> None:
     # `grid-auto-flow: dense` guarantees no skipped cells around the 2x2 heroes.
     modern_cards = []
 
+    # Heroes (2x2 feature tiles) alternate left/right across the whole section so
+    # they zigzag naturally instead of all stacking in columns 1-2. .hero-left /
+    # .hero-right pin the column at the md+ (4-col) breakpoint; on 2-col they just
+    # span full width as before.
+    hero_state = {"n": 0}
+    def hero_span():
+        side = "hero-left" if hero_state["n"] % 2 == 0 else "hero-right"
+        hero_state["n"] += 1
+        return f"col-span-2 row-span-2 {side}"
+
     # Newest hand-finished mascots (Project ProtoStar set) render at the very top
     # of Modern Huggies. Huguma is the 2x2 special feature tile; the other three
     # trail it as singles. grid-auto-flow:dense backfills the cells beside Huguma.
     featured_new = [
-        ("Huguma.png", "col-span-2 row-span-2"),
+        ("Huguma.png", hero_span()),
         ("Spock Huggy.png", ""),
         ("Scanner Huggy.png", ""),
         ("ProtoStar Huggy.png", ""),
@@ -307,13 +322,13 @@ def main() -> None:
         "Dragon Huggy.png",
         "Viking Huggy.png",
     }
-    modern_cards.extend(tiled_cards("Huggy Collection 2026", new_files, new_wide))
+    modern_cards.extend(tiled_cards("Huggy Collection 2026", new_files, new_wide, hero_span))
 
     # Existing modern set below, left in its current order; heroes marked in place.
     modern_files = list_images(IMAGES / "modern Huggies")
     modern_wide = {"Huggy Pop.gif", "Doodle Huggy.gif", "Vibing Huggy.gif", "Super Huggy.png"}
     for f in modern_files:
-        span = "col-span-2 row-span-2" if f in modern_wide else ""
+        span = hero_span() if f in modern_wide else ""
         modern_cards.append(card_huggy("modern Huggies", f, span))
 
     modern_section = f"""      <section id="ModernHuggies" class="mb-28">
@@ -462,6 +477,13 @@ def main() -> None:
       #no-results.show {{ display: block; }}
       #no-results .big {{ font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: var(--ink); margin-bottom: 8px; }}
       mark {{ background: #FEF08A; color: inherit; border-radius: 3px; padding: 0 1px; }}
+      /* Heroes alternate sides at the 4-col breakpoint so the 2x2 feature tiles
+         zigzag (left, right, left...) instead of all hugging columns 1-2.
+         grid-auto-flow:dense backfills the singles around them with no gaps. */
+      @media (min-width: 768px) {{
+        #ModernHuggies .card-grid > .hero-left {{ grid-column: 1 / span 2; }}
+        #ModernHuggies .card-grid > .hero-right {{ grid-column: 3 / span 2; }}
+      }}
     </style>
     <link rel="stylesheet" href="css/style.css" />
     <style>

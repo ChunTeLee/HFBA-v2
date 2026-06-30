@@ -110,6 +110,13 @@
       #no-results.show { display: block; }
       #no-results .big { font-family: 'IBM Plex Mono', monospace; font-size: 20px; color: var(--ink); margin-bottom: 8px; }
       mark { background: #FEF08A; color: inherit; border-radius: 3px; padding: 0 1px; }
+      /* Heroes alternate sides at the 4-col breakpoint so the 2x2 feature tiles
+         zigzag (left, right, left...) instead of all hugging columns 1-2.
+         grid-auto-flow:dense backfills the singles around them with no gaps. */
+      @media (min-width: 768px) {
+        #ModernHuggies .card-grid > .hero-left { grid-column: 1 / span 2; }
+        #ModernHuggies .card-grid > .hero-right { grid-column: 3 / span 2; }
+      }
     </style>
     <link rel="stylesheet" href="css/style.css" />
     <style>
@@ -287,7 +294,7 @@
           <div class="font-mono max-w-fit text-3xl bg-blue-500 text-white py-3 px-6 rounded-full">Modern Huggies</div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-x-5 gap-y-10 card-grid" style="grid-auto-flow: dense">
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__huguma" data-display-name="Huguma" data-tags="huguma daruma japanese lucky red pop art halftone mascot おみくじ">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-left" data-id="collection-2026__huguma" data-display-name="Huguma" data-tags="huguma daruma japanese lucky red pop art halftone mascot おみくじ">
             <img src="images/Huggy Collection 2026/Huguma.png" alt="Huguma" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Huguma</h5>
@@ -327,7 +334,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__doodle-huggy" data-display-name="Doodle Huggy" data-tags="doodle">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-right" data-id="collection-2026__doodle-huggy" data-display-name="Doodle Huggy" data-tags="doodle">
             <img src="images/Huggy Collection 2026/Doodle Huggy.gif" alt="Doodle Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Doodle Huggy</h5>
@@ -427,7 +434,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__dragon-huggy" data-display-name="Dragon Huggy" data-tags="dragon">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-left" data-id="collection-2026__dragon-huggy" data-display-name="Dragon Huggy" data-tags="dragon">
             <img src="images/Huggy Collection 2026/Dragon Huggy.png" alt="Dragon Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Dragon Huggy</h5>
@@ -527,7 +534,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__huggy-pop" data-display-name="Huggy Pop" data-tags="pop">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-right" data-id="collection-2026__huggy-pop" data-display-name="Huggy Pop" data-tags="pop">
             <img src="images/Huggy Collection 2026/Huggy Pop.gif" alt="Huggy Pop" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Huggy Pop</h5>
@@ -627,7 +634,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__super-huggy" data-display-name="Super Huggy" data-tags="super">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-left" data-id="collection-2026__super-huggy" data-display-name="Super Huggy" data-tags="super">
             <img src="images/Huggy Collection 2026/Super Huggy.png" alt="Super Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Super Huggy</h5>
@@ -727,7 +734,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__vibing-huggy" data-display-name="Vibing Huggy" data-tags="vibing">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-right" data-id="collection-2026__vibing-huggy" data-display-name="Vibing Huggy" data-tags="vibing">
             <img src="images/Huggy Collection 2026/Vibing Huggy.gif" alt="Vibing Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Vibing Huggy</h5>
@@ -827,7 +834,7 @@
               </button>
             </div>
           </div>
-          <div class="w-full flex flex-col col-span-2 row-span-2" data-id="collection-2026__viking-huggy" data-display-name="Viking Huggy" data-tags="viking">
+          <div class="w-full flex flex-col col-span-2 row-span-2 hero-left" data-id="collection-2026__viking-huggy" data-display-name="Viking Huggy" data-tags="viking">
             <img src="images/Huggy Collection 2026/Viking Huggy.png" alt="Viking Huggy" class="w-full h-full bg-white shadow-DropShadow md:p-7 p-3 rounded-3xl object-contain">
             <div class="px-3 pt-3 flex flex-col gap-1 md:flex-row md:justify-between md:items-center">
               <h5 class="text-lg asset-name">Viking Huggy</h5>
